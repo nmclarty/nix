@@ -1,0 +1,79 @@
+{config, inputs, pkgs, ...}: {
+  imports = [ ./config.nix ]; # traefik config
+  users = import "${inputs.self}/lib/createUser.nix" {name = "utils"; id = 2002;};
+  networking.firewall.allowedTCPPorts = [ 80 443 ]; # public traefik ports
+  virtualisation.quadlet = {
+    containers = {
+      traefik = {
+        containerConfig = {
+          image = "docker.io/library/traefik:v3";
+          autoUpdate = "registry";
+          user = "2002:2002";
+          environments = { CF_DNS_API_TOKEN_FILE = "/run/secrets/utils_traefik_token"; };
+          secrets = [ "utils_traefik_token,uid=2002,gid=2002,mode=0400" ];
+          volumes = [ "/etc/config/traefik.yaml:/etc/traefik/traefik.yaml:ro" "/srv/utils/traefik:/data" ];
+          sysctl."net.ipv4.ip_unprivileged_port_start" = "80";
+          publishPorts = [ "80:80" "443:443" "8080:8080" ];
+          networks = [ "socket-proxy" "exposed:ip=10.90.0.2" ];
+          healthCmd = "traefik healthcheck";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+        unitConfig = {
+          Wants = [ "socket-proxy.service" ];
+          After = [ "socket-proxy.service" ];
+        };
+      };
+      socket-proxy = {
+        containerConfig = {
+          image = "lscr.io/linuxserver/socket-proxy:latest";
+          autoUpdate = "registry";
+          readOnly = true;
+          tmpfses = [ "/tmp" ];
+          environments = {
+            CONTAINERS = "1";
+            LOG_LEVEL = "notice";
+          };
+          volumes = [ "/var/run/docker.sock:/var/run/docker.sock:ro" ];
+          networks = [ "socket-proxy.network" ];
+          healthCmd = "wget -O - -q -T 5 http://127.0.0.1:2375/_ping";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+      };
+      speed = {
+        containerConfig = {
+          image = "docker.io/openspeedtest/latest:latest";
+          autoUpdate = "registry";
+          networks = [ "exposed.network" ];
+          labels = { "traefik.enable" = "true"; };
+          healthCmd = "wget --spider -T 5 http://127.0.0.1:3000";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+      };
+      homepage = {
+        containerConfig = {
+          image = "ghcr.io/gethomepage/homepage:latest";
+          autoUpdate = "registry";
+          user = "2002:2002";
+          publishPorts = [ "3000:3000" ];
+          environments = {
+            "HOMEPAGE_ALLOWED_HOSTS" = "${config.networking.hostName}:3000";
+          };
+          volumes = [ "/srv/utils/homepage:/app/config" ];
+          healthCmd = "wget -O - -q -T 5 http://127.0.0.1:3000/api/healthcheck";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+      };
+    };
+    networks = {
+      socket-proxy.networkConfig.internal = true;
+      exposed.networkConfig = { 
+        subnets = [ "10.90.0.0/24" ];
+        ipRanges = [ "10.90.0.5-10.90.0.254" ];
+      };
+    };
+  };
+}
