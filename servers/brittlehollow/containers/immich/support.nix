@@ -1,21 +1,22 @@
-{config, pkgs, ...}:{
+{ config, pkgs, ... }: {
   virtualisation.quadlet = {
     containers = {
       immich-redis = {
         containerConfig = {
-        image = "docker.io/valkey/valkey:8-bookworm";
-        autoUpdate = "registry";
-        user = "2004:2004";
-        volumes = [ "/srv/immich/redis:/data" ];
-        networks = [ "immich.network" ];
-        healthCmd = "redis-cli ping";
-        healthStartupCmd = "sleep 10";
-        healthOnFailure = "kill";
+          image = "docker.io/valkey/valkey:8-bookworm";
+          autoUpdate = "registry";
+          user = "2004:2004";
+          volumes = [ "/srv/immich/redis:/data" ];
+          networks = [ "immich.network" ];
+          healthCmd = "redis-cli ping";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
         };
       };
       immich-postgres = {
         containerConfig = {
-          image = "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0";
+          image =
+            "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0";
           autoUpdate = "registry";
           user = "2004:2004";
           shmSize = "128mb";

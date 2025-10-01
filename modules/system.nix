@@ -29,7 +29,8 @@
   };
 
   # pam
-  sops.secrets."authorized-keys".sopsFile = "${inputs.nix-secrets}/secrets.yaml";
+  sops.secrets."authorized-keys".sopsFile =
+    "${inputs.nix-secrets}/secrets.yaml";
   security.pam = {
     sshAgentAuth = {
       enable = true;
@@ -64,7 +65,7 @@
       isNormalUser = true;
       extraGroups = [ "wheel" "systemd-journal" ];
       shell = pkgs.fish;
-      packages = with pkgs; [];
+      packages = with pkgs; [ ];
       uid = 1000;
       hashedPasswordFile = config.sops.secrets.nmclarty.path;
     };

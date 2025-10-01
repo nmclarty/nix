@@ -1,6 +1,9 @@
-{config, inputs, pkgs, ...}: {
+{ config, inputs, pkgs, ... }: {
   imports = [ ./config.nix ]; # traefik config
-  users = import "${inputs.self}/lib/createUser.nix" {name = "utils"; id = 2002;};
+  users = import "${inputs.self}/lib/createUser.nix" {
+    name = "utils";
+    id = 2002;
+  };
   networking.firewall.allowedTCPPorts = [ 80 443 ]; # public traefik ports
   virtualisation.quadlet = {
     containers = {
@@ -9,9 +12,14 @@
           image = "docker.io/library/traefik:v3";
           autoUpdate = "registry";
           user = "2002:2002";
-          environments = { CF_DNS_API_TOKEN_FILE = "/run/secrets/utils_traefik_token"; };
+          environments = {
+            CF_DNS_API_TOKEN_FILE = "/run/secrets/utils_traefik_token";
+          };
           secrets = [ "utils_traefik_token,uid=2002,gid=2002,mode=0400" ];
-          volumes = [ "/etc/config/traefik.yaml:/etc/traefik/traefik.yaml:ro" "/srv/utils/traefik:/data" ];
+          volumes = [
+            "/etc/config/traefik.yaml:/etc/traefik/traefik.yaml:ro"
+            "/srv/utils/traefik:/data"
+          ];
           sysctl."net.ipv4.ip_unprivileged_port_start" = "80";
           publishPorts = [ "80:80" "443:443" "8080:8080" ];
           networks = [ "socket-proxy" "exposed:ip=10.90.0.2" ];
@@ -70,7 +78,7 @@
     };
     networks = {
       socket-proxy.networkConfig.internal = true;
-      exposed.networkConfig = { 
+      exposed.networkConfig = {
         subnets = [ "10.90.0.0/24" ];
         ipRanges = [ "10.90.0.5-10.90.0.254" ];
       };

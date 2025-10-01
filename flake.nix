@@ -23,18 +23,18 @@
     nixosConfigurations = {
       brittlehollow = inputs.stable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = { 
+        specialArgs = {
           inherit inputs system;
-          pkgs-unstable = import inputs.unstable { inherit system; }; 
+          pkgs-unstable = import inputs.unstable { inherit system; };
         };
         modules = [ ./modules ./servers/brittlehollow ];
       };
 
       timberhearth = inputs.stable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = { 
+        specialArgs = {
           inherit inputs system;
-          pkgs-unstable = import inputs.unstable { inherit system; }; 
+          pkgs-unstable = import inputs.unstable { inherit system; };
         };
         modules = [ ./modules ./servers/timberhearth ];
       };

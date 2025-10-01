@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   environment.etc = {
     "config/traefik.yaml".text = ''
       global:
@@ -32,7 +32,7 @@
           exposedByDefault: false
           network: "exposed"
           defaultRule: "Host(`{{ normalize .ContainerName }}.${config.private.domain}`)"
-      
+
       api:
         dashboard: true
         insecure: true
@@ -45,7 +45,6 @@
             dnsChallenge:
               provider: cloudflare
     '';
-    "config/homepage.yaml".text = ''
-    '';
+    "config/homepage.yaml".text = "";
   };
 }

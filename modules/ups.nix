@@ -1,4 +1,4 @@
-{lib, config, inputs, ...}: {
+{ lib, config, inputs, ... }: {
   sops.secrets."nut/monuser".sopsFile = "${inputs.nix-secrets}/secrets.yaml";
   power.ups = {
     enable = true;

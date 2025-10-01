@@ -13,13 +13,14 @@
             MARIADB_ROOT_PASSWORD_FILE = "/run/secrets/minecraft_mariadb_root";
             MARIADB_PASSWORD_FILE = "/run/secrets/minecraft_mariadb_password";
           };
-          secrets = [ 
+          secrets = [
             "minecraft_mariadb_root,uid=2005,gid=2005,mode=0400"
             "minecraft_mariadb_password,uid=2005,gid=2005,mode=0400"
           ];
           volumes = [ "/srv/minecraft/mariadb:/var/lib/mysql" ];
           networks = [ "minecraft.network" ];
-          healthCmd = "healthcheck.sh --connect --mariadbupgrade --innodb_initialized";
+          healthCmd =
+            "healthcheck.sh --connect --mariadbupgrade --innodb_initialized";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
         };

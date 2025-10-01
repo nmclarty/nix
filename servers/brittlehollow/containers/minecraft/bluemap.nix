@@ -1,6 +1,6 @@
-{inputs, config, ... }:
+{ inputs, config, ... }:
 let
-  overworld = {key, name, sorting}: ''
+  overworld = { key, name, sorting }: ''
     world: "/worlds/${key}/world"
     dimension: "minecraft:overworld"
     name: "${name} Overworld"
@@ -25,7 +25,7 @@ let
     marker-sets: {}
   '';
 
-  nether = {key, name, sorting}: ''
+  nether = { key, name, sorting }: ''
     world: "/worlds/${key}/world_nether"
     dimension: "minecraft:the_nether"
     name: "${name} Nether"
@@ -58,7 +58,7 @@ let
     marker-sets: {}
   '';
 
-  end = {key, name, sorting}: ''
+  end = { key, name, sorting }: ''
     world: "/worlds/${key}/world_the_end"
     dimension: "minecraft:the_end"
     name: "${name} End"
@@ -82,8 +82,7 @@ let
     ignore-missing-light-data: false
     marker-sets: {}
   '';
-in
-{
+in {
   # all files must not be symlinks otherwise the container can't access them.
   environment.etc = {
     "config/bluemap/core.conf" = {
@@ -140,29 +139,53 @@ in
     # survival world
     "config/bluemap/maps/survival_overworld.conf" = {
       mode = "0644";
-      text = overworld { key = "survival"; name = "Survival"; sorting = 0; };
+      text = overworld {
+        key = "survival";
+        name = "Survival";
+        sorting = 0;
+      };
     };
     "config/bluemap/maps/survival_nether.conf" = {
       mode = "0644";
-      text = nether { key = "survival"; name = "Survival"; sorting = 10; };
+      text = nether {
+        key = "survival";
+        name = "Survival";
+        sorting = 10;
+      };
     };
     "config/bluemap/maps/survival_end.conf" = {
       mode = "0644";
-      text = end { key = "survival"; name = "Survival"; sorting = 20; };
+      text = end {
+        key = "survival";
+        name = "Survival";
+        sorting = 20;
+      };
     };
 
     # creative world
     "config/bluemap/maps/creative_overworld.conf" = {
       mode = "0644";
-      text = overworld { key = "creative"; name = "Creative"; sorting = 1; };
+      text = overworld {
+        key = "creative";
+        name = "Creative";
+        sorting = 1;
+      };
     };
     "config/bluemap/maps/creative_nether.conf" = {
       mode = "0644";
-      text = nether { key = "creative"; name = "Creative"; sorting = 11; };
+      text = nether {
+        key = "creative";
+        name = "Creative";
+        sorting = 11;
+      };
     };
     "config/bluemap/maps/creative_end.conf" = {
       mode = "0644";
-      text = end { key = "creative"; name = "Creative"; sorting = 21; };
+      text = end {
+        key = "creative";
+        name = "Creative";
+        sorting = 21;
+      };
     };
 
     # these are just here so bluemap doesn't complain about missing files
@@ -173,7 +196,8 @@ in
   };
 
   sops.secrets."minecraft/mariadb/password" = {
-    sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+    sopsFile =
+      "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
     key = "minecraft/mariadb/password";
   };
   sops.templates."minecraft/bluemap/sql.conf" = {
@@ -206,15 +230,17 @@ in
             "/srv/minecraft/bluemap/web:/app/web"
             "/srv/minecraft/bluemap/data:/app/data"
             "/srv/minecraft/bluemap/mariadb-java-client-3.4.1.jar:/app/mariadb-java-client.jar:ro"
-            "${config.sops.templates."minecraft/bluemap/sql.conf".path}:/app/config/storages/sql.conf:ro"
+            "${
+              config.sops.templates."minecraft/bluemap/sql.conf".path
+            }:/app/config/storages/sql.conf:ro"
             # worlds
             "/srv/minecraft/survival:/worlds/survival:ro"
             "/srv/minecraft/creative:/worlds/creative:ro"
           ];
           networks = [ "minecraft.network" "exposed.network" ];
-          labels = { 
-            "traefik.enable" = "true"; 
-            "traefik.http.services.bluemap.loadbalancer.server.port" = "8100"; 
+          labels = {
+            "traefik.enable" = "true";
+            "traefik.http.services.bluemap.loadbalancer.server.port" = "8100";
           };
           healthCmd = "wget -O /dev/null -q -T 5 http://127.0.0.1:8100";
           healthStartupCmd = "sleep 10";

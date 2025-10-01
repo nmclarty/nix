@@ -1,10 +1,10 @@
-{config, pkgs, lib, ...}: {
+{ config, pkgs, lib, ... }: {
   sops.secrets = {
-    "restic/password" = {};
-    "restic/local/access" = {};
-    "restic/local/secret" = {};
-    "restic/remote/access" = {};
-    "restic/remote/secret" = {};
+    "restic/password" = { };
+    "restic/local/access" = { };
+    "restic/local/secret" = { };
+    "restic/remote/access" = { };
+    "restic/remote/secret" = { };
   };
   sops.templates."restic/profiles.toml" = {
     path = "/etc/resticprofile/profiles.toml";
@@ -34,21 +34,35 @@
         repository = "s3:${config.private.restic.local.host}/${config.networking.hostName}-restic"
       [local.env]
         AWS_ACCESS_KEY_ID = "${config.sops.placeholder."restic/local/access"}"
-        AWS_SECRET_ACCESS_KEY = "${config.sops.placeholder."restic/local/secret"}"
+        AWS_SECRET_ACCESS_KEY = "${
+          config.sops.placeholder."restic/local/secret"
+        }"
 
       [remote]
         inherit = "template"
         repository = "s3:${config.private.restic.remote.host}/${config.networking.hostName}-restic"
       [remote.env]
         AWS_ACCESS_KEY_ID = "${config.sops.placeholder."restic/remote/access"}"
-        AWS_SECRET_ACCESS_KEY = "${config.sops.placeholder."restic/remote/secret"}"
-      '';
+        AWS_SECRET_ACCESS_KEY = "${
+          config.sops.placeholder."restic/remote/secret"
+        }"
+    '';
   };
-  systemd.services.backup = let services = lib.concatStringsSep " " (builtins.attrNames config.virtualisation.quadlet.containers); in {
+  systemd.services.backup = let
+    services = lib.concatStringsSep " "
+      (builtins.attrNames config.virtualisation.quadlet.containers);
+  in {
     description = "Snapshot disks and backup using restic";
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
-    path = [ pkgs.systemd pkgs.coreutils pkgs.moreutils pkgs.util-linux pkgs.zfs pkgs.resticprofile ];
+    path = [
+      pkgs.systemd
+      pkgs.coreutils
+      pkgs.moreutils
+      pkgs.util-linux
+      pkgs.zfs
+      pkgs.resticprofile
+    ];
     serviceConfig.AllowedCPUs = "12-19";
     script = ''
       function cleanup {

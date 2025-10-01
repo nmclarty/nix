@@ -1,4 +1,4 @@
-{config, ...}:{
+{ config, ... }: {
   environment.etc = {
     "config/immich.json".text = ''
       {

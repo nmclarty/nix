@@ -1,9 +1,13 @@
-{config, inputs, ...}: {
+{ config, inputs, ... }: {
   imports = [ ./support.nix ./bluemap.nix ];
-  users = import "${inputs.self}/lib/createUser.nix" {name = "minecraft"; id = 2005;};
+  users = import "${inputs.self}/lib/createUser.nix" {
+    name = "minecraft";
+    id = 2005;
+  };
 
   sops.secrets."minecraft/velocity/secret" = {
-    sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+    sopsFile =
+      "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
     key = "minecraft/velocity/secret";
   };
   sops.templates."minecraft/gate/config.yaml" = {
@@ -24,7 +28,9 @@
           showMaxPlayers: 20
         forwarding:
           mode: velocity
-          velocitySecret: '${config.sops.placeholder."minecraft/velocity/secret"}'
+          velocitySecret: '${
+            config.sops.placeholder."minecraft/velocity/secret"
+          }'
     '';
   };
   virtualisation.quadlet = {
@@ -34,7 +40,11 @@
           image = "ghcr.io/minekube/gate:latest";
           autoUpdate = "registry";
           user = "2005:2005";
-          volumes = [ "${config.sops.templates."minecraft/gate/config.yaml".path}:/config.yaml:ro" ];
+          volumes = [
+            "${
+              config.sops.templates."minecraft/gate/config.yaml".path
+            }:/config.yaml:ro"
+          ];
           networks = [ "minecraft.network" ];
           publishPorts = [ "25565:25565" ];
         };
@@ -79,8 +89,6 @@
       };
 
     };
-    networks = {
-      minecraft = {};
-    };
+    networks = { minecraft = { }; };
   };
 }

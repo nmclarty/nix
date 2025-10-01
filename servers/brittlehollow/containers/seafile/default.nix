@@ -1,7 +1,10 @@
-{config, inputs, ...}: {
-  imports = [ ./support.nix  ]; # mariadb and memcached
-  users = import "${inputs.self}/lib/createUser.nix" { name = "seafile"; id = 2003; };
-  virtualisation.quadlet = { 
+{ config, inputs, ... }: {
+  imports = [ ./support.nix ]; # mariadb and memcached
+  users = import "${inputs.self}/lib/createUser.nix" {
+    name = "seafile";
+    id = 2003;
+  };
+  virtualisation.quadlet = {
     containers = {
       seafile = {
         containerConfig = {
@@ -42,8 +45,6 @@
         };
       };
     };
-    networks = {
-      seafile = {};
-    };
+    networks = { seafile = { }; };
   };
 }

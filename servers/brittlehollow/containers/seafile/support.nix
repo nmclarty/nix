@@ -1,4 +1,4 @@
-{config, pkgs, ...}:{
+{ config, pkgs, ... }: {
   virtualisation.quadlet = {
     containers = {
       seafile-mariadb = {
@@ -13,7 +13,8 @@
           secrets = [ "seafile_mariadb_root,uid=2003,gid=2003,mode=0400" ];
           volumes = [ "/srv/seafile/mariadb:/var/lib/mysql" ];
           networks = [ "seafile.network" ];
-          healthCmd = "healthcheck.sh --connect --mariadbupgrade --innodb_initialized";
+          healthCmd =
+            "healthcheck.sh --connect --mariadbupgrade --innodb_initialized";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
         };

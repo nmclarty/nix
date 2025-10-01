@@ -1,7 +1,10 @@
-{config, inputs, ...}: {
+{ config, inputs, ... }: {
   imports = [ ./support.nix ./config.nix ]; # redis, postgres, and config
-  users = import "${inputs.self}/lib/createUser.nix" { name = "immich"; id = 2004; }; # immich user
-  virtualisation.quadlet = { 
+  users = import "${inputs.self}/lib/createUser.nix" {
+    name = "immich";
+    id = 2004;
+  }; # immich user
+  virtualisation.quadlet = {
     containers = {
       immich = {
         containerConfig = {
@@ -16,7 +19,10 @@
           };
           secrets = [ "immich_postgres_password,uid=2004,gid=2004,mode=0400" ];
           devices = [ "/dev/dri:/dev/dri" ];
-          volumes = [ "/srv/immich/library:/data" "/etc/config/immich.json:/etc/immich/immich.json:ro" ];
+          volumes = [
+            "/srv/immich/library:/data"
+            "/etc/config/immich.json:/etc/immich/immich.json:ro"
+          ];
           networks = [ "immich.network" "exposed.network" ];
           labels = { "traefik.enable" = "true"; };
           healthCmd = "curl -fs http://127.0.0.1:2283/api/server/ping";
@@ -35,7 +41,8 @@
           userns = "auto:uidmapping=0:2004:1,gidmapping=0:2004:1";
           podmanArgs = [ "--device-cgroup-rule=c 189:* rmw" ];
           devices = [ "/dev/dri:/dev/dri" ];
-          volumes = [ "/dev/bus/usb:/dev/bus/usb" "immich-learning-cache:/cache" ];
+          volumes =
+            [ "/dev/bus/usb:/dev/bus/usb" "immich-learning-cache:/cache" ];
           networks = [ "immich.network" ];
           healthCmd = "bash -c 'echo -n > /dev/tcp/127.0.0.1/3003'";
           healthStartupCmd = "sleep 10";
@@ -44,8 +51,6 @@
         serviceConfig.AllowedCPUs = "12-19";
       };
     };
-    networks = {
-      immich = {};
-    };
+    networks = { immich = { }; };
   };
 }

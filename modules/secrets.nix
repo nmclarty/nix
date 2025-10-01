@@ -1,6 +1,7 @@
-{config, inputs, ... }: {
+{ config, inputs, ... }: {
   sops = {
-    defaultSopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
+    defaultSopsFile =
+      "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
     log = [ "secretChanges" ];
     age = {
       generateKey = true;

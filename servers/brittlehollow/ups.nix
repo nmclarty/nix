@@ -1,16 +1,15 @@
-{config, inputs, ...}: {
+{ config, inputs, ... }: {
   networking.firewall.allowedTCPPorts = [ 3493 ];
-  sops.secrets."nut/admin".sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
+  sops.secrets."nut/admin".sopsFile =
+    "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
   power.ups = {
     mode = "netserver"; # override the default mode
-    upsd.listen = [
-      { address = "0.0.0.0"; }
-    ];
+    upsd.listen = [{ address = "0.0.0.0"; }];
     ups.primary = {
       driver = "usbhid-ups";
       port = "auto";
       description = "Cyberpower UPS - All servers";
-      directives = ["pollfreq = 5" "productid = 0601"];
+      directives = [ "pollfreq = 5" "productid = 0601" ];
     };
     ups.ups = {
       driver = "dummy-ups";
@@ -20,8 +19,8 @@
     # admin user for full access
     users.admin = {
       passwordFile = config.sops.secrets."nut/admin".path;
-      actions = ["SET" "FSD"];
-      instcmds = ["ALL"];
+      actions = [ "SET" "FSD" ];
+      instcmds = [ "ALL" ];
       upsmon = "primary";
     };
     # override the default monitor settings
