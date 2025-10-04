@@ -38,7 +38,8 @@
         set -gx NIXOS_CONFIG ~/nix/
       end
 
-      if status --is-login
+      if not set -q FISH_INITIALIZED
+        set -gx FISH_INITIALIZED 1
         fix_ssh_auth_sock
         env_vars
         cat /run/motd 2>/dev/null | head -n -1 || true

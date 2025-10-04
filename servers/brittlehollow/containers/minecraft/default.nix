@@ -4,46 +4,71 @@
     name = "minecraft";
     id = 2005;
   };
-
-  sops.secrets."minecraft/velocity/secret" = {
-    sopsFile =
-      "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
-    key = "minecraft/velocity/secret";
-  };
-  sops.templates."minecraft/gate/config.yaml" = {
-    restartUnits = [ "gate.service" ];
+  sops.templates."minecraft/velocity/velocity.toml" = {
+    restartUnits = [ "velocity.service" ];
     owner = "minecraft";
     content = ''
-      config:
-        bind: 0.0.0.0:25565
-        servers:
-          survival: minecraft-survival:25565
-          creative: minecraft-creative:25565
-        try:
-          - survival
-          - creative
-        status:
-          motd : |
-            hello from brittlehollow
-          showMaxPlayers: 20
-        forwarding:
-          mode: velocity
-          velocitySecret: '${
-            config.sops.placeholder."minecraft/velocity/secret"
-          }'
+      config-version = "2.7"
+      bind = "0.0.0.0:25565"
+      motd = "<green><b>the earth says hello!</b></green>\nsurvival | creative"
+      show-max-players = 20
+      online-mode = true
+      force-key-authentication = true
+      prevent-client-proxy-connections = false
+      player-info-forwarding-mode = "modern"
+      forwarding-secret-file = "/run/secrets/minecraft_velocity_secret"
+      announce-forge = false
+      kick-existing-players = false
+      ping-passthrough = "none"
+      enable-player-address-logging = true
+
+      [servers]
+      survival = "minecraft-survival:25565"
+      creative = "minecraft-creative:25565"
+      try = [ "survival", "creative" ]
+
+      [forced-hosts]
+      "survival.obsidiantech.ca" = [ "survival" ]
+      "creative.obsidiantech.ca" = [ "creative" ]
+
+      [advanced]
+      compression-threshold = 256
+      compression-level = -1
+      login-ratelimit = 3000
+      connection-timeout = 5000
+      read-timeout = 30000
+      haproxy-protocol = false
+      tcp-fast-open = false
+      bungee-plugin-message-channel = true
+      show-ping-requests = false
+      failover-on-unexpected-server-disconnect = true
+      announce-proxy-commands = true
+      log-command-executions = false
+      log-player-connections = true
+      accepts-transfers = false
+
+      [query]
+      enabled = false
+      port = 25577
+      map = "Velocity"
+      show-plugins = false
     '';
   };
+
   virtualisation.quadlet = {
     containers = {
-      gate = {
+      velocity = {
         containerConfig = {
-          image = "ghcr.io/minekube/gate:latest";
+          image = "docker.io/itzg/mc-proxy:stable";
           autoUpdate = "registry";
           user = "2005:2005";
-          volumes = [
-            "${
-              config.sops.templates."minecraft/gate/config.yaml".path
-            }:/config.yaml:ro"
+          environments = {
+            TYPE = "VELOCITY";
+          };
+          secrets = [ "minecraft_velocity_secret,uid=2005,gid=2005,mode=0400" ];
+          volumes = [ 
+            "/srv/minecraft/velocity:/server"
+            "${config.sops.templates."minecraft/velocity/velocity.toml".path}:/server/velocity.toml:ro"
           ];
           networks = [ "minecraft.network" ];
           publishPorts = [ "25565:25565" ];
@@ -82,6 +107,28 @@
           };
           volumes = [ "/srv/minecraft/creative:/data" ];
           networks = [ "minecraft.network" ];
+          healthCmd = "mc-health";
+          healthStartupCmd = "sleep 30";
+          healthOnFailure = "kill";
+        };
+      };
+
+      minecraft-biomes = {
+        containerConfig = {
+          image = "docker.io/itzg/minecraft-server:stable";
+          autoUpdate = "registry";
+          user = "2005:2005";
+          environments = {
+            EULA = "TRUE";
+            TYPE = "FORGE";
+            VERSION = "1.20.1";
+            FORGE_VERSION = "47.4.9";
+            INIT_MEMORY = "2G";
+            MAX_MEMORY = "8G";
+          };
+          volumes = [ "/srv/minecraft/biomes:/data" ];
+          networks = [ "minecraft.network" ];
+          publishPorts = [ "25566:25565" ];
           healthCmd = "mc-health";
           healthStartupCmd = "sleep 30";
           healthOnFailure = "kill";
