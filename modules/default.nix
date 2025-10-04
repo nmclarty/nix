@@ -7,5 +7,6 @@
     ./ups.nix
     ./flakes.nix
     ./secrets.nix
+    ./motd.nix
   ];
 }

@@ -38,8 +38,11 @@
         set -gx NIXOS_CONFIG ~/nix/
       end
 
-      fix_ssh_auth_sock
-      env_vars
+      if status --is-login
+        fix_ssh_auth_sock
+        env_vars
+        cat /run/motd 2>/dev/null | head -n -1 || true
+      end
     '';
   };
   programs.nix-ld.enable = true;
