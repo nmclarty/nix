@@ -38,10 +38,10 @@
         set -gx NIXOS_CONFIG ~/nix/
       end
 
-      if not set -q FISH_INITIALIZED
-        set -gx FISH_INITIALIZED 1
-        fix_ssh_auth_sock
-        env_vars
+      fix_ssh_auth_sock
+      env_vars
+      if not set -q MOTD_DISPLAYED
+        set -gx MOTD_DISPLAYED 1
         cat /run/motd 2>/dev/null | head -n -1 || true
       end
     '';
@@ -49,6 +49,7 @@
   programs.nix-ld.enable = true;
 
   # services
+  systemd.services.tailscaled.serviceConfig.LogLevelMax = "notice";
   services.tailscale = {
     enable = true;
     openFirewall = true;

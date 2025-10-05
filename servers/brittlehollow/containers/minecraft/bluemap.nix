@@ -25,8 +25,8 @@ let
     marker-sets: {}
   '';
 
-  nether = { key, name, sorting }: ''
-    world: "/worlds/${key}/world_nether"
+  nether = { key, name, sorting, isPaper ? true }: ''
+    world: "/worlds/${key}/world${if isPaper then "_nether" else ""}"
     dimension: "minecraft:the_nether"
     name: "${name} Nether"
     sorting: ${toString sorting}
@@ -58,8 +58,8 @@ let
     marker-sets: {}
   '';
 
-  end = { key, name, sorting }: ''
-    world: "/worlds/${key}/world_the_end"
+  end = { key, name, sorting, isPaper ? true }: ''
+    world: "/worlds/${key}/world${if isPaper then "_the_end" else ""}"
     dimension: "minecraft:the_end"
     name: "${name} End"
     sorting: ${toString sorting}
@@ -188,6 +188,34 @@ in {
       };
     };
 
+    # biomes world
+    "config/bluemap/maps/biomes_overworld.conf" = {
+      mode = "0644";
+      text = overworld {
+        key = "biomes";
+        name = "Biomes";
+        sorting = 2;
+      };
+    };
+    "config/bluemap/maps/biomes_nether.conf" = {
+      mode = "0644";
+      text = nether {
+        key = "biomes";
+        name = "Biomes";
+        sorting = 12;
+        isPaper = false;
+      };
+    };
+    "config/bluemap/maps/biomes_end.conf" = {
+      mode = "0644";
+      text = end {
+        key = "biomes";
+        name = "Biomes";
+        sorting = 22;
+        isPaper = false;
+      };
+    };
+
     # these are just here so bluemap doesn't complain about missing files
     "config/bluemap/packs/empty.txt" = {
       mode = "0644";
@@ -236,6 +264,7 @@ in {
             # worlds
             "/srv/minecraft/survival:/worlds/survival:ro"
             "/srv/minecraft/creative:/worlds/creative:ro"
+            "/srv/minecraft/biomes:/worlds/biomes:ro"
           ];
           networks = [ "minecraft.network" "exposed.network" ];
           labels = {

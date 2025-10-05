@@ -19,7 +19,7 @@
       forwarding-secret-file = "/run/secrets/minecraft_velocity_secret"
       announce-forge = false
       kick-existing-players = false
-      ping-passthrough = "none"
+      ping-passthrough = "disabled"
       enable-player-address-logging = true
 
       [servers]
