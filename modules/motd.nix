@@ -41,12 +41,12 @@ let
       return now - then
 
     statuses = map(get_status, profiles)
-    bools = ["Failure", "Success"]
+    status_labels = ["Failure", "Success"]
 
     print("Backup status:")
     for status in statuses:
       time_ago = diff(status["time"])
-      print(f'  {status["profile"]}: ({bools[status["success"]]}) {str(time_ago)[:-7]} ago')
+      print(f'  {status["profile"]}: ({status_labels[status["success"]]}) {str(time_ago)[:-7]} ago')
   '';
 in 
 {
