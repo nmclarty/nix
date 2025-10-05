@@ -15,6 +15,7 @@
         initialize = "true"
         cache-dir = "/var/cache/restic"
         cleanup-cache = "true"
+        extended-status = "true"
         pack-size = "64"
         password-file = "${config.sops.secrets."restic/password".path}"
         [template.backup]
@@ -32,6 +33,7 @@
       [local]
         inherit = "template"
         repository = "s3:${config.private.restic.local.host}/${config.networking.hostName}-restic"
+        status-file = "/var/lib/resticprofile/local.status"
       [local.env]
         AWS_ACCESS_KEY_ID = "${config.sops.placeholder."restic/local/access"}"
         AWS_SECRET_ACCESS_KEY = "${
@@ -41,6 +43,7 @@
       [remote]
         inherit = "template"
         repository = "s3:${config.private.restic.remote.host}/${config.networking.hostName}-restic"
+        status-file = "/var/lib/resticprofile/remote.status"
       [remote.env]
         AWS_ACCESS_KEY_ID = "${config.sops.placeholder."restic/remote/access"}"
         AWS_SECRET_ACCESS_KEY = "${
@@ -78,13 +81,18 @@
         echo "Mounting snapshots in '/.backup'..."
         parallel -i mount -m -t zfs $1/{}@backup /.backup/{} -- $(cut -d "/" -f 2 <<< "$volumes")
       }
+      function createDirs {
+        mkdir -p /.backup
+        mkdir -p /var/lib/resticprofile
+      }
 
       set -euo pipefail
+      createDirs
       systemctl stop ${services}
       cleanup zroot
       snapshot zroot
       systemctl start ${services}
-      parallel -i resticprofile {}.backup -q -- local remote
+      parallel -i resticprofile {}.backup -- local remote
       cleanup zroot
     '';
   };
