@@ -76,7 +76,7 @@ in
       progress-empty-character "-"
     }
     components {
-      command "hostname | figlet | lolcat -f | head -n -1"
+      command "hostname | figlet | lolcat -f"
       uptime prefix="Uptime:"
       load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
       memory swap-pos="below"

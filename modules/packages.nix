@@ -4,7 +4,7 @@
 
   # packages
   environment.systemPackages = with pkgs; [
-    btop
+    pkgs-unstable.btop
     gdu
     micro
     git
@@ -16,9 +16,9 @@
     yq-go
     difftastic
     openssl
-    gcc
     jq
     sops
+    nh
   ];
 
   # programs
@@ -42,7 +42,7 @@
       env_vars
       if not set -q MOTD_DISPLAYED
         set -gx MOTD_DISPLAYED 1
-        cat /run/motd 2>/dev/null | head -n -1 || true
+        cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
       end
     '';
   };
