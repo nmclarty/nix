@@ -76,6 +76,7 @@
       };
 
       minecraft-survival = {
+        autoStart = false;
         containerConfig = {
           image = "docker.io/itzg/minecraft-server:stable";
           autoUpdate = "registry";
@@ -95,6 +96,7 @@
       };
 
       minecraft-creative = {
+        autoStart = false;
         containerConfig = {
           image = "docker.io/itzg/minecraft-server:stable";
           autoUpdate = "registry";
@@ -114,6 +116,7 @@
       };
 
       minecraft-biomes = {
+        autoStart = false;
         containerConfig = {
           image = "docker.io/itzg/minecraft-server:stable";
           autoUpdate = "registry";

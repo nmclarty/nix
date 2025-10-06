@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, pkgs-unstable, lib, ... }: {
   sops.secrets = {
     "restic/password" = { };
     "restic/local/access" = { };
@@ -58,13 +58,15 @@
     description = "Snapshot disks and backup using restic";
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
-    path = [
-      pkgs.systemd
-      pkgs.coreutils
-      pkgs.moreutils
-      pkgs.util-linux
-      pkgs.zfs
-      pkgs.resticprofile
+    path = with pkgs; [
+      systemd
+      coreutils
+      moreutils
+      util-linux
+      zfs
+      resticprofile
+      pkgs-unstable.podman
+      jq
     ];
     serviceConfig.AllowedCPUs = "12-19";
     script = ''
@@ -85,13 +87,18 @@
         mkdir -p /.backup
         mkdir -p /var/lib/resticprofile
       }
+      function getRunningContainers {
+        podman quadlet list --format json | \
+          jq -r "map(select((.Name | contains(\".container\")) and .Status == \"active/running\")) | .[].UnitName"
+      }
 
       set -euo pipefail
       createDirs
-      systemctl stop ${services}
+      containers=$(getRunningContainers)
+      systemctl stop $containers
       cleanup zroot
       snapshot zroot
-      systemctl start ${services}
+      systemctl start $containers
       parallel -i resticprofile {}.backup -- local remote
       cleanup zroot
     '';
