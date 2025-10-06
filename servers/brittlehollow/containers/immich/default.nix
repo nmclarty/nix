@@ -16,6 +16,7 @@
             REDIS_HOSTNAME = "immich-redis";
             DB_HOSTNAME = "immich-postgres";
             IMMICH_CONFIG_FILE = "/etc/immich/immich.json";
+            IMMICH_WORKERS_INCLUDE = "api";
           };
           secrets = [ "immich_postgres_password,uid=2004,gid=2004,mode=0400" ];
           devices = [ "/dev/dri:/dev/dri" ];
@@ -30,10 +31,41 @@
           healthOnFailure = "kill";
         };
         unitConfig = {
-          Requires = [ "immich-redis.service" "immich-postgres.service" ];
-          After = [ "immich-redis.service" "immich-postgres.service" ];
+          Requires = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" "immich-microservices.service" ];
+          After = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" "immich-microservices.service" ];
         };
       };
+
+      immich-microservices = {
+        containerConfig = {
+          image = "ghcr.io/immich-app/immich-server:release";
+          autoUpdate = "registry";
+          user = "2004:2004";
+          environments = {
+            DB_PASSWORD_FILE = "/run/secrets/immich_postgres_password";
+            REDIS_HOSTNAME = "immich-redis";
+            DB_HOSTNAME = "immich-postgres";
+            IMMICH_CONFIG_FILE = "/etc/immich/immich.json";
+            IMMICH_WORKERS_EXCLUDE = "api";
+          };
+          secrets = [ "immich_postgres_password,uid=2004,gid=2004,mode=0400" ];
+          devices = [ "/dev/dri:/dev/dri" ];
+          volumes = [
+            "/srv/immich/library:/data"
+            "/etc/config/immich.json:/etc/immich/immich.json:ro"
+          ];
+          networks = [ "immich.network" ];
+          healthCmd = "true";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+        unitConfig = {
+          Requires = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" ];
+          After = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" ];
+        };
+        serviceConfig.AllowedCPUs = "12-19";
+      };
+
       immich-learning = {
         containerConfig = {
           image = "ghcr.io/immich-app/immich-machine-learning:release-openvino";

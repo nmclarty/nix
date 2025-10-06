@@ -80,7 +80,7 @@
           },
           "duplicateDetection": {
             "enabled": true,
-            "maxDistance": 0.01
+            "maxDistance": 0.001
           },
           "facialRecognition": {
             "enabled": true,
