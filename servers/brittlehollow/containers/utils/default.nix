@@ -32,6 +32,7 @@
           After = [ "socket-proxy.service" ];
         };
       };
+
       socket-proxy = {
         containerConfig = {
           image = "lscr.io/linuxserver/socket-proxy:latest";
@@ -49,6 +50,7 @@
           healthOnFailure = "kill";
         };
       };
+
       speed = {
         containerConfig = {
           image = "docker.io/openspeedtest/latest:latest";
@@ -60,6 +62,7 @@
           healthOnFailure = "kill";
         };
       };
+
       homepage = {
         containerConfig = {
           image = "ghcr.io/gethomepage/homepage:latest";
@@ -71,6 +74,30 @@
           };
           volumes = [ "/srv/utils/homepage:/app/config" ];
           healthCmd = "wget -O - -q -T 5 http://127.0.0.1:3000/api/healthcheck";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+      };
+
+      pocket = {
+        containerConfig = {
+          image = "ghcr.io/pocket-id/pocket-id:v1";
+          autoUpdate = "registry";
+          user = "2002:2002";
+          environments = {
+            APP_URL = "https://pocket.${config.private.domain}";
+            TRUST_PROXY = "true";
+            MAXMIND_LICENSE_KEY_FILE = "/run/secrets/utils_pocket_maxmind";
+            ENCRYPTION_KEY_FILE = "/run/secrets/utils_pocket_encryption";
+          };
+          secrets = [
+            "utils_pocket_maxmind,uid=2002,gid=2002,mode=0400"
+            "utils_pocket_encryption,uid=2002,gid=2002,mode=0400"
+          ];
+          volumes = [ "/srv/utils/pocket:/app/data" ];
+          networks = [ "exposed.network" ];
+          labels = { "traefik.enable" = "true"; };
+          healthCmd = "/app/pocket-id healthcheck";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
         };

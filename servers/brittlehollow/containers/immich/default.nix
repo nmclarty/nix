@@ -22,7 +22,7 @@
           devices = [ "/dev/dri:/dev/dri" ];
           volumes = [
             "/srv/immich/library:/data"
-            "/etc/config/immich.json:/etc/immich/immich.json:ro"
+            "${config.sops.templates."immich/config.json".path}:/etc/immich/immich.json:ro"
           ];
           networks = [ "immich.network" "exposed.network" ];
           labels = { "traefik.enable" = "true"; };
@@ -52,7 +52,7 @@
           devices = [ "/dev/dri:/dev/dri" ];
           volumes = [
             "/srv/immich/library:/data"
-            "/etc/config/immich.json:/etc/immich/immich.json:ro"
+            "${config.sops.templates."immich/config.json".path}:/etc/immich/immich.json:ro"
           ];
           networks = [ "immich.network" ];
           healthCmd = "true";
