@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, inputs, ... }: {
   sops = {
     secrets = {
       "immich/pocket/client" = {
@@ -11,7 +11,7 @@
       };
     };
     templates."immich/config.json" = {
-      restartunits = [ "immich.service" "immich-microservices.service" ];
+      restartUnits = [ "immich.service" "immich-microservices.service" ];
       owner = "immich";
       content = ''
         {
@@ -117,24 +117,24 @@
             }
           },
           "oauth": {
-            "autoLaunch": false,
-            "autoRegister": true,
-            "buttonText": "Login with OAuth",
-            "clientId": "",
-            "clientSecret": "",
-            "defaultStorageQuota": null,
-            "enabled": false,
-            "issuerUrl": "",
-            "mobileOverrideEnabled": false,
-            "mobileRedirectUri": "",
+            "enabled": true,
+            "issuerUrl": "https://pocket.${config.private.domain}",
+            "clientId": "${config.sops.placeholder."immich/pocket/client"}",
+            "clientSecret": "${config.sops.placeholder."immich/pocket/secret"}",
             "scope": "openid email profile",
             "signingAlgorithm": "RS256",
-            "profileSigningAlgorithm": "none",
             "storageLabelClaim": "preferred_username",
-            "storageQuotaClaim": "immich_quota"
+            "storageQuotaClaim": "immich_quota",
+            "defaultStorageQuota": null,
+            "buttonText": "Login with Pocket ID",
+            "autoRegister": true,
+            "autoLaunch": true,
+            "mobileOverrideEnabled": false,
+            "mobileRedirectUri": "",
+            "profileSigningAlgorithm": "none",
           },
           "passwordLogin": {
-            "enabled": true
+            "enabled": false
           },
           "storageTemplate": {
             "enabled": true,
