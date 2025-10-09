@@ -30,10 +30,7 @@
           driver = "shell";
           opts = {
             list = "true";
-            lookup = ''
-              yq .$(yq -r ".idToName.$SECRET_ID" /var/lib/containers/storage/secrets/secrets.json | tr '_' '.') ${
-                config.sops.secrets."podman.yaml".path
-              }'';
+            lookup = ''printf $(yq .$(yq -r ".idToName.$SECRET_ID" /var/lib/containers/storage/secrets/secrets.json | tr '_' '.') ${config.sops.secrets."podman.yaml".path})'';
             store = "true";
             delete = "true";
           };

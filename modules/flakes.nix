@@ -6,5 +6,8 @@
     nix-private.nixosModules.private
   ];
   services.nixos-cli = { enable = true; };
-  private.enable = true;
+  private = {
+    enable = true;
+    containers.enable = true;
+  };
 }
