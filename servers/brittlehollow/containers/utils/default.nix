@@ -56,7 +56,10 @@
           image = "docker.io/openspeedtest/latest:latest";
           autoUpdate = "registry";
           networks = [ "exposed.network" ];
-          labels = { "traefik.enable" = "true"; };
+          labels = { 
+            "traefik.enable" = "true";
+            "traefik.http.routers.speed.middlewares" = "tinyauth";
+          };
           healthCmd = "wget --spider -T 5 http://127.0.0.1:3000";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
@@ -102,6 +105,36 @@
           healthOnFailure = "kill";
         };
       };
+
+      tinyauth = {
+        containerConfig = {
+          image = "ghcr.io/steveiliop56/tinyauth:v4";
+          autoUpdate = "registry";
+          user = "2002:2002";
+          environments = {
+            # general
+            APP_URL = "https://tinyauth.${config.private.domain}";
+            OAUTH_AUTO_REDIRECT = "pocketid";
+            # pocket-id oauth
+            PROVIDERS_POCKETID_CLIENT_SECRET_FILE = "/run/secrets/utils_tinyauth_secret";
+            PROVIDERS_POCKETID_AUTH_URL = "https://pocket.${config.private.domain}/authorize";
+            PROVIDERS_POCKETID_TOKEN_URL = "https://pocket.${config.private.domain}/api/oidc/token";
+            PROVIDERS_POCKETID_USER_INFO_URL = "https://pocket.${config.private.domain}/api/oidc/userinfo";
+            PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
+            PROVIDERS_POCKETID_NAME="Pocket ID";
+          };
+          secrets = [
+            "utils_tinyauth_client,type=env,target=PROVIDERS_POCKETID_CLIENT_ID"
+            "utils_tinyauth_secret,uid=2002,gid=2002,mode=0400"
+          ];
+          networks = [ "exposed.network" ];
+          labels = {
+            "traefik.enable" = "true";
+            "traefik.http.middlewares.tinyauth.forwardauth.address" = "http://tinyauth:3000/api/auth/traefik";
+          };
+        };
+      };
+
     };
     networks = {
       socket-proxy.networkConfig.internal = true;
