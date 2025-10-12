@@ -1,1 +1,8 @@
-{ imports = [ ./immich ./utils ./seafile ./minecraft ]; }
+{ 
+  imports = [
+  ./immich
+  ./utils
+  ./minecraft
+  ./storage
+  ];
+}
