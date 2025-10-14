@@ -60,7 +60,10 @@
   };
   users = {
     mutableUsers = false;
-    users.root.hashedPasswordFile = config.sops.secrets.root.path;
+    users.root = {
+      shell = pkgs.fish;
+      hashedPasswordFile = config.sops.secrets.root.path;
+    };
     users.nmclarty = {
       isNormalUser = true;
       extraGroups = [ "wheel" "systemd-journal" ];

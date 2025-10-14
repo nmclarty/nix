@@ -56,10 +56,7 @@
           image = "docker.io/openspeedtest/latest:latest";
           autoUpdate = "registry";
           networks = [ "exposed.network" ];
-          labels = { 
-            "traefik.enable" = "true";
-            "traefik.http.routers.speed.middlewares" = "tinyauth";
-          };
+          labels = { "traefik.enable" = "true"; };
           healthCmd = "wget --spider -T 5 http://127.0.0.1:3000";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";

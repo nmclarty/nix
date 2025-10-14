@@ -40,13 +40,14 @@
 
       fix_ssh_auth_sock
       env_vars
-      if not set -q MOTD_DISPLAYED
-        set -gx MOTD_DISPLAYED 1
+      if status is-login
         cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
       end
     '';
   };
   programs.nix-ld.enable = true;
+  # command-not-found doesn't work with flakes
+  programs.command-not-found.enable = false;
 
   # services
   systemd.services.tailscaled.serviceConfig.LogLevelMax = "notice";
@@ -60,6 +61,8 @@
     enable = true;
     openFirewall = true;
   };
+  # to avoid lingering apps on ssh session loss
+  services.logind.killUserProcesses = true;
 
   # sudo
   security.sudo.extraConfig = ''

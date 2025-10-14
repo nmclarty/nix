@@ -1,5 +1,5 @@
 { inputs, config, ... }: {
-  imports = [ ../hardware.nix ./ups.nix ./containers ];
+  imports = [ ./containers ../hardware.nix ./ups.nix ];
   # Network
   networking = {
     hostName = "brittlehollow";
@@ -10,4 +10,6 @@
     "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
   # ZFS
   boot.zfs.extraPools = [ "tank" ];
+  # Private
+  private.containers.enable = true;
 }
