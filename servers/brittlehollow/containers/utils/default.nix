@@ -4,7 +4,6 @@
     name = "utils";
     id = 2002;
   };
-  networking.firewall.allowedTCPPorts = [ 80 443 ]; # public traefik ports
   virtualisation.quadlet = {
     containers = {
       traefik = {
