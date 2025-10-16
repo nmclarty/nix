@@ -50,34 +50,6 @@
         };
       };
 
-      speed = {
-        containerConfig = {
-          image = "docker.io/openspeedtest/latest:latest";
-          autoUpdate = "registry";
-          networks = [ "exposed.network" ];
-          labels = { "traefik.enable" = "true"; };
-          healthCmd = "wget --spider -T 5 http://127.0.0.1:3000";
-          healthStartupCmd = "sleep 10";
-          healthOnFailure = "kill";
-        };
-      };
-
-      homepage = {
-        containerConfig = {
-          image = "ghcr.io/gethomepage/homepage:latest";
-          autoUpdate = "registry";
-          user = "2002:2002";
-          publishPorts = [ "3000:3000" ];
-          environments = {
-            "HOMEPAGE_ALLOWED_HOSTS" = "${config.networking.hostName}:3000";
-          };
-          volumes = [ "/srv/utils/homepage:/app/config" ];
-          healthCmd = "wget -O - -q -T 5 http://127.0.0.1:3000/api/healthcheck";
-          healthStartupCmd = "sleep 10";
-          healthOnFailure = "kill";
-        };
-      };
-
       pocket = {
         containerConfig = {
           image = "ghcr.io/pocket-id/pocket-id:v1";
@@ -103,6 +75,7 @@
       };
 
       tinyauth = {
+        autoStart = false;
         containerConfig = {
           image = "ghcr.io/steveiliop56/tinyauth:v4";
           autoUpdate = "registry";

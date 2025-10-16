@@ -50,7 +50,6 @@ let
   '';
 in 
 {
-  #environment.systemPackages = with pkgs-unstable; [ rust-motd figlet lolcat python3];
   systemd.services.rust-motd = {
     description = "Update the motd using rust-motd";
     after = [ "network-online.target" ];

@@ -45,6 +45,5 @@
             dnsChallenge:
               provider: cloudflare
     '';
-    "config/homepage.yaml".text = "";
   };
 }
