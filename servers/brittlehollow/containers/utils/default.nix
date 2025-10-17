@@ -16,12 +16,17 @@
           };
           secrets = [ "utils_traefik_token,uid=2002,gid=2002,mode=0400" ];
           volumes = [
-            "/etc/config/traefik.yaml:/etc/traefik/traefik.yaml:ro"
+            "${config.sops.templates."utils/traefik.yaml".path}:/etc/traefik/traefik.yaml:ro"
             "/srv/utils/traefik:/data"
           ];
           sysctl."net.ipv4.ip_unprivileged_port_start" = "80";
-          publishPorts = [ "80:80" "443:443" "8080:8080" ];
+          publishPorts = [ "80:80" "443:443" ];
           networks = [ "socket-proxy" "exposed:ip=10.90.0.2" ];
+          labels = { 
+            "traefik.enable" = "true";
+            "traefik.http.routers.dashboard.service" = "api@internal";
+            "traefik.http.routers.dashboard.middlewares" = "tinyauth";
+           };
           healthCmd = "traefik healthcheck";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
@@ -75,7 +80,6 @@
       };
 
       tinyauth = {
-        autoStart = false;
         containerConfig = {
           image = "ghcr.io/steveiliop56/tinyauth:v4";
           autoUpdate = "registry";
@@ -83,12 +87,16 @@
           environments = {
             # general
             APP_URL = "https://tinyauth.${config.private.domain}";
+            LOG_LEVEL = "warn";
             OAUTH_AUTO_REDIRECT = "pocketid";
+            SECURE_COOKIE = "true";
+            TRUSTED_PROXIES = "10.90.0.2";
             # pocket-id oauth
             PROVIDERS_POCKETID_CLIENT_SECRET_FILE = "/run/secrets/utils_tinyauth_secret";
             PROVIDERS_POCKETID_AUTH_URL = "https://pocket.${config.private.domain}/authorize";
             PROVIDERS_POCKETID_TOKEN_URL = "https://pocket.${config.private.domain}/api/oidc/token";
             PROVIDERS_POCKETID_USER_INFO_URL = "https://pocket.${config.private.domain}/api/oidc/userinfo";
+            PROVIDERS_POCKETID_REDIRECT_URL = "https://tinyauth.${config.private.domain}/api/oauth/callback/pocketid";
             PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
             PROVIDERS_POCKETID_NAME="Pocket ID";
           };
@@ -96,6 +104,7 @@
             "utils_tinyauth_client,type=env,target=PROVIDERS_POCKETID_CLIENT_ID"
             "utils_tinyauth_secret,uid=2002,gid=2002,mode=0400"
           ];
+          volumes = [ "/srv/utils/tinyauth:/data" ];
           networks = [ "exposed.network" ];
           labels = {
             "traefik.enable" = "true";
