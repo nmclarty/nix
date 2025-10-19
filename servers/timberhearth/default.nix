@@ -1,5 +1,5 @@
 {
-  imports = [ ../hardware.nix ];
+  imports = [ ../modules ];
   # Network
   networking = {
     hostName = "timberhearth";

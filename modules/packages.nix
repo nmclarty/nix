@@ -57,10 +57,6 @@
     package = pkgs-unstable.tailscale;
     useRoutingFeatures = "server";
   };
-  services.iperf3 = {
-    enable = true;
-    openFirewall = true;
-  };
   # to avoid lingering apps on ssh session loss
   services.logind.killUserProcesses = true;
 

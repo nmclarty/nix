@@ -7,12 +7,6 @@
   i18n.defaultLocale = "en_CA.UTF-8";
   services.xserver.xkb.layout = "us";
 
-  # auto upgrades
-  # system.autoUpgrade = {
-  #   enable = true;
-  #   allowReboot = true;
-  # };
-
   # swap
   zramSwap.enable = true;
 
@@ -29,8 +23,7 @@
   };
 
   # pam
-  sops.secrets."authorized-keys".sopsFile =
-    "${inputs.nix-secrets}/secrets.yaml";
+  sops.secrets."authorized-keys".sopsFile = "${inputs.nix-secrets}/secrets.yaml";
   security.pam = {
     sshAgentAuth = {
       enable = true;
