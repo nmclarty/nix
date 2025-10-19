@@ -11,8 +11,10 @@
     };
     # extras
     quadlet-nix.url = "github:seiarotg/quadlet-nix";
-    sops-nix.url = "github:Mic92/sops-nix";
-    nixos-cli.url = "github:nix-community/nixos-cli";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "stable";
+    };
     # private
     nix-private = {
       url = "git+ssh://git@github.com/nmclarty/nix-private";
