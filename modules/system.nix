@@ -23,11 +23,10 @@
   };
 
   # pam
-  sops.secrets."authorized-keys".sopsFile = "${inputs.nix-private}/secrets.yaml";
   security.pam = {
     sshAgentAuth = {
       enable = true;
-      authorizedKeysFiles = [ config.sops.secrets.authorized-keys.path ];
+      authorizedKeysFiles = [ config.sops.secrets."nmclarty/ssh/remote".path ];
     };
     services.sudo.sshAgentAuth = true;
   };
@@ -42,11 +41,11 @@
 
   # users
   sops.secrets = {
-    "nmclarty" = {
+    "nmclarty/hashedPassword" = {
       sopsFile = "${inputs.nix-private}/secrets.yaml";
       neededForUsers = true;
     };
-    "root" = {
+    "root/hashedPassword" = {
       sopsFile = "${inputs.nix-private}/secrets.yaml";
       neededForUsers = true;
     };
@@ -55,7 +54,7 @@
     mutableUsers = false;
     users.root = {
       shell = pkgs.fish;
-      hashedPasswordFile = config.sops.secrets.root.path;
+      hashedPasswordFile = config.sops.secrets."root/hashedPassword".path;
     };
     users.nmclarty = {
       isNormalUser = true;
@@ -63,7 +62,7 @@
       shell = pkgs.fish;
       packages = with pkgs; [ ];
       uid = 1000;
-      hashedPasswordFile = config.sops.secrets.nmclarty.path;
+      hashedPasswordFile = config.sops.secrets."nmclarty/hashedPassword".path;
     };
   };
 }

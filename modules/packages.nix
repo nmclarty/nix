@@ -4,9 +4,6 @@
 
   # packages
   environment.systemPackages = with pkgs; [
-    pkgs-unstable.btop
-    gdu
-    micro
     git
     wget
     doggo
@@ -35,7 +32,7 @@
       function env_vars
         set -gx fish_greeting ""
         set -gx EDITOR micro
-        set -gx NIXOS_CONFIG ~/nix/
+        set -gx NH_FLAKE ~/nix/
       end
 
       fix_ssh_auth_sock
