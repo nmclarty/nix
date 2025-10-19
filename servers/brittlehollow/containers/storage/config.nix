@@ -36,19 +36,21 @@
         restartUnits = [ "seafile.service" ];
         owner = "storage";
         content = ''
+          # initial
           SECRET_KEY = "${config.sops.placeholder."storage/seafile/secret"}"
           TIME_ZONE = "Etc/UTC"
 
-          # customization settings
+          # general
+          ENABLE_TWO_FACTOR_AUTH = True
           SITE_TITLE = "Seafile"
 
-          # library settings
+          # library
           ENCRYPTED_LIBRARY_VERSION = 4
           ENCRYPTED_LIBRARY_PWD_HASH_ALGO = "argon2id"
           ENCRYPTED_LIBRARY_PWD_HASH_PARAMS = "2,102400,8"
           ENABLE_REPO_SNAPSHOT_LABEL = True
 
-          # oidc settings for pocket id integration
+          # oidc for pocket id integration
           ENABLE_OAUTH = True
           CLIENT_SSO_VIA_LOCAL_BROWSER = True
           OAUTH_CLIENT_ID = "${config.sops.placeholder."storage/seafile/oauth/client"}"

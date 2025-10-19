@@ -125,7 +125,7 @@
             "signingAlgorithm": "RS256",
             "storageLabelClaim": "preferred_username",
             "storageQuotaClaim": "immich_quota",
-            "defaultStorageQuota": null,
+            "defaultStorageQuota": 250,
             "buttonText": "Login with Pocket ID",
             "autoRegister": true,
             "autoLaunch": true,
