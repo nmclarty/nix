@@ -2,15 +2,15 @@
   sops = {
     secrets = {
       "storage/seafile/secret" = {
-        sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+        sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
         key = "storage/seafile/secret";
       };
       "storage/seafile/oauth/client" = {
-        sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+        sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
         key = "storage/seafile/oauth/client";
       };
       "storage/seafile/oauth/secret" = {
-        sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+        sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
         key = "storage/seafile/oauth/secret";
       };
     };

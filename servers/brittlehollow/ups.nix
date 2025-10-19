@@ -1,7 +1,7 @@
 { config, inputs, ... }: {
   networking.firewall.allowedTCPPorts = [ 3493 ];
   sops.secrets."nut/admin".sopsFile =
-    "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
+    "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";
   power.ups = {
     mode = "netserver"; # override the default mode
     upsd.listen = [{ address = "0.0.0.0"; }];

@@ -225,7 +225,7 @@ in {
 
   sops.secrets."minecraft/mariadb/password" = {
     sopsFile =
-      "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+      "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
     key = "minecraft/mariadb/password";
   };
   sops.templates."minecraft/bluemap/sql.conf" = {

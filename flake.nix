@@ -13,10 +13,6 @@
       url = "git+ssh://git@github.com/nmclarty/nix-private";
       inputs.nixpkgs.follows = "stable";
     };
-    nix-secrets = {
-      url = "git+ssh://git@github.com/nmclarty/nix-secrets";
-      flake = false;
-    };
   };
 
   outputs = inputs: {

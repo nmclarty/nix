@@ -1,7 +1,7 @@
 { config, lib, pkgs, pkgs-unstable, inputs, ... }: {
   sops.secrets."podman.yaml" = {
     sopsFile =
-      "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+      "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
     key = "";
   };
   system.activationScripts.podman-secrets = {

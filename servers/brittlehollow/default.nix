@@ -7,7 +7,7 @@
     useNetworkd = true;
   };
   sops.secrets."zfs/tank".sopsFile =
-    "${inputs.nix-secrets}/${config.networking.hostName}/secrets.yaml";
+    "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";
   # ZFS
   boot.zfs.extraPools = [ "tank" ];
   # Private

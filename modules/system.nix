@@ -23,7 +23,7 @@
   };
 
   # pam
-  sops.secrets."authorized-keys".sopsFile = "${inputs.nix-secrets}/secrets.yaml";
+  sops.secrets."authorized-keys".sopsFile = "${inputs.nix-private}/secrets.yaml";
   security.pam = {
     sshAgentAuth = {
       enable = true;
@@ -43,11 +43,11 @@
   # users
   sops.secrets = {
     "nmclarty" = {
-      sopsFile = "${inputs.nix-secrets}/secrets.yaml";
+      sopsFile = "${inputs.nix-private}/secrets.yaml";
       neededForUsers = true;
     };
     "root" = {
-      sopsFile = "${inputs.nix-secrets}/secrets.yaml";
+      sopsFile = "${inputs.nix-private}/secrets.yaml";
       neededForUsers = true;
     };
   };

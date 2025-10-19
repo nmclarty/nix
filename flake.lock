@@ -62,33 +62,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1760050443,
-        "narHash": "sha256-uVmfz6Db45+QZkdka3dNiQMiHFaqB1HFEgVC8Aipu5I=",
+        "lastModified": 1760836241,
+        "narHash": "sha256-e4ctxzf1pRIKU9Xc1pFvoZtpwGR2lxYUaGu+lRj5z3E=",
         "ref": "refs/heads/main",
-        "rev": "3dc63458f13a1926e94bb1c6d63258ca8dac30e4",
-        "revCount": 9,
+        "rev": "3cfdce2bb60bb78b3f1cb959d40ccc279a654733",
+        "revCount": 11,
         "type": "git",
         "url": "ssh://git@github.com/nmclarty/nix-private"
       },
       "original": {
         "type": "git",
         "url": "ssh://git@github.com/nmclarty/nix-private"
-      }
-    },
-    "nix-secrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1760232942,
-        "narHash": "sha256-JvqhCkNIJxhjNS0dwmaZQ/BGr57rJh01CLi6tp31Oxw=",
-        "ref": "refs/heads/main",
-        "rev": "a9e9c50a5410ce6b77af413563a3bfee0e6cdfb0",
-        "revCount": 14,
-        "type": "git",
-        "url": "ssh://git@github.com/nmclarty/nix-secrets"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/nmclarty/nix-secrets"
       }
     },
     "nixos-cli": {
@@ -177,7 +161,6 @@
     "root": {
       "inputs": {
         "nix-private": "nix-private",
-        "nix-secrets": "nix-secrets",
         "nixos-cli": "nixos-cli",
         "quadlet-nix": "quadlet-nix",
         "sops-nix": "sops-nix",

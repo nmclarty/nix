@@ -2,11 +2,11 @@
   sops = {
     secrets = {
       "immich/pocket/client" = {
-        sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+        sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
         key = "immich/pocket/client";
       };
       "immich/pocket/secret" = {
-        sopsFile = "${inputs.nix-secrets}/${config.networking.hostName}/podman.yaml";
+        sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
         key = "immich/pocket/secret";
       };
     };

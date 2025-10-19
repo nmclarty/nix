@@ -1,5 +1,5 @@
 { lib, config, inputs, ... }: {
-  sops.secrets."nut/monuser".sopsFile = "${inputs.nix-secrets}/secrets.yaml";
+  sops.secrets."nut/monuser".sopsFile = "${inputs.nix-private}/secrets.yaml";
   power.ups = {
     enable = true;
     mode = lib.mkDefault "netclient";
