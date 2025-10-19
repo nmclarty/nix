@@ -12,12 +12,12 @@
     secrets = {
       "nmclarty/ssh/remote" = {
         sopsFile = "${inputs.nix-private}/secrets.yaml";
-        owner = "nmclarty";
+        mode = "0444"; # world-readable because it's a public key
       };
       "nmclarty/ssh/public" = {
         sopsFile = "${inputs.nix-private}/secrets.yaml";
         path = "/home/nmclarty/.ssh/id_ed25519.pub";
-        owner = "nmclarty";
+        mode = "0444"; # world-readable because it's a public key
       };
       "nmclarty/ssh/private" = {
         sopsFile = "${inputs.nix-private}/secrets.yaml";

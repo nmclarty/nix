@@ -4,8 +4,20 @@
     username = "nmclarty";
     homeDirectory = "/home/nmclarty";
     packages = with pkgs; [
+      # general utilities
       gdu
       micro
+      wget
+      doggo
+      moreutils
+      yq-go
+      difftastic
+      nh
+      # for backups
+      resticprofile
+      # for secrets
+      sops
+      pwgen
     ];
   };
   programs = {

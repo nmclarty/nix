@@ -3,20 +3,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # packages
-  environment.systemPackages = with pkgs; [
-    git
-    wget
-    doggo
-    resticprofile
-    moreutils
-    intel-gpu-tools
-    yq-go
-    difftastic
-    openssl
-    jq
-    sops
-    nh
-  ];
+  environment.systemPackages = with pkgs; [ ];
 
   # programs
   programs.fish = {

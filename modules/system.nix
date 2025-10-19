@@ -60,7 +60,6 @@
       isNormalUser = true;
       extraGroups = [ "wheel" "systemd-journal" ];
       shell = pkgs.fish;
-      packages = with pkgs; [ ];
       uid = 1000;
       hashedPasswordFile = config.sops.secrets."nmclarty/hashedPassword".path;
     };
