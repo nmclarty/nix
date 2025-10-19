@@ -9,7 +9,7 @@
       driver = "usbhid-ups";
       port = "auto";
       description = "Cyberpower UPS - All servers";
-      directives = [ "pollfreq = 5" "productid = 0601" ];
+      directives = [ "pollfreq = 5" "productid = 0601" "pollonly" ];
     };
     ups.ups = {
       driver = "dummy-ups";

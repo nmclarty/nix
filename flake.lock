@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760868240,
-        "narHash": "sha256-O8yr04egSh3zrdcPfLWEzmKmZp//9UMjuIHRSy4JkdQ=",
+        "lastModified": 1760871731,
+        "narHash": "sha256-Gau9Cr5rdAXsV7ViLKBKOWihDqF70vx3QAPZ6cB5P5M=",
         "ref": "refs/heads/main",
-        "rev": "3ab22f28631b57281acf05a8f214ee40fb494542",
-        "revCount": 14,
+        "rev": "d9cb1fbe4a4aaf63e218dd8f117ebe9276f48d29",
+        "revCount": 15,
         "type": "git",
         "url": "ssh://git@github.com/nmclarty/nix-private"
       },

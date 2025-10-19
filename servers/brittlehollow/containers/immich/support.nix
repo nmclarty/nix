@@ -29,7 +29,7 @@
           secrets = [ "immich_postgres_password,uid=2004,gid=2004,mode=0400" ];
           volumes = [ "/srv/immich/postgres:/var/lib/postgresql/data" ];
           networks = [ "immich.network" ];
-          healthCmd = "pg_isready";
+          healthCmd = "pg_isready -U postgres";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
         };
