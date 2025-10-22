@@ -10,6 +10,10 @@
     "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";
   # ZFS
   boot.zfs.extraPools = [ "tank" ];
+  services.sanoid.datasets.tank = {
+    useTemplate = ["default"];
+    recursive = true;
+  };
   # Private
   private.containers.enable = true;
 }
