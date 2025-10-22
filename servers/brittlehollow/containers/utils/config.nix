@@ -35,6 +35,7 @@
               endpoint: "tcp://socket-proxy:2375"
               exposedByDefault: false
               network: "exposed"
+              allowEmptyServices: true
               defaultRule: "Host(`{{ normalize .ContainerName }}.${config.private.domain}`)"
 
           api:
