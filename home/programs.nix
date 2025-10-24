@@ -30,5 +30,27 @@
         gpg.ssh.allowedSignersFile = osConfig.sops.templates."git/allowed_signers".path;
       };
     };
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        # because pam_ssh_agent_auth doesn't like symlinks
+        function fix_ssh_auth_sock
+          if test -L "$SSH_AUTH_SOCK"
+            set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
+          end
+        end
+      '';
+      loginShellInit = ''
+        # env vars
+        set -gx fish_greeting ""
+        set -gx EDITOR micro
+        set -gx NH_FLAKE ~/nix/
+
+        # motd
+        if status is-login
+          cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
+        end
+      '';
+    };
   };
 }
