@@ -11,7 +11,7 @@
   # ZFS
   boot.zfs.extraPools = [ "tank" ];
   services.sanoid.datasets.tank = {
-    useTemplate = ["default"];
+    useTemplate = [ "default" ];
     recursive = true;
   };
   # Private

@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, lib, ... }: {
+{ config, pkgs, pkgs-unstable, ... }: {
   sops.secrets = {
     "restic/password" = { };
     "restic/local/access" = { };
@@ -51,10 +51,7 @@
         }"
     '';
   };
-  systemd.services.backup = let
-    services = lib.concatStringsSep " "
-      (builtins.attrNames config.virtualisation.quadlet.containers);
-  in {
+  systemd.services.backup = {
     description = "Snapshot disks and backup using restic";
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];

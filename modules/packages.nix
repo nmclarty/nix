@@ -1,9 +1,9 @@
-{ pkgs, pkgs-unstable, ... }: {
+{ pkgs-unstable, ... }: {
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # packages
-  environment.systemPackages = with pkgs; [ ];
+  # environment.systemPackages = with pkgs; [ ];
 
   # programs
   programs = {
@@ -39,6 +39,8 @@
   # services
   systemd.services.tailscaled.serviceConfig.LogLevelMax = "notice";
   services = {
+    # clean up lingering apps on ssh session loss
+    logind.killUserProcesses = true;
     # remote access
     tailscale = {
       enable = true;
@@ -46,8 +48,6 @@
       package = pkgs-unstable.tailscale;
       useRoutingFeatures = "server";
     };
-    # to avoid lingering apps on ssh session loss
-    logind.killUserProcesses = true;
     sanoid = {
       enable = true;
       templates.default = {
@@ -59,7 +59,7 @@
         autoprune = true;
       };
       datasets.zroot = {
-        useTemplate = ["default"];
+        useTemplate = [ "default" ];
         recursive = true;
         processChildrenOnly = true;
       };

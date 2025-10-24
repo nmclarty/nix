@@ -1,8 +1,8 @@
-{ 
+{
   imports = [
-  ./immich
-  ./utils
-  ./minecraft
-  ./storage
+    ./immich
+    ./utils
+    ./minecraft
+    ./storage
   ];
 }

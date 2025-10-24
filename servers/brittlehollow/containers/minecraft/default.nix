@@ -66,7 +66,7 @@
             TYPE = "VELOCITY";
           };
           secrets = [ "minecraft_velocity_secret,uid=2005,gid=2005,mode=0400" ];
-          volumes = [ 
+          volumes = [
             "/srv/minecraft/velocity:/server"
             "${config.sops.templates."minecraft/velocity/velocity.toml".path}:/server/velocity.toml:ro"
           ];

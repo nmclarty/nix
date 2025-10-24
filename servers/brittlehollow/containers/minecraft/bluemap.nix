@@ -82,7 +82,8 @@ let
     ignore-missing-light-data: false
     marker-sets: {}
   '';
-in {
+in
+{
   # all files must not be symlinks otherwise the container can't access them.
   environment.etc = {
     "config/bluemap/core.conf" = {

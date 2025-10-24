@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, inputs, lib, config, ... }: 
+{ pkgs, pkgs-unstable, inputs, lib, config, ... }:
 let
   last-updated = pkgs.writeScriptBin "last-updated" ''
     #!${pkgs.python3}/bin/python3
@@ -48,14 +48,14 @@ let
       time_ago = diff(status["time"])
       print(f'  {status["profile"]}: ({status_labels[status["success"]]}) {str(time_ago)[:-7]} ago')
   '';
-in 
+in
 {
   systemd.services.rust-motd = {
     description = "Update the motd using rust-motd";
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ pkgs-unstable.rust-motd pkgs.bash pkgs.hostname pkgs.figlet pkgs.lolcat pkgs.python3 ];
+    path = with pkgs; [ pkgs-unstable.rust-motd bash hostname figlet lolcat python3 ];
     script = ''
       mkdir -p /var/lib/rust-motd
       while true; do
@@ -64,31 +64,33 @@ in
       done
     '';
   };
-  environment.etc."rust-motd/config.kdl".text = let
-    # creates a list of services without dashes in their names (only main, not their dependencies)
-    services = lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames config.virtualisation.quadlet.containers);
-    # turns that list into rust-motd container entries
-    containers = lib.concatStringsSep "\n    " (map (s: "container display-name=\"${s}\" docker-name=\"/${s}\"") services);
-    in ''
-    global {
-      version "1.0"
-      progress-empty-character "-"
-    }
-    components {
-      command "hostname | figlet | lolcat -f"
-      uptime prefix="Uptime:"
-      load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
-      memory swap-pos="below"
-      filesystems {
-        filesystem name="nix" mount-point="/nix"
-        filesystem name="services" mount-point="/srv"
+  environment.etc."rust-motd/config.kdl".text =
+    let
+      # creates a list of services without dashes in their names (only main, not their dependencies)
+      services = lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames config.virtualisation.quadlet.containers);
+      # turns that list into rust-motd container entries
+      containers = lib.concatStringsSep "\n    " (map (s: "container display-name=\"${s}\" docker-name=\"/${s}\"") services);
+    in
+    ''
+      global {
+        version "1.0"
+        progress-empty-character "-"
       }
-      cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
-      docker {
-        ${containers}
+      components {
+        command "hostname | figlet | lolcat -f"
+        uptime prefix="Uptime:"
+        load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
+        memory swap-pos="below"
+        filesystems {
+          filesystem name="nix" mount-point="/nix"
+          filesystem name="services" mount-point="/srv"
+        }
+        cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
+        docker {
+          ${containers}
+        }
+        command "${last-updated}/bin/last-updated stable unstable"
+        command "${backup-status}/bin/backup-status local remote"
       }
-      command "${last-updated}/bin/last-updated stable unstable"
-      command "${backup-status}/bin/backup-status local remote"
-    }
-  '';
+    '';
 }

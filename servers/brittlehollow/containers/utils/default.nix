@@ -22,11 +22,11 @@
           sysctl."net.ipv4.ip_unprivileged_port_start" = "80";
           publishPorts = [ "80:80" "443:443" ];
           networks = [ "socket-proxy" "exposed:ip=10.90.0.2" ];
-          labels = { 
+          labels = {
             "traefik.enable" = "true";
             "traefik.http.routers.dashboard.service" = "api@internal";
             "traefik.http.routers.dashboard.middlewares" = "tinyauth";
-           };
+          };
           healthCmd = "traefik healthcheck";
           healthStartupCmd = "sleep 10";
           healthOnFailure = "kill";
@@ -98,7 +98,7 @@
             PROVIDERS_POCKETID_USER_INFO_URL = "https://pocket.${config.private.domain}/api/oidc/userinfo";
             PROVIDERS_POCKETID_REDIRECT_URL = "https://tinyauth.${config.private.domain}/api/oauth/callback/pocketid";
             PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
-            PROVIDERS_POCKETID_NAME="Pocket ID";
+            PROVIDERS_POCKETID_NAME = "Pocket ID";
           };
           secrets = [
             "utils_tinyauth_client,type=env,target=PROVIDERS_POCKETID_CLIENT_ID"
