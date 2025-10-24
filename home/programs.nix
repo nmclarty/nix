@@ -1,25 +1,4 @@
-{pkgs, osConfig, ...}: {
-  home = {
-    stateVersion = "25.05";
-    username = "nmclarty";
-    homeDirectory = "/home/nmclarty";
-    packages = with pkgs; [
-      # general utilities
-      gdu
-      micro
-      wget
-      doggo
-      moreutils
-      yq-go
-      difftastic
-      nh
-      # for backups
-      resticprofile
-      # for secrets
-      sops
-      pwgen
-    ];
-  };
+{ osConfig, ... }: {
   programs = {
     btop = {
       enable = true;

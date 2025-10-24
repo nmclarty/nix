@@ -1,4 +1,4 @@
-{ inputs, system, ... }: {
+{ inputs, ... }: {
   imports = with inputs; [
     quadlet-nix.nixosModules.quadlet
     sops-nix.nixosModules.sops
@@ -8,7 +8,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.nmclarty = "${inputs.self}/home.nix";
+    users.nmclarty = "${inputs.self}/home";
   };
   private.enable = true;
 }
