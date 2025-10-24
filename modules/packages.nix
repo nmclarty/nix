@@ -15,7 +15,12 @@
   };
 
   # services
-  systemd.services.tailscaled.serviceConfig.LogLevelMax = "notice";
+  systemd.services.tailscaled = {
+    # since tailscale ssh is killed during switch
+    # disable automatic restarts, and manage updates manually
+    restartIfChanged = false;
+    serviceConfig.LogLevelMax = "notice";
+  };
   services = {
     # clean up lingering apps on ssh session loss
     logind.killUserProcesses = true;

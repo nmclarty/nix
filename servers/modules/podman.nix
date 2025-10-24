@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, inputs, ... }: {
+{ config, pkgs, pkgs-unstable, inputs, ... }: {
   sops.secrets."podman.yaml" = {
     sopsFile =
       "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";

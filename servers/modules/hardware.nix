@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }: {
+{ config, lib, modulesPath, ... }: {
   # extra hardware configuration
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
