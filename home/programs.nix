@@ -34,10 +34,8 @@
       enable = true;
       interactiveShellInit = ''
         # because pam_ssh_agent_auth doesn't like symlinks
-        function fix_ssh_auth_sock
-          if test -L "$SSH_AUTH_SOCK"
-            set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
-          end
+        if test -L "$SSH_AUTH_SOCK"
+          set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
         end
       '';
       loginShellInit = ''
