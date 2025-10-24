@@ -18,8 +18,6 @@
       # secrets
       sops
       pwgen
-      # secure boot
-      sbctl
     ];
   };
 }

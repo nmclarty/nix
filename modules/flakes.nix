@@ -3,6 +3,7 @@
     quadlet-nix.nixosModules.quadlet
     sops-nix.nixosModules.sops
     home-manager.nixosModules.home-manager
+    lanzaboote.nixosModules.lanzaboote
     nix-private.nixosModules.private
   ];
   home-manager = {

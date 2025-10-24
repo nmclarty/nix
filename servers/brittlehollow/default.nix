@@ -1,5 +1,10 @@
 { inputs, config, ... }: {
-  imports = [ ../modules ./containers ./ups.nix ];
+  imports = [
+    ../modules
+    ./containers
+    ./ups.nix
+    ./lanzaboote.nix
+  ];
   # Network
   networking = {
     hostName = "brittlehollow";

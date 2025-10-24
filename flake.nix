@@ -15,6 +15,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "stable";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "stable";
+    };
     # private
     nix-private = {
       url = "git+ssh://git@github.com/nmclarty/nix-private";

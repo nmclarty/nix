@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }: {
+{ config, inputs, ... }: {
   imports = [ ./config.nix ]; # traefik config
   users = import "${inputs.self}/lib/createUser.nix" {
     name = "utils";
