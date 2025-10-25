@@ -39,16 +39,24 @@
           # initial
           SECRET_KEY = "${config.sops.placeholder."storage/seafile/secret"}"
           TIME_ZONE = "Etc/UTC"
+          
+          # security
+          ALLOWED_HOSTS = [ "seafile.${config.private.domain}", "127.0.0.1" ]
+          CSRF_COOKIE_SECURE = True
+          SESSION_COOKIE_SECURE = True
 
           # general
           ENABLE_TWO_FACTOR_AUTH = True
+          ENABLE_WIKI = False
           SITE_TITLE = "Seafile"
+          LOGOUT_REDIRECT_URL = "https://seafile.${config.private.domain}/accounts/login/"
 
           # library
           ENCRYPTED_LIBRARY_VERSION = 4
           ENCRYPTED_LIBRARY_PWD_HASH_ALGO = "argon2id"
           ENCRYPTED_LIBRARY_PWD_HASH_PARAMS = "2,102400,8"
           ENABLE_REPO_SNAPSHOT_LABEL = True
+          ENABLE_REPO_HISTORY_SETTING = False
 
           # oidc for pocket id integration
           ENABLE_OAUTH = True
