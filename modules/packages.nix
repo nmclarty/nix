@@ -49,8 +49,15 @@
     };
   };
 
-  # sudo
-  security.sudo.extraConfig = ''
-    Defaults env_keep += "EDITOR"
-  '';
+  # security
+  security = {
+    sudo.extraConfig = ''Defaults env_keep += "EDITOR"'';
+    wrappers.btop = {
+      enable = true;
+      owner = "root";
+      group = "root";
+      source = "${pkgs-unstable.btop}/bin/btop";
+      capabilities = "cap_perfmon=ep";
+    };
+  };
 }
