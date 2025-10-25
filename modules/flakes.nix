@@ -9,6 +9,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "bak";
     users.nmclarty = "${inputs.self}/home";
   };
   private.enable = true;

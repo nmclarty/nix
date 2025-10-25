@@ -29,6 +29,10 @@
                     - main: "${config.private.domain}"
                       sans:
                         - "*.${config.private.domain}"
+              # fix for immich timeouts
+              transport:
+                respondingTimeouts:
+                  readTimeout: "0s"
 
           providers:
             docker:

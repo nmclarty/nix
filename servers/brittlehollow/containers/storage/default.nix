@@ -19,13 +19,13 @@
             SEAFILE_SERVER_PROTOCOL = "https";
             SITE_ROOT = "/";
             NON_ROOT = "false";
-            SEAFILE_LOG_TO_STDOUT = "false";
+            SEAFILE_LOG_TO_STDOUT = "true";
             ENABLE_SEADOC = "false";
             SEADOC_SERVER_URL = "${SEAFILE_SERVER_PROTOCOL}://${SEAFILE_SERVER_HOSTNAME}/sdoc-server";
             CACHE_PROVIDER = "redis";
             REDIS_HOST = "storage-redis";
             REDIS_PORT = "6379";
-            ENABLE_NOTIFICATION_SERVER = "false";
+            ENABLE_NOTIFICATION_SERVER = "true";
             INNER_NOTIFICATION_SERVER_URL = "http://storage-notification:8083";
             NOTIFICATION_SERVER_URL = "${SEAFILE_SERVER_PROTOCOL}://${SEAFILE_SERVER_HOSTNAME}/notification";
             ENABLE_SEAFILE_AI = "false";
@@ -61,7 +61,45 @@
           After = [ "storage-mariadb.service" "storage-redis.service" ];
         };
       };
+
+      storage-notification = {
+        containerConfig = {
+          image = "docker.io/seafileltd/notification-server:13.0-latest";
+          autoUpdate = "registry";
+          environments = {
+            SEAFILE_MYSQL_DB_HOST = "storage-mariadb";
+            SEAFILE_MYSQL_DB_PORT = "3306";
+            SEAFILE_MYSQL_DB_USER = "seafile";
+            SEAFILE_MYSQL_DB_CCNET_DB_NAME = "ccnet_db";
+            SEAFILE_MYSQL_DB_SEAFILE_DB_NAME = "seafile_db";
+            SEAFILE_LOG_TO_STDOUT = "true";
+            NOTIFICATION_SERVER_LOG_LEVEL = "info";
+          };
+          secrets = [
+            "storage_mariadb_password,type=env,target=SEAFILE_MYSQL_DB_PASSWORD"
+            "storage_seafile_jwt,type=env,target=JWT_PRIVATE_KEY"
+          ];
+          volumes = [ "/srv/storage/seafile/logs:/shared/seafile/logs" ];
+          networks = [ "exposed.network" "storage.network" ];
+          labels = {
+            "traefik.enable" = "true";
+            "traefik.http.services.storage-notification.loadbalancer.server.port" = "8083";
+            "traefik.http.routers.storage-notification.rule" = 
+              "Host(`seafile.${config.private.domain}`) && PathPrefix(`/notification`)";
+          };
+          healthCmd = "bash -c 'echo -n > /dev/tcp/127.0.0.1/8083'";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
+        };
+        unitConfig = {
+          Requires = [ "storage-mariadb.service" ];
+          After = [ "storage-mariadb.service" ];
+        };
+      };
     };
-    networks = { storage = { }; };
+
+    networks = {
+      storage = { }; 
+    };
   };
 }
