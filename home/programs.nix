@@ -49,6 +49,9 @@
           cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
         end
       '';
+      functions = {
+        helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
+      };
     };
   };
 }

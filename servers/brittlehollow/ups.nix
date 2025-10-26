@@ -2,6 +2,9 @@
   networking.firewall.allowedTCPPorts = [ 3493 ];
   sops.secrets."nut/admin".sopsFile =
     "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";
+  # for some reason, nut seems to spam this (seemingly) benign error
+  systemd.services.upsdrv.serviceConfig.LogFilterPatterns =
+    "~nut_libusb_get_(report|string): Input/Output Error";
   power.ups = {
     mode = "netserver"; # override the default mode
     upsd.listen = [{ address = "0.0.0.0"; }];
