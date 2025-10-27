@@ -1,4 +1,4 @@
-{ osConfig, self, ... }: {
+{ osConfig, inputs, ... }: {
   programs = {
     btop = {
       enable = true;
@@ -34,7 +34,7 @@
       matchBlocks =
         let
           # get all the hosts
-          hosts = builtins.attrNames self.nixosConfigurations;
+          hosts = builtins.attrNames inputs.self.nixosConfigurations;
           # generate configuration for each that allows agent forwarding
           generatedBlocks = builtins.listToAttrs (
             map

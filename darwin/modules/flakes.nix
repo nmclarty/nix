@@ -8,7 +8,7 @@
     useUserPackages = true;
     backupFileExtension = "bak";
     users.nmclarty = "${inputs.self}/home";
-    extraSpecialArgs = inputs;
+    extraSpecialArgs = { inherit inputs; };
   };
   private.enable = true;
 }
