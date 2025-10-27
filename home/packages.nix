@@ -11,7 +11,7 @@
       difftastic
       # nixos
       nh
-      nixd
+      nil
       nixpkgs-fmt
       # backups
       resticprofile
