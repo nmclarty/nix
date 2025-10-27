@@ -15,6 +15,27 @@
         "type": "github"
       }
     },
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759509947,
+        "narHash": "sha256-4XifSIHfpJKcCf5bZZRhj8C4aCpjNBaE3kXr02s4rHU=",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "rev": "000eadb231812ad6ea6aebd7526974aaf4e79355",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-darwin",
+        "ref": "nix-darwin-25.05",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -128,11 +149,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761374794,
-        "narHash": "sha256-rO2G04NQB8cf6U06I1cdeIt5K2EyKiHBVOaA75aM3oc=",
+        "lastModified": 1761524537,
+        "narHash": "sha256-Llv/dR1Uu1UwllSMP6EaO5jC3qrSzO2/d3L+VLu+pcw=",
         "ref": "refs/heads/main",
-        "rev": "dfa1b305494275062a3ac7d2b6df31d4a0f22655",
-        "revCount": 18,
+        "rev": "c2ec21d5bb51725014d993e02c6eb8c3affaca9f",
+        "revCount": 20,
         "type": "git",
         "url": "ssh://git@github.com/nmclarty/nix-private"
       },
@@ -201,6 +222,7 @@
     },
     "root": {
       "inputs": {
+        "darwin": "darwin",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nix-private": "nix-private",
@@ -269,11 +291,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1761114652,
-        "narHash": "sha256-f/QCJM/YhrV/lavyCVz8iU3rlZun6d+dAiC3H+CDle4=",
+        "lastModified": 1761373498,
+        "narHash": "sha256-Q/uhWNvd7V7k1H1ZPMy/vkx3F8C13ZcdrKjO7Jv7v0c=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "01f116e4df6a15f4ccdffb1bcd41096869fb385c",
+        "rev": "6a08e6bb4e46ff7fcbb53d409b253f6bad8a28ce",
         "type": "github"
       },
       "original": {
