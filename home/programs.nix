@@ -1,4 +1,4 @@
-{ osConfig, ... }: {
+{ osConfig, self, ... }: {
   programs = {
     btop = {
       enable = true;
@@ -28,6 +28,31 @@
         init.defaultBranch = "main";
         gpg.ssh.defaultKeyCommand = "ssh-add -L";
       };
+    };
+    ssh = {
+      enable = true;
+      matchBlocks =
+        let
+          # get all the hosts
+          hosts = builtins.attrNames self.nixosConfigurations;
+          # generate configuration for each that allows agent forwarding
+          generatedBlocks = builtins.listToAttrs (
+            map
+              (host: {
+                name = host;
+                value = {
+                  forwardAgent = true;
+                };
+              })
+              hosts
+          );
+          # add manual config for hosts that aren't managed by nix
+          manualBlocks = {
+            ashtwin = { forwardAgent = true; };
+          };
+        in
+        # combine both and set the config option
+        generatedBlocks // manualBlocks;
     };
     fish = {
       enable = true;

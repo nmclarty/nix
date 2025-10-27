@@ -8,6 +8,7 @@
     useUserPackages = true;
     backupFileExtension = "bak";
     users.nmclarty = "${inputs.self}/home";
+    extraSpecialArgs = inputs;
   };
   private.enable = true;
 }

@@ -25,6 +25,7 @@
   	  "1password"
   	  "seafile-client"
   	  "tailscale-app"
+			"scroll-reverser"
       "stats"
   	  # development
   	  "docker-desktop"
