@@ -80,7 +80,6 @@ in
         command "hostname | figlet | lolcat -f"
         uptime prefix="Uptime:"
         load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
-        memory swap-pos="below"
         filesystems {
           filesystem name="nix" mount-point="/nix"
           filesystem name="services" mount-point="/srv"

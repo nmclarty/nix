@@ -14,6 +14,7 @@
         swap_disk = false;
         use_fstab = false;
         disk_free_priv = true;
+        show_coretemp = false;
       };
     };
     git = {
