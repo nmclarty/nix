@@ -23,34 +23,45 @@
       signing = {
         format = "ssh";
         signByDefault = true;
-        key = osConfig.sops.secrets."nmclarty/ssh/remote".path;
       };
       extraConfig = {
         init.defaultBranch = "main";
-        gpg.ssh.allowedSignersFile = osConfig.sops.templates."git/allowed_signers".path;
+        gpg.ssh.defaultKeyCommand = "ssh-add -L";
       };
     };
     fish = {
       enable = true;
       interactiveShellInit = ''
-        # because pam_ssh_agent_auth doesn't like symlinks
-        if test -L "$SSH_AUTH_SOCK"
+        # set up ssh auth socket
+        set op_sock ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+        if test -S $op_sock
+          # if 1password agent socket exists, use it
+          set -gx SSH_AUTH_SOCK $op_sock
+        else if test -L "$SSH_AUTH_SOCK"
+          # if we're running remotely via ssh, resolve the symlink
           set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
+        end
+
+        # load homebrew env
+        set brew /opt/homebrew/bin/brew
+        if test -f $brew
+          eval ($brew shellenv)
         end
       '';
       loginShellInit = ''
         # env vars
-        set -gx fish_greeting ""
         set -gx EDITOR micro
-        set -gx NH_FLAKE ~/nix/
+        set -gx NH_FLAKE ~/projects/nix/
 
         # motd
-        if status is-login
+        if status is-login; and test -f /run/motd
           cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
         end
       '';
       functions = {
         helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
+        fish_prompt = ''set_color green; echo -n "($(basename $PWD)) > "'';
+        fish_greeting = "";
       };
     };
   };
