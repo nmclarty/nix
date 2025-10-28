@@ -60,7 +60,7 @@ in
       mkdir -p /var/lib/rust-motd
       while true; do
         rust-motd /etc/rust-motd/config.kdl > /run/motd
-        sleep 300
+        sleep 60
       done
     '';
   };
