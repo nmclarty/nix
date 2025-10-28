@@ -84,7 +84,7 @@
           labels = {
             "traefik.enable" = "true";
             "traefik.http.services.storage-notification.loadbalancer.server.port" = "8083";
-            "traefik.http.routers.storage-notification.rule" = 
+            "traefik.http.routers.storage-notification.rule" =
               "Host(`seafile.${config.private.domain}`) && PathPrefix(`/notification`)";
           };
           healthCmd = "bash -c 'echo -n > /dev/tcp/127.0.0.1/8083'";
@@ -99,7 +99,7 @@
     };
 
     networks = {
-      storage = { }; 
+      storage = { };
     };
   };
 }

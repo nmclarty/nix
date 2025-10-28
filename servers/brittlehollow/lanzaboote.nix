@@ -1,4 +1,4 @@
-{ lib, pkgs-unstable, ...}: {
+{ lib, pkgs-unstable, ... }: {
   # sbctl to manage keys and for debugging
   environment.systemPackages = [ pkgs-unstable.sbctl ];
   boot = {

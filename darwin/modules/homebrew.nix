@@ -32,7 +32,7 @@
       "wireshark-app"
       # media
       "google-chrome"
-	  "spotify"
+      "spotify"
       "firefox"
       "zen"
       "discord"

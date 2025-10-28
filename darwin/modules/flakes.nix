@@ -1,4 +1,4 @@
-{ inputs, ...}: {
+{ inputs, ... }: {
   imports = with inputs; [
     home-manager.darwinModules.home-manager
     nix-private.darwinModules.private

@@ -10,8 +10,11 @@
   # swap
   zramSwap.enable = true;
 
-  # enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # nix settings
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    warn-dirty = false;
+  };
 
   # disable generating man cache (because fish causes it to hang)
   documentation.man.generateCaches = false;
