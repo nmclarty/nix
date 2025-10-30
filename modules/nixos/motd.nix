@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, inputs, lib, config, ... }:
+{ pkgs, inputs, lib, config, perSystem, ... }:
 let
   last-updated = pkgs.writeScriptBin "last-updated" ''
     #!${pkgs.python3}/bin/python3
@@ -55,7 +55,7 @@ in
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ pkgs-unstable.rust-motd bash hostname figlet lolcat python3 ];
+    path = with pkgs; [ perSystem.unstable.rust-motd bash hostname figlet lolcat python3 ];
     script = ''
       mkdir -p /var/lib/rust-motd
       while true; do

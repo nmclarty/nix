@@ -1,6 +1,6 @@
-{ lib, pkgs-unstable, ... }: {
+{ lib, perSystem, ... }: {
   # sbctl to manage keys and for debugging
-  environment.systemPackages = [ pkgs-unstable.sbctl ];
+  environment.systemPackages = [ perSystem.unstable.sbctl ];
   boot = {
     # lanzaboote replaces systemd-boot
     loader.systemd-boot.enable = lib.mkForce false;

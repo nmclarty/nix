@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }: {
+{ config, pkgs, perSystem, ... }: {
   sops.secrets = {
     "restic/password" = { };
     "restic/local/access" = { };
@@ -62,7 +62,7 @@
       util-linux
       zfs
       resticprofile
-      pkgs-unstable.podman
+      perSystem.unstable.podman
       jq
     ];
     serviceConfig.AllowedCPUs = "12-19";

@@ -1,10 +1,13 @@
-{ inputs, config, ... }: {
+{ inputs, config, flake, ... }: {
   imports = [
-    ../modules
+    flake.modules.nixos.default
+    flake.modules.server.default
     ./containers
     ./ups.nix
     ./lanzaboote.nix
   ];
+  # set arch
+  nixpkgs.hostPlatform = "x86_64-linux";
   # Network
   networking = {
     hostName = "brittlehollow";

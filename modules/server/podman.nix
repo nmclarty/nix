@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, inputs, ... }: {
+{ config, pkgs, inputs, perSystem, ... }: {
   sops.secrets."podman.yaml" = {
     sopsFile =
       "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
@@ -39,7 +39,7 @@
     };
     podman = {
       enable = true;
-      package = pkgs-unstable.podman;
+      package = perSystem.unstable.podman;
       autoPrune.enable = true;
       dockerSocket.enable = true;
       extraPackages = [

@@ -1,4 +1,4 @@
-{ pkgs-unstable, ... }: {
+{ perSystem, ... }: {
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -28,7 +28,7 @@
     tailscale = {
       enable = true;
       openFirewall = true;
-      package = pkgs-unstable.tailscale;
+      package = perSystem.unstable.tailscale;
       useRoutingFeatures = "server";
     };
     sanoid = {
@@ -56,7 +56,7 @@
       enable = true;
       owner = "root";
       group = "root";
-      source = "${pkgs-unstable.btop}/bin/btop";
+      source = "${perSystem.unstable.btop}/bin/btop";
       capabilities = "cap_perfmon=ep";
     };
   };

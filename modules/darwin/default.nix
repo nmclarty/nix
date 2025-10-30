@@ -1,7 +1,7 @@
 {
   imports = [
-    ./homebrew.nix
     ./flakes.nix
+    ./homebrew.nix
     ./system.nix
   ];
 }

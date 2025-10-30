@@ -4,11 +4,11 @@
   # nix settings
   nix = {
     # for determinate nix
-  	enable = false;
-  	settings = {
-    	experimental-features = [ "nix-command" "flakes" ];
-   		warn-dirty = false;
-  	};
+    enable = false;
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      warn-dirty = false;
+    };
   };
   # set arch
   nixpkgs.hostPlatform = "aarch64-darwin";
