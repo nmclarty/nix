@@ -11,9 +11,17 @@
   zramSwap.enable = true;
 
   # nix settings
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    warn-dirty = false;
+  nix = {
+    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      warn-dirty = false;
+    };
   };
 
   # disable generating man cache (because fish causes it to hang)
@@ -32,14 +40,6 @@
       authorizedKeysFiles = [ config.sops.secrets."nmclarty/ssh/remote".path ];
     };
     services.sudo.sshAgentAuth = true;
-  };
-
-  # nixos cleanup
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
   };
 
   # users
