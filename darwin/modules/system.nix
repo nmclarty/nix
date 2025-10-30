@@ -2,9 +2,13 @@
   # version
   system.stateVersion = 6;
   # nix settings
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    warn-dirty = false;
+  nix = {
+    # for determinate nix
+  	enable = false;
+  	settings = {
+    	experimental-features = [ "nix-command" "flakes" ];
+   		warn-dirty = false;
+  	};
   };
   # set arch
   nixpkgs.hostPlatform = "aarch64-darwin";
