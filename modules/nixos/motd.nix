@@ -88,7 +88,7 @@ in
         docker {
           ${containers}
         }
-        command "${last-updated}/bin/last-updated stable unstable"
+        command "${last-updated}/bin/last-updated nixpkgs unstable"
         command "${backup-status}/bin/backup-status local remote"
       }
     '';
