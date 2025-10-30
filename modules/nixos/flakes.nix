@@ -1,4 +1,4 @@
-{ inputs, flake, ... }: {
+{ inputs, ... }: {
   imports = with inputs; [
     quadlet-nix.nixosModules.quadlet
     sops-nix.nixosModules.sops
