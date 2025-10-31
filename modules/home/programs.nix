@@ -26,6 +26,7 @@
       enable = true;
       userName = "Nevan McLarty";
       userEmail = osConfig.private.git.email;
+      difftastic.enable = true;
       signing = {
         format = "ssh";
         signByDefault = true;
