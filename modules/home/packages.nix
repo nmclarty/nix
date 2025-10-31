@@ -9,6 +9,8 @@
       moreutils
       yq-go
       difftastic
+      zstd
+      lazygit
       # nixos
       nh
       nil

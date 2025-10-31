@@ -4,3 +4,6 @@
 # nix
 result
 result-*
+
+# mac
+.DS_Store
