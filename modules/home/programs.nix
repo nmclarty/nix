@@ -56,6 +56,10 @@
           # add manual config for hosts that aren't managed by nix
           manualBlocks = {
             ashtwin = { forwardAgent = true; };
+            ics226 = {
+              user = "student";
+              forwardAgent = true;
+            };
           };
         in
         # combine both and set the config option
