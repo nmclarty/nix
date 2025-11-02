@@ -33,7 +33,6 @@
       # media
       "google-chrome"
       "spotify"
-      "firefox"
       "zen"
       "discord"
       "prismlauncher"
