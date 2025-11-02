@@ -11,6 +11,7 @@
       difftastic
       zstd
       lazygit
+      goaccess
       # nixos
       nh
       nil

@@ -16,7 +16,8 @@
           };
           secrets = [ "utils_traefik_token,uid=2002,gid=2002,mode=0400" ];
           volumes = [
-            "${config.sops.templates."utils/traefik.yaml".path}:/etc/traefik/traefik.yaml:ro"
+            "${config.sops.templates."utils/traefik/traefik.yaml".path}:/etc/traefik/traefik.yaml:ro"
+            "${config.sops.templates."utils/traefik/dynamic.yaml".path}:/etc/traefik/dynamic.yaml:ro"
             "/srv/utils/traefik:/data"
           ];
           sysctl."net.ipv4.ip_unprivileged_port_start" = "80";

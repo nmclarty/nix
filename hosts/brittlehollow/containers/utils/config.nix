@@ -1,7 +1,7 @@
 { config, ... }: {
   sops = {
     templates = {
-      "utils/traefik.yaml" = {
+      "utils/traefik/traefik.yaml" = {
         restartUnits = [ "traefik.service" ];
         owner = "utils";
         content = ''
@@ -11,6 +11,8 @@
             level: INFO
           ping:
             entryPoint: traefik
+          accessLog:
+            filePath: /data/logs/access.log
 
           entryPoints:
             http:
@@ -23,6 +25,8 @@
             https:
               address: :443
               http:
+                middlewares:
+                  - security@file
                 tls:
                   certResolver: cloudflare
                   domains:
@@ -35,6 +39,8 @@
                   readTimeout: "0s"
 
           providers:
+            file:
+              filename: /etc/traefik/dynamic.yaml
             docker:
               endpoint: "tcp://socket-proxy:2375"
               exposedByDefault: false
@@ -52,6 +58,24 @@
                 storage: /data/acme.json
                 dnsChallenge:
                   provider: cloudflare
+        '';
+      };
+      "utils/traefik/dynamic.yaml" = {
+        restartUnits = [ "traefik.service" ];
+        owner = "utils";
+        content = ''
+          http:
+            middlewares:
+              security:
+                headers:
+                  contentTypeNosniff: true
+                  frameDeny: true
+                  stsSeconds: 63072000
+                  stsIncludeSubdomains: true
+                  referrerPolicy: "strict-origin-when-cross-origin"
+                  customResponseHeaders:
+                    server: ""
+                    x-powered-by: ""
         '';
       };
     };

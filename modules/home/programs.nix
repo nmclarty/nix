@@ -95,9 +95,14 @@
         end
       '';
       functions = {
-        helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
-        fish_prompt = ''set_color green; echo -n "($(basename $PWD)) > "'';
         fish_greeting = "";
+        fish_prompt = ''set_color green; echo -n "($(basename $PWD)) > "'';
+        helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
+        helper-logs = ''
+          cat /srv/utils/traefik/logs/access.log \
+          | grep "$argv[1]@docker" (if test (count $argv) -eq 0; echo "-v"; end) \
+          | goaccess --log-format TRAEFIKCLF
+        '';
       };
     };
   };
