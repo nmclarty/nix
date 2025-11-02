@@ -12,9 +12,11 @@
       zstd
       lazygit
       goaccess
+      iperf
       # nixos
       nh
       nil
+      statix
       nixpkgs-fmt
       # backups
       resticprofile
