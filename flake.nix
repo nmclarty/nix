@@ -19,6 +19,8 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+    comin.url = "github:nlewo/comin";
+    comin.inputs.nixpkgs.follows = "nixpkgs";
   };
   # Load the blueprint
   outputs = inputs: inputs.blueprint { inherit inputs; };

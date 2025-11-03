@@ -5,5 +5,6 @@
     ./packages.nix
     ./podman.nix
     ./ups.nix
+    ./comin.nix
   ];
 }
