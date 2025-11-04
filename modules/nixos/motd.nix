@@ -4,23 +4,32 @@ let
     #!${pkgs.python3}/bin/python3
     import json, datetime, sys
 
-    inputs = sys.argv[1:]
-    flake_path = "${inputs.self}/flake.lock"
-
-    with open(flake_path, "r") as file:
-      data = json.load(file)
-
     def diff(channel):
       now = datetime.datetime.now()
       then = datetime.datetime.fromtimestamp(data["nodes"][channel]["locked"]["lastModified"])
       return [channel, now - then]
+    
+    # path to the comin (gitops) status file
+    status_path = "/var/lib/comin/status.json"
+    # the flake inputs to check
+    inputs = sys.argv[1:]
+    # path to the lock file
+    flake_path = "${inputs.self}/flake.lock"
+
+    with open(status_path, "r") as file:
+      status = json.load(file)
+    
+    with open(flake_path, "r") as file:
+      data = json.load(file)
 
     last = map(diff, inputs)
 
-    print("Nixpkgs updated:")
+    print("Update status:")
+    print(f'  Message: {status["COMIN_GIT_MSG"]} ({status["COMIN_GIT_SHA"][:7]})')
     for i in last:
       print(f'  {i[0]}: {str(i[1])[:-7]} ago')
   '';
+
   backup-status = pkgs.writeScriptBin "backup-status" ''
     #!${pkgs.python3}/bin/python3
     import json, datetime, sys

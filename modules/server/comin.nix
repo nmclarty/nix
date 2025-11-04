@@ -1,6 +1,9 @@
 { inputs, config, pkgs, ... }: {
   imports = [ inputs.comin.nixosModules.comin ];
+  # secret for pulling private repos
   sops.secrets."github/token".sopsFile = "${inputs.nix-private}/secrets.yaml";
+  # add jq to path for outputting the status in JSON
+  systemd.services.comin.path = [ pkgs.jq ];
   services.comin = {
     enable = true;
     remotes = [
@@ -18,7 +21,7 @@
       }
     ];
     postDeploymentCommand = pkgs.writers.writeBash "post" ''
-      env | grep COMIN_ > /var/lib/comin/deployment.status
+      jq -n 'env | to_entries | map(select(.key | startswith("COMIN"))) | from_entries' > /var/lib/comin/status.json
     '';
   };
 }
