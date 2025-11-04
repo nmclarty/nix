@@ -4,5 +4,7 @@
     nodejs_24
     yarn-berry
     gdal
+    kubectl
+    kubelogin-oidc
   ];
 }
