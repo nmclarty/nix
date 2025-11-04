@@ -38,8 +38,12 @@ let
     status_path = "/var/lib/resticprofile"
 
     def get_status(profile):
-      with open(f'{status_path}/{profile}.status', "r") as file:
-        data = json.load(file)
+      try:
+        with open(f'{status_path}/{profile}.status', "r") as file:
+          data = json.load(file)
+      except FileNotFoundError:
+        print("  N/A")
+        exit()
       status = data["profiles"][profile]["backup"]
       status["profile"] = profile
       return status
@@ -68,37 +72,41 @@ in
     script = ''
       mkdir -p /var/lib/rust-motd
       while true; do
-        rust-motd /etc/rust-motd/config.kdl > /run/motd
+        rust-motd ${config.sops.templates."rust-motd/config.kdl".path} > /run/motd
         sleep 60
       done
     '';
   };
-  environment.etc."rust-motd/config.kdl".text =
-    let
-      # creates a list of services without dashes in their names (only main, not their dependencies)
-      services = lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames config.virtualisation.quadlet.containers);
-      # turns that list into rust-motd container entries
-      containers = lib.concatStringsSep "\n    " (map (s: "container display-name=\"${s}\" docker-name=\"/${s}\"") services);
-    in
-    ''
-      global {
-        version "1.0"
-        progress-empty-character "-"
-      }
-      components {
-        command "hostname | figlet | lolcat -f"
-        uptime prefix="Uptime:"
-        load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
-        filesystems {
-          filesystem name="nix" mount-point="/nix"
-          filesystem name="services" mount-point="/srv"
+  sops.templates."rust-motd/config.kdl" = {
+    restartUnits = [ "rust-motd.service" ];
+    owner = "root";
+    content =
+      let
+        # creates a list of services without dashes in their names (only main, not their dependencies)
+        services = lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames config.virtualisation.quadlet.containers);
+        # turns that list into rust-motd container entries
+        containers = lib.concatStringsSep "\n    " (map (s: "container display-name=\"${s}\" docker-name=\"/${s}\"") services);
+      in
+      ''
+        global {
+          version "1.0"
+          progress-empty-character "-"
         }
-        cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
-        docker {
-          ${containers}
+        components {
+          command "hostname | figlet | lolcat -f"
+          uptime prefix="Uptime:"
+          load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
+          filesystems {
+            filesystem name="nix" mount-point="/nix"
+            filesystem name="services" mount-point="/srv"
+          }
+          cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
+          docker {
+            ${containers}
+          }
+          command "${last-updated}/bin/last-updated nixpkgs unstable"
+          command "${backup-status}/bin/backup-status local remote"
         }
-        command "${last-updated}/bin/last-updated nixpkgs unstable"
-        command "${backup-status}/bin/backup-status local remote"
-      }
-    '';
+      '';
+  };
 }

@@ -13,12 +13,6 @@
         branches.main.name = "main";
         auth.access_token_path = config.sops.secrets."github/token".path;
       }
-      {
-        name = "local";
-        url = "/home/nmclarty/projects/nix";
-        branches.main.name = "main";
-        poller.period = 2;
-      }
     ];
     postDeploymentCommand = pkgs.writers.writeBash "post" ''
       jq -n 'env | to_entries | map(select(.key | startswith("COMIN"))) | from_entries' > /var/lib/comin/status.json
