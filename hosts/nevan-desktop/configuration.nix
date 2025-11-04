@@ -1,0 +1,10 @@
+{inputs, ...}: {
+  imports = [
+    inputs.nixos-wsl.nixosModules.default
+  ];
+  wsl = {
+    enable = true;
+    defaultUser = "nmclarty";
+  };
+  system.stateVersion = "25.05";
+}

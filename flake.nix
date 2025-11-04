@@ -6,6 +6,8 @@
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     # utilities
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
