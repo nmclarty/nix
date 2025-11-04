@@ -61,6 +61,10 @@
               user = "student";
               forwardAgent = true;
             };
+            "github.com" = {
+              hostname = "ssh.github.com";
+              port = 443;
+            };
           };
         in
         # combine both and set the config option
