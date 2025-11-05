@@ -104,8 +104,8 @@ in
           docker {
             ${containers}
           }
-          command "${last-updated}/bin/last-updated nixpkgs unstable"
-          command "${backup-status}/bin/backup-status local remote"
+          command color="light-white" "${last-updated}/bin/last-updated nixpkgs unstable"
+          command color="light-white" "${backup-status}/bin/backup-status local remote"
         }
       '';
   };
