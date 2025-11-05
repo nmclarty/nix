@@ -25,5 +25,8 @@
     comin.inputs.nixpkgs.follows = "nixpkgs";
   };
   # Load the blueprint
-  outputs = inputs: inputs.blueprint { inherit inputs; };
+  outputs = inputs:
+    inputs.blueprint {
+      inherit inputs;
+    };
 }

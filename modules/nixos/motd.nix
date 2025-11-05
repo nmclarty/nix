@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, config, perSystem, ... }:
+{ pkgs, flake, lib, config, perSystem, ... }:
 let
   last-updated = pkgs.writeScriptBin "last-updated" ''
     #!${pkgs.python3}/bin/python3
@@ -14,7 +14,7 @@ let
     # the flake inputs to check
     inputs = sys.argv[1:]
     # path to the lock file
-    flake_path = "${inputs.self}/flake.lock"
+    flake_path = "${flake}/flake.lock"
 
     with open(status_path, "r") as file:
       status = json.load(file)
@@ -96,11 +96,11 @@ in
           command "hostname | figlet | lolcat -f"
           uptime prefix="Uptime:"
           load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
+          cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
           filesystems {
             filesystem name="nix" mount-point="/nix"
             filesystem name="services" mount-point="/srv"
           }
-          cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
           docker {
             ${containers}
           }
