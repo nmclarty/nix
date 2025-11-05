@@ -99,6 +99,10 @@
           cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
         end
       '';
+      shellAbbrs = {
+        dc = "docker compose";
+        de = "docker exec -it";
+      };
       functions = {
         fish_greeting = "";
         fish_prompt = ''set_color green; echo -n "($(basename $PWD)) > "'';
