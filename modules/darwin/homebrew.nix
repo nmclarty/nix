@@ -30,6 +30,7 @@
       "docker-desktop"
       "visual-studio-code"
       "wireshark-app"
+      "jetbrains-toolbox"
       # media
       "google-chrome"
       "spotify"
