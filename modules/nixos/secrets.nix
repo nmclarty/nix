@@ -34,6 +34,12 @@
           37232202+nmclarty@users.noreply.github.com namespaces="git" ${config.sops.placeholder."nmclarty/ssh/remote"}
         '';
       };
+      "git/token" = {
+        owner = "nmclarty";
+        content = ''
+          access-tokens = github.com=${config.sops.placeholder."github/token"}
+        '';
+      };
     };
   };
 }

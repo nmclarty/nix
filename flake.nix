@@ -13,7 +13,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
-    nix-private.url = "git+ssh://git@github.com/nmclarty/nix-private";
+    nix-private.url = "github:nmclarty/nix-private";
     nix-private.inputs.nixpkgs.follows = "nixpkgs";
     # extras
     quadlet-nix.url = "github:seiarotg/quadlet-nix";

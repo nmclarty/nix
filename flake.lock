@@ -208,15 +208,15 @@
       "locked": {
         "lastModified": 1762491725,
         "narHash": "sha256-jbEhMyX1941/SUQriY97fqJuCWrS+FQNBcEiSQTS5QQ=",
-        "ref": "refs/heads/main",
+        "owner": "nmclarty",
+        "repo": "nix-private",
         "rev": "7709fa8c46c310e68b43f32cb7cfd7e78068ae6b",
-        "revCount": 22,
-        "type": "git",
-        "url": "ssh://git@github.com/nmclarty/nix-private"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/nmclarty/nix-private"
+        "owner": "nmclarty",
+        "repo": "nix-private",
+        "type": "github"
       }
     },
     "nixos-wsl": {

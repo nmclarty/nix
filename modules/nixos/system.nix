@@ -22,6 +22,9 @@
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
     };
+    extraOptions = ''
+      !include ${config.sops.templates."git/token".path}
+    '';
   };
 
   # disable generating man cache (because fish causes it to hang)
