@@ -1,4 +1,4 @@
-{ osConfig, inputs, ... }: {
+{ inputs, ... }: {
   programs = {
     direnv = {
       enable = true;
@@ -26,7 +26,7 @@
     git = {
       enable = true;
       userName = "Nevan McLarty";
-      userEmail = osConfig.private.git.email;
+      userEmail = "37232202+nmclarty@users.noreply.github.com";
       difftastic.enable = true;
       signing = {
         format = "ssh";

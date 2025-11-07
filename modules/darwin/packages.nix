@@ -1,4 +1,4 @@
-{perSystem, ...}: {
+{ perSystem, ... }: {
   environment.systemPackages = with perSystem.unstable; [
     go
     nodejs_24

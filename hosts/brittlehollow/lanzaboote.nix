@@ -1,4 +1,6 @@
-{ lib, perSystem, ... }: {
+{ inputs, lib, perSystem, ... }: {
+  # import flake module
+  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
   # sbctl to manage keys and for debugging
   environment.systemPackages = [ perSystem.unstable.sbctl ];
   boot = {

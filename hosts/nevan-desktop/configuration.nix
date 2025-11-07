@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{ inputs, perSystem, ... }: {
   imports = [
     inputs.nixos-wsl.nixosModules.default
   ];
@@ -7,4 +7,7 @@
     defaultUser = "nmclarty";
   };
   system.stateVersion = "25.05";
+  nixpkgs.hostPlatform = "x86_64-linux";
+  # home manager
+  home-manager.extraSpecialArgs = { unstable = perSystem.unstable; };
 }

@@ -1,7 +1,13 @@
 { config, pkgs, inputs, perSystem, ... }: {
+  # import flake modules
+  imports = with inputs; [
+    quadlet-nix.nixosModules.quadlet
+    nix-private.nixosModules.private
+  ];
+  # enable private options
+  private.enable = true;
   sops.secrets."podman.yaml" = {
-    sopsFile =
-      "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
+    sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
     key = "";
   };
   system.activationScripts.podman-secrets = {

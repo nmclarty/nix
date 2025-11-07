@@ -1,4 +1,6 @@
 { config, inputs, ... }: {
+  # import flake module
+  imports = [ inputs.sops-nix.nixosModules.sops ];
   sops = {
     defaultSopsFile =
       "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";

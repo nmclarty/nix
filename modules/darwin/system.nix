@@ -1,4 +1,4 @@
-{ perSystem, ...}: {
+{ perSystem, ... }: {
   # version
   system.stateVersion = 6;
   # nix settings
