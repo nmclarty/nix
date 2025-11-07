@@ -63,7 +63,7 @@ let
   '';
 in
 {
-  config = lib.mkIf pkgs.platform.isLinux {
+  config = lib.mkIf pkgs.stdenv.isLinux {
     home.packages = with pkgs; [
       unstable.rust-motd
       figlet
