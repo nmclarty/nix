@@ -15,7 +15,7 @@
       iperf
       # nixos
       nh
-      nil
+      nixd
       statix
       nixpkgs-fmt
       # backups
