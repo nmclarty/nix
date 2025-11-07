@@ -25,7 +25,10 @@
       enable = true;
       containersConf.settings = {
         # containers.log_driver = "k8s-file";
-        engine.events_logger = "file";
+        engine = {
+          events_logger = "file";
+          remote = true;
+        };
         secrets = {
           driver = "shell";
           opts = {

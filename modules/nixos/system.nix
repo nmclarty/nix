@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }: {
+{ pkgs, config, inputs, perSystem, ... }: {
   # version
   system.stateVersion = "25.05";
 
@@ -42,6 +42,9 @@
     services.sudo.sshAgentAuth = true;
   };
 
+  # home manager
+  home-manager.extraSpecialArgs = { unstable = perSystem.unstable; };
+
   # users
   sops.secrets = {
     "nmclarty/hashedPassword" = {
@@ -61,7 +64,7 @@
     };
     users.nmclarty = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "systemd-journal" ];
+      extraGroups = [ "wheel" "systemd-journal" "podman" ];
       shell = pkgs.fish;
       uid = 1000;
       hashedPasswordFile = config.sops.secrets."nmclarty/hashedPassword".path;

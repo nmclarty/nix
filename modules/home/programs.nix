@@ -94,10 +94,8 @@
         set -gx EDITOR micro
         set -gx NH_FLAKE ~/projects/nix/
 
-        # motd
-        if status is-login; and test -f /run/motd
-          cat /run/motd 2>/dev/null | head -n -1 | grep -v '^$'
-        end
+        # motd (remove empty lines)
+        rust-motd | grep -v '^$'
       '';
       shellAbbrs = {
         dc = "docker compose";
@@ -105,7 +103,11 @@
       };
       functions = {
         fish_greeting = "";
-        fish_prompt = ''set_color green; echo -n "($(basename $PWD)) > "'';
+        fish_prompt = ''
+          echo -n "$(hostname | lolcat -f)"
+          set_color brgreen; echo -n " [$(basename $PWD)]";
+          set_color bryellow; echo -n " > ";
+        '';
         helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
         helper-logs = ''
           cat /srv/utils/traefik/logs/access.log \

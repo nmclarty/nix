@@ -23,6 +23,8 @@
       # secrets
       sops
       pwgen
+      # prompt
+      lolcat
     ];
   };
 }

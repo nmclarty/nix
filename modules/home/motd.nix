@@ -1,4 +1,4 @@
-{ pkgs, flake, lib, config, perSystem, ... }:
+{ pkgs, unstable, flake, lib, osConfig, config, ... }:
 let
   last-updated = pkgs.writeScriptBin "last-updated" ''
     #!${pkgs.python3}/bin/python3
@@ -63,27 +63,18 @@ let
   '';
 in
 {
-  systemd.services.rust-motd = {
-    description = "Update the motd using rust-motd";
-    after = [ "network-online.target" ];
-    requires = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ perSystem.unstable.rust-motd bash hostname figlet lolcat python3 ];
-    script = ''
-      mkdir -p /var/lib/rust-motd
-      while true; do
-        rust-motd ${config.sops.templates."rust-motd/config.kdl".path} > /run/motd
-        sleep 60
-      done
-    '';
-  };
-  sops.templates."rust-motd/config.kdl" = {
-    restartUnits = [ "rust-motd.service" ];
-    owner = "root";
-    content =
+  home.packages = with pkgs; [
+    unstable.rust-motd
+    figlet
+    lolcat
+  ];
+  xdg = {
+    # ensure the state dir exists, so cg_stats works
+    stateFile."rust-motd/.empty".text = "";
+    configFile."rust-motd/config.kdl".text =
       let
         # creates a list of services without dashes in their names (only main, not their dependencies)
-        services = lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames config.virtualisation.quadlet.containers);
+        services = lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames osConfig.virtualisation.quadlet.containers);
         # turns that list into rust-motd container entries
         containers = lib.concatStringsSep "\n    " (map (s: "container display-name=\"${s}\" docker-name=\"/${s}\"") services);
       in
@@ -94,14 +85,14 @@ in
         }
         components {
           command "hostname | figlet | lolcat -f"
-          uptime prefix="Uptime:"
-          load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
-          cg-stats state-file="/var/lib/rust-motd/cg_stats.toml" threshold=0.01
           filesystems {
             filesystem name="nix" mount-point="/nix"
             filesystem name="services" mount-point="/srv"
           }
-          docker {
+          uptime prefix="Uptime:"
+          load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
+          cg-stats state-file="${config.xdg.stateHome}/rust-motd/cg_stats.toml" threshold=0.01
+          docker title="Podman" {
             ${containers}
           }
           command color="light-white" "${last-updated}/bin/last-updated nixpkgs unstable"

@@ -1,4 +1,4 @@
-{
+{ perSystem, ...}: {
   # version
   system.stateVersion = 6;
   # nix settings
@@ -19,4 +19,6 @@
   system.primaryUser = "nmclarty";
   # fish
   programs.fish.enable = true;
+  # home manager
+  home-manager.extraSpecialArgs = { unstable = perSystem.unstable; };
 }
