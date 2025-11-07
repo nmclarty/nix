@@ -31,7 +31,7 @@
       "git/allowed_signers" = {
         owner = "nmclarty";
         content = ''
-          ${config.private.git.email} namespaces="git" ${config.sops.placeholder."nmclarty/ssh/remote"}
+          37232202+nmclarty@users.noreply.github.com namespaces="git" ${config.sops.placeholder."nmclarty/ssh/remote"}
         '';
       };
     };
