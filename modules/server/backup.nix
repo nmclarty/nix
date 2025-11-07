@@ -90,13 +90,33 @@
       }
 
       set -euo pipefail
+
+      # make sure directories exist
       createDirs
+      
+      # get the list of running quadlet containers
       containers=$(getRunningContainers)
-      systemctl stop $containers
+
+      # stop containers if there are any
+      if [[ -n "$containers" ]]; then
+        systemctl stop $containers
+      fi
+
+      # unmount and delete any leftover snapshots
       cleanup zroot
+
+      # create new snapshots and mount them
       snapshot zroot
-      systemctl start $containers
+
+      # start containers if there are any
+      if [[ -n "$containers" ]]; then
+        systemctl start $containers
+      fi
+
+      # run the backups in parallel
       parallel -i resticprofile {}.backup -- local remote
+
+      # unmount and delete snapshots
       cleanup zroot
     '';
   };
