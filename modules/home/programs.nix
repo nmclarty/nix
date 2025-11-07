@@ -95,7 +95,9 @@
         set -gx NH_FLAKE ~/projects/nix/
 
         # motd (remove empty lines)
-        rust-motd | grep -v '^$'
+        if type -q rust-motd
+          rust-motd | grep -v '^$'
+        end
       '';
       shellAbbrs = {
         dc = "docker compose";
