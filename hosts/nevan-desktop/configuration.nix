@@ -9,5 +9,5 @@
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
   # home manager
-  home-manager.extraSpecialArgs = { unstable = perSystem.unstable; };
+  home-manager.extraSpecialArgs = { inherit (perSystem) unstable; };
 }

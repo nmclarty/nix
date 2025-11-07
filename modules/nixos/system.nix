@@ -46,7 +46,7 @@
   };
 
   # home manager
-  home-manager.extraSpecialArgs = { unstable = perSystem.unstable; };
+  home-manager.extraSpecialArgs = { inherit (perSystem) unstable; };
 
   # users
   sops.secrets = {

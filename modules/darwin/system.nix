@@ -10,8 +10,6 @@
       warn-dirty = false;
     };
   };
-  # set arch
-  nixpkgs.hostPlatform = "aarch64-darwin";
   # pam
   security.pam.services.sudo_local.touchIdAuth = true;
   # users
@@ -20,5 +18,5 @@
   # fish
   programs.fish.enable = true;
   # home manager
-  home-manager.extraSpecialArgs = { unstable = perSystem.unstable; };
+  home-manager.extraSpecialArgs = { inherit (perSystem) unstable; };
 }

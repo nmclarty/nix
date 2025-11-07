@@ -2,9 +2,6 @@
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # packages
-  # environment.systemPackages = with pkgs; [ ];
-
   # programs
   programs = {
     fish.enable = true;

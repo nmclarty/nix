@@ -24,8 +24,7 @@
       add_secrets || true
     '';
   };
-  systemd.services.podman.environment.LOGGING =
-    "--log-level=warn"; # reduce log spam
+  systemd.services.podman.environment.LOGGING = "--log-level=warn"; # reduce log spam
   virtualisation = {
     containers = {
       enable = true;
@@ -48,10 +47,10 @@
       package = perSystem.unstable.podman;
       autoPrune.enable = true;
       dockerSocket.enable = true;
-      extraPackages = [
-        pkgs.yq-go
-        pkgs.coreutils
-        pkgs.iptables
+      extraPackages = with pkgs; [
+        yq-go
+        coreutils
+        iptables
       ]; # yq and tr (coreutils) for parsing secrets, iptables for creating pods (doesn't work without it?)
     };
     quadlet = {
