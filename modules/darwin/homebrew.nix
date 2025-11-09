@@ -25,7 +25,9 @@
       "seafile-client"
       "tailscale-app"
       "scroll-reverser"
+      # tools
       "stats"
+      "balenaetcher"
       # development
       "docker-desktop"
       "visual-studio-code"
