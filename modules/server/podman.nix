@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, perSystem, ... }: {
+{ config, pkgs, inputs, ... }: {
   # import flake modules
   imports = with inputs; [
     quadlet-nix.nixosModules.quadlet
@@ -44,7 +44,6 @@
     };
     podman = {
       enable = true;
-      package = perSystem.unstable.podman;
       autoPrune.enable = true;
       dockerSocket.enable = true;
       extraPackages = with pkgs; [

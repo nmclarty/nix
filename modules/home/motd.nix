@@ -1,4 +1,4 @@
-{ pkgs, unstable, flake, lib, osConfig, config, ... }:
+{ pkgs, flake, lib, osConfig, config, ... }:
 let
   update-status = pkgs.writers.writePython3 "update-status" { }
     (builtins.readFile "${flake}/scripts/update-status.py");
@@ -8,7 +8,7 @@ in
 {
   config = lib.mkIf pkgs.stdenv.isLinux {
     home.packages = with pkgs; [
-      unstable.rust-motd
+      rust-motd
       figlet
       lolcat
     ];
@@ -40,7 +40,7 @@ in
             docker title="Podman" {
               ${containers}
             }
-            command color="light-white" "${update-status} ${flake} nixpkgs unstable"
+            command color="light-white" "${update-status} ${flake} nixpkgs"
             command color="light-white" "${backup-status} local remote"
           }
         '';

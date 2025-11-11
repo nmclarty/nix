@@ -1,4 +1,4 @@
-{ perSystem, ... }: {
+{ pkgs, ... }: {
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -20,12 +20,11 @@
   };
   services = {
     # clean up lingering apps on ssh session loss
-    logind.killUserProcesses = true;
+    logind.settings.Login.KillUserProcesses = true;
     # remote access
     tailscale = {
       enable = true;
       openFirewall = true;
-      package = perSystem.unstable.tailscale;
       useRoutingFeatures = "server";
     };
     sanoid = {
@@ -53,7 +52,7 @@
       enable = true;
       owner = "root";
       group = "root";
-      source = "${perSystem.unstable.btop}/bin/btop";
+      source = "${pkgs.btop}/bin/btop";
       capabilities = "cap_perfmon=ep";
     };
   };

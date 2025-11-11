@@ -25,20 +25,26 @@
     };
     git = {
       enable = true;
-      userName = "Nevan McLarty";
-      userEmail = "37232202+nmclarty@users.noreply.github.com";
-      difftastic.enable = true;
+      settings = {
+        user = {
+          name = "Nevan McLarty";
+          email = "37232202+nmclarty@users.noreply.github.com";
+        };
+        init.defaultBranch = "main";
+        gpg.ssh.defaultKeyCommand = "ssh-add -L";
+      };
       signing = {
         format = "ssh";
         signByDefault = true;
       };
-      extraConfig = {
-        init.defaultBranch = "main";
-        gpg.ssh.defaultKeyCommand = "ssh-add -L";
-      };
+    };
+    difftastic = {
+      enable = true;
+      git.enable = true;
     };
     ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks =
         let
           # get all the hosts

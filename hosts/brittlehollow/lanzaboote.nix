@@ -1,8 +1,8 @@
-{ inputs, lib, perSystem, ... }: {
+{ inputs, lib, pkgs, ... }: {
   # import flake module
   imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
   # sbctl to manage keys and for debugging
-  environment.systemPackages = [ perSystem.unstable.sbctl ];
+  environment.systemPackages = with pkgs; [ sbctl ];
   boot = {
     # lanzaboote replaces systemd-boot
     loader.systemd-boot.enable = lib.mkForce false;

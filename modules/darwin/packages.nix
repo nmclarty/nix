@@ -1,5 +1,5 @@
-{ perSystem, ... }: {
-  environment.systemPackages = with perSystem.unstable; [
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [
     go
     nodejs_24
     yarn-berry

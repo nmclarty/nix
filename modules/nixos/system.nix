@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, perSystem, ... }: {
+{ pkgs, config, inputs, ... }: {
   # version
   system.stateVersion = "25.05";
 
@@ -44,9 +44,6 @@
     };
     services.sudo.sshAgentAuth = true;
   };
-
-  # home manager
-  home-manager.extraSpecialArgs = { inherit (perSystem) unstable; };
 
   # users
   sops.secrets = {
