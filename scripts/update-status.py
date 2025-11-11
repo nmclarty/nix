@@ -57,15 +57,20 @@ inputs = argv[2:]
 with open(flake_lock_path, "r") as file:
     flake_lock = load(file)
 
-# load the status info in json from comin, and the parse it
-status = parse_status(
-    loads(run(["comin", "status", "--json"],
-              capture_output=True, text=True, check=True).stdout))
+try:
+    # load the status info in json from comin, and the parse it
+    status = parse_status(
+        loads(run(["comin", "status", "--json"],
+                  capture_output=True, text=True, check=True).stdout))
+except TypeError:
+    print("Updates:")
+    print("  Status: (N/A) Could not retrieve update status (yet?)")
+    exit()
 
 # don't show extra info if there is none
 extra_info = f' [{status["extra"]}]' if status["extra"] else ""
 
-print("Updates: ")
+print("Updates:")
 print(f'  Status: ({status["status"]}) {status["ago"]}{extra_info}')
 print(f'  Commit: ({status["sha"][:7]}) "{status["msg"]}"')
 print("  Inputs:")
