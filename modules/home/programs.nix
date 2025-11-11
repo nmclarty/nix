@@ -71,6 +71,11 @@
               hostname = "ssh.github.com";
               port = 443;
             };
+            nixos = {
+              hostname = "10.4.0.108";
+              user = "root";
+              forwardAgent = true;
+            };
           };
         in
         # combine both and set the config option
