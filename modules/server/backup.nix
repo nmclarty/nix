@@ -11,24 +11,24 @@
     content = ''
       version = "1"
       [template]
-        force-inactive-lock = "true"
-        initialize = "true"
+        force-inactive-lock = true
+        initialize = true
         cache-dir = "/var/cache/restic"
-        cleanup-cache = "true"
-        extended-status = "true"
-        pack-size = "64"
+        cleanup-cache = true
+        extended-status = true
+        pack-size = 64
         password-file = "${config.sops.secrets."restic/password".path}"
         [template.backup]
           tag = "automatic"
-          source = [ "home", "srv", "nixos" ]
+          source = [ "nixos", "srv" ]
           source-base = "/.backup"
-          source-relative = "true"
+          source-relative = true
         [template.retention]
-          after-backup = "true"
-          tag = "true"
-          prune = "true"
-          keep-daily = "7"
-          keep-weekly = "4"
+          after-backup = true
+          tag = true
+          prune = true
+          keep-daily = 7
+          keep-weekly = 4
 
       [local]
         inherit = "template"

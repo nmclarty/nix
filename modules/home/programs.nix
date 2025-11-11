@@ -15,7 +15,7 @@
         proc_gradient = false;
         proc_filter_kernel = true;
         proc_aggregate = true;
-        disks_filter = "/ /nix /srv /home";
+        disks_filter = "/ /srv /nix ";
         swap_disk = false;
         use_fstab = false;
         disk_free_priv = true;
@@ -111,6 +111,7 @@
           set_color bryellow; echo -n " > ";
         '';
         helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
+        helper-ps = "sudo podman ps --format='table {{.Names}}\t{{.Status}}\t{{.Image}}'";
         helper-logs = ''
           cat /srv/utils/traefik/logs/access.log \
           | grep "$argv[1]@docker" (if test (count $argv) -eq 0; echo "-v"; end) \
