@@ -25,6 +25,8 @@
       pwgen
       # prompt
       lolcat
+      # development
+      python3
     ];
   };
 }
