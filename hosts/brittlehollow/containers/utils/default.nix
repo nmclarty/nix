@@ -21,12 +21,18 @@
             "/srv/utils/traefik:/data"
           ];
           sysctl."net.ipv4.ip_unprivileged_port_start" = "80";
-          publishPorts = [ "80:80" "443:443" ];
+          publishPorts = [
+            "80:80" # main http
+            "443:443" # main https
+            "8443:8443" # tailscale https
+          ];
           networks = [ "socket-proxy" "exposed:ip=10.90.0.2" ];
           labels = {
             "traefik.enable" = "true";
-            "traefik.http.routers.dashboard.service" = "api@internal";
-            "traefik.http.routers.dashboard.middlewares" = "tinyauth";
+            "traefik.http.routers.traefik.service" = "api@internal";
+            "traefik.http.routers.traefik.middlewares" = "tinyauth";
+            "traefik.http.routers.traefik.entrypoints" = "tailscale";
+            "traefik.http.routers.traefik.rule" = "Host(`traefik.ts.${config.private.domain}`)";
           };
           healthCmd = "traefik healthcheck";
           healthStartupCmd = "sleep 10";
@@ -111,6 +117,9 @@
             "traefik.enable" = "true";
             "traefik.http.middlewares.tinyauth.forwardauth.address" = "http://tinyauth:3000/api/auth/traefik";
           };
+          healthCmd = "tinyauth healthcheck";
+          healthStartupCmd = "sleep 10";
+          healthOnFailure = "kill";
         };
       };
 

@@ -80,7 +80,7 @@
               "concurrency": 5
             },
             "faceDetection": {
-              "concurrency": 8
+              "concurrency": 2
             },
             "library": {
               "concurrency": 5
@@ -95,7 +95,7 @@
               "concurrency": 5
             },
             "ocr": {
-              "concurrency": 5
+              "concurrency": 1
             },
             "search": {
               "concurrency": 5
@@ -104,13 +104,13 @@
               "concurrency": 5
             },
             "smartSearch": {
-              "concurrency": 8
+              "concurrency": 2
             },
             "thumbnailGeneration": {
               "concurrency": 3
             },
             "videoConversion": {
-              "concurrency": 4
+              "concurrency": 1
             }
           },
           "library": {
@@ -153,7 +153,7 @@
               "maxResolution": 736,
               "minDetectionScore": 0.5,
               "minRecognitionScore": 0.8,
-              "modelName": "PP-OCRv5_server"
+              "modelName": "PP-OCRv5_mobile"
             },
             "urls": [
               "http://immich-learning:3003"

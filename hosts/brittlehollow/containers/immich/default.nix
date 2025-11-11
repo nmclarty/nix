@@ -71,6 +71,7 @@
           image = "ghcr.io/immich-app/immich-machine-learning:release-openvino";
           autoUpdate = "registry";
           userns = "auto:uidmapping=0:2004:1,gidmapping=0:2004:1";
+          environments = { MACHINE_LEARNING_MODEL_INTRA_OP_THREADS = "2"; };
           podmanArgs = [ "--device-cgroup-rule=c 189:* rmw" ];
           devices = [ "/dev/dri:/dev/dri" ];
           volumes =

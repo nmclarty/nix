@@ -10,7 +10,7 @@
           log:
             level: INFO
           ping:
-            entryPoint: traefik
+            entryPoint: http
           accessLog:
             filePath: /data/logs/access.log
 
@@ -24,6 +24,7 @@
                     scheme: https
             https:
               address: :443
+              asDefault: true
               http:
                 middlewares:
                   - security@file
@@ -37,6 +38,16 @@
               transport:
                 respondingTimeouts:
                   readTimeout: "0s"
+
+            tailscale:
+              address: :8443
+              http:
+                tls:
+                  certResolver: cloudflare
+                  domains:
+                    - main: "ts.${config.private.domain}"
+                      sans:
+                        - "*.ts.${config.private.domain}"
 
           providers:
             file:
