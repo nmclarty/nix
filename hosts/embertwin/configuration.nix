@@ -1,4 +1,4 @@
-{ flake, ... }: {
+{ flake, pkgs, ... }: {
   imports = [
     flake.modules.nixos.default
     flake.modules.server.default
@@ -9,4 +9,5 @@
     hostId = "c8cdbbba";
     useNetworkd = true;
   };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
