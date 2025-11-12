@@ -33,6 +33,7 @@
       "visual-studio-code"
       "wireshark-app"
       "jetbrains-toolbox"
+      "claude-code"
       # media
       "google-chrome"
       "spotify"
