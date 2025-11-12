@@ -1,4 +1,5 @@
-{
+{flake, ...}: {
+  imports = [ flake.nixosModules.disko ];
   disko.devices = {
     disk = {
       primary = {

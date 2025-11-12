@@ -2,6 +2,7 @@
   imports = [
     flake.modules.nixos.default
     flake.modules.server.default
+    ./disko.nix
   ];
   # Network
   networking = {
