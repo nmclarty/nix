@@ -1,7 +1,8 @@
-{ flake, pkgs, ... }: {
+{ inputs, flake, pkgs, ... }: {
   imports = [
     flake.modules.nixos.default
     flake.modules.server.default
+    inputs.disko.nixosModules.disko
     ./disko.nix
   ];
   # Network
