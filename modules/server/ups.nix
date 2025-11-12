@@ -1,7 +1,7 @@
 { lib, config, inputs, ... }: {
   sops.secrets."nut/monuser".sopsFile = "${inputs.nix-private}/secrets.yaml";
   power.ups = {
-    enable = true;
+    enable = false;
     mode = lib.mkDefault "netclient";
     # basic user for monitoring only
     users.monuser = {

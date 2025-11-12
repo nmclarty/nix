@@ -3,7 +3,7 @@
   # secret for pulling private repos
   sops.secrets."github/token".sopsFile = "${inputs.nix-private}/secrets.yaml";
   services.comin = {
-    enable = true;
+    enable = false;
     remotes = [
       {
         name = "github";
