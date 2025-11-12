@@ -32,7 +32,7 @@
       zroot = {
         type = "zpool";
         options = {
-          ashift = 12;
+          ashift = "12";
           autotrim = "on";
         };
         rootFsOptions = {
