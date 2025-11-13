@@ -1,6 +1,8 @@
 { pkgs, ... }: {
   home = {
     packages = with pkgs; [
+      # general
+      eza
       # general utilities
       gdu
       micro
