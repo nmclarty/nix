@@ -29,6 +29,8 @@
       lolcat
       # development
       python3
+      nodejs
+      go
     ];
   };
 }
