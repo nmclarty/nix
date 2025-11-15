@@ -14,10 +14,16 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@4
-      - uses: DeterminateSystems/determinate-nix-action@v3
-      - uses: DeterminateSystems/update-flake-lock@main
+      - name: Checout repository
+        uses: actions/checkout@v4
+
+      - name: Install nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
         with:
+          nix-options: "--access-tokens github.com=${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}"
           pr-title: "Flake.lock: update inputs"
           pr-labels: |
             automated
