@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/determinate-nix-action@v3
+        with:
+          token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
       - uses: DeterminateSystems/update-flake-lock@main
         with:
           pr-title: "Flake.lock: update inputs"
