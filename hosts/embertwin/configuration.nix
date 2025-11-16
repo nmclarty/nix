@@ -5,6 +5,8 @@
     inputs.disko.nixosModules.disko
     ./disko.nix
   ];
+  # architecture
+  nixpkgs.hostPlatform = "aarch64-linux";
   # Network
   networking = {
     hostName = "embertwin";
