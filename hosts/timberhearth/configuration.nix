@@ -1,4 +1,4 @@
-{ flake, ... }: {
+{ flake, inputs, ... }: {
   imports = with flake.modules; [
     # profiles
     nixos.default
