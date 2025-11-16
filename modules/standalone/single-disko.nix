@@ -39,6 +39,7 @@
           compression = "lz4";
           xattr = "sa";
         };
+        mountpoint = "none";
         datasets = {
           # persistent datasets (will be backed up)
           nixos = {
