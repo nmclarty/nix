@@ -20,8 +20,8 @@
             swap = {
               size = "8G";
               content = {
-              	type = "swap";
-              	randomEncryption = true;
+                type = "swap";
+                randomEncryption = true;
               };
             };
             root = {
