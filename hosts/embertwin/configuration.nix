@@ -5,13 +5,18 @@
     inputs.disko.nixosModules.disko
     ./disko.nix
   ];
-  # architecture
-  nixpkgs.hostPlatform = "aarch64-linux";
   # Network
   networking = {
     hostName = "embertwin";
     hostId = "c8cdbbba";
     useNetworkd = true;
   };
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # hardware
+  nixpkgs.hostPlatform = "aarch64-linux";
+  boot = {
+    # lts kernel lacks support for many rock 5b features
+    kernelPackages = pkgs.linuxPackages_latest;
+    initrd.availableKernelModules = [ "nvme" "usbhid" "usb_storage" "sr_mod" ];
+  };
 }

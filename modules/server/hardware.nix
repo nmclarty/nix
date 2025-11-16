@@ -1,6 +1,6 @@
 { config, lib, modulesPath, ... }: {
-  # # extra hardware configuration
-  # imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  # extra hardware configuration
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   # # kernel modules
   # boot.initrd.availableKernelModules =
