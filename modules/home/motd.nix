@@ -30,10 +30,6 @@ in
           }
           components {
             command "hostname | figlet | lolcat -f"
-            filesystems {
-              filesystem name="nix" mount-point="/nix"
-              filesystem name="services" mount-point="/srv"
-            }
             uptime prefix="Uptime:"
             load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
             cg-stats state-file="${config.xdg.stateHome}/rust-motd/cg_stats.toml" threshold=0.01
