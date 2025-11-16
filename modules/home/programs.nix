@@ -111,6 +111,11 @@
         end
       '';
       shellAbbrs = {
+        # general
+        ll = "eza -lh --git";
+        la = "eza -lh --git --all";
+        lt = "eza -lh --git --tree --git-ignore --total-size";
+        # docker
         dc = "docker compose";
         de = "docker exec -it";
       };

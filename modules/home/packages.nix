@@ -1,6 +1,8 @@
 { pkgs, ... }: {
   home = {
     packages = with pkgs; [
+      # general
+      eza
       # general utilities
       gdu
       micro
@@ -27,6 +29,8 @@
       lolcat
       # development
       python3
+      nodejs
+      go
     ];
   };
 }
