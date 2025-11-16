@@ -55,11 +55,11 @@
             type = "zfs_fs";
             mountpoint = "/nix";
           };
-          "zroot/nixos/cache" = {
+          "nixos/cache" = {
             type = "zfs_fs";
             mountpoint = "/var/cache";
           };
-          "zroot/nixos/containers" = {
+          "nixos/containers" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/containers";
           };
