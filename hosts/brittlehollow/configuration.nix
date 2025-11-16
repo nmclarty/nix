@@ -1,7 +1,12 @@
 { inputs, config, flake, ... }: {
-  imports = [
-    flake.modules.nixos.default
-    flake.modules.server.default
+  imports = with flake.modules; [
+    # profiles
+    nixos.default
+    server.default
+    # standalone
+    standalone.server-disko
+    inputs.disko.nixosModules.disko
+    # host
     ./containers
     ./ups.nix
     ./lanzaboote.nix
