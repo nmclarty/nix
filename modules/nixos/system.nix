@@ -2,6 +2,18 @@
   # version
   system.stateVersion = "25.05";
 
+  # enable nonfree firmware
+  hardware.enableRedistributableFirmware = true;
+
+  # use systemd boot
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot = {
+      configurationLimit = 5;
+      enable = true;
+    };
+  };
+
   # locale
   time.timeZone = "America/Vancouver";
   i18n.defaultLocale = "en_CA.UTF-8";

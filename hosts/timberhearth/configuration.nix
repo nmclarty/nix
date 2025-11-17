@@ -1,12 +1,21 @@
-{ flake, ... }: {
-  imports = [
-    flake.modules.nixos.default
-    flake.modules.server.default
+{ flake, inputs, ... }: {
+  imports = with flake.modules; [
+    # profiles
+    nixos.default
+    server.default
+    # standalone
+    disko.single
+    inputs.disko.nixosModules.disko
   ];
-  # Network
+  # hardware
   networking = {
     hostName = "timberhearth";
     hostId = "41bc3559";
-    useNetworkd = true;
+  };
+  nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = true;
+  boot = {
+    initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "sd_mod" ];
+    kernelModules = [ "kvm-intel" ];
   };
 }

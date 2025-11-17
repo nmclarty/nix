@@ -64,7 +64,12 @@ try:
                   capture_output=True, text=True, check=True).stdout))
 except TypeError:
     print("Updates:")
-    print("  Status: (N/A) Could not retrieve update status (yet?)")
+    print("  (N/A) Update status not available")
+    exit()
+
+except FileNotFoundError:
+    print("Updates:")
+    print("  (N/A) Comin binary not found")
     exit()
 
 # don't show extra info if there is none

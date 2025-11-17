@@ -11,7 +11,7 @@ def get_status(profile):
         with open(f'{status_path}/{profile}.status', "r") as file:
             data = json.load(file)
     except FileNotFoundError:
-        print("  N/A")
+        print("  (N/A) Backup status not found")
         exit()
     status = data["profiles"][profile]["backup"]
     status["profile"] = profile
