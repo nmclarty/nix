@@ -4,7 +4,7 @@
     nixos.default
     server.default
     # standalone
-    standalone.single-disko
+    disko.single
     inputs.disko.nixosModules.disko
   ];
   # hardware

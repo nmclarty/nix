@@ -4,7 +4,7 @@
     nixos.default
     server.default
     # standalone
-    standalone.sbc-disko
+    disko.sbc
     inputs.disko.nixosModules.disko
   ];
 

@@ -4,7 +4,7 @@
     nixos.default
     server.default
     # standalone
-    standalone.mirror-disko
+    disko.mirror
     inputs.disko.nixosModules.disko
     # host
     ./containers
