@@ -3,7 +3,7 @@
     packages = with pkgs; [
       # general
       eza
-      # general utilities
+      # utilities
       gdu
       micro
       wget
@@ -15,6 +15,7 @@
       lazygit
       goaccess
       iperf
+      ssh-to-age
       # nixos
       nh
       nixd
