@@ -14,6 +14,9 @@
     };
   };
 
+  # tailscale needs networkd for dns to work properly
+  networking.useNetworkd = true;
+
   # locale
   time.timeZone = "America/Vancouver";
   i18n.defaultLocale = "en_CA.UTF-8";
