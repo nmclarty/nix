@@ -15,6 +15,9 @@
   wsl = {
     enable = true;
     defaultUser = "nmclarty";
+    wslConf = {
+      interop.enabled = false;
+    };
   };
   system.stateVersion = "25.05";
 }
