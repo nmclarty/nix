@@ -37,9 +37,6 @@
       enable = true;
       git.enable = true;
     };
-    gh = {
-      enable = true;
-    };
     ssh = {
       enable = true;
       enableDefaultConfig = false;
