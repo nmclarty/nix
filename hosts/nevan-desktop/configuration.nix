@@ -5,6 +5,9 @@
     # standalone
     inputs.nixos-wsl.nixosModules.default
   ];
+  
+  # workaround to fix slow startup
+  services.chrony.servers = [];
 
   # hardware
   networking = {
