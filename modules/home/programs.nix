@@ -119,6 +119,7 @@
         '';
         helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
         helper-ps = "sudo podman ps --format='table {{.Names}}\t{{.Status}}\t{{.Image}}'";
+        helper-hostid = "head -c4 /dev/urandom | xxd -p";
         helper-logs = ''
           cat /srv/utils/traefik/logs/access.log \
           | grep "$argv[1]@docker" (if test (count $argv) -eq 0; echo "-v"; end) \
