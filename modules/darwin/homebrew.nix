@@ -13,6 +13,8 @@
     };
     brews = [
       "mas"
+      "docker"
+      { name = "colima"; restart_service = true; }
     ];
     masApps = {
       Xcode = 497799835;

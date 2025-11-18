@@ -16,8 +16,5 @@
   users.users.nmclarty.home = "/Users/nmclarty";
   system.primaryUser = "nmclarty";
   # fish
-  programs.fish = {
-    enable = true;
-    package = pkgs.fish.overrideAttrs { doCheck = false; };
-  };
+  programs.fish.enable = true;
 }
