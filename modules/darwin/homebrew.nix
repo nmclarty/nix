@@ -14,6 +14,7 @@
     brews = [
       "mas"
       "docker"
+      "docker-compose"
       { name = "colima"; restart_service = true; }
     ];
     masApps = {
