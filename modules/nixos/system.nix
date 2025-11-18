@@ -10,9 +10,6 @@
   # enable nonfree firmware
   hardware.enableRedistributableFirmware = true;
 
-  # use networkd for a more modern networking stack
-  networking.useNetworkd = true;
-
   # use zram for memory compression
   zramSwap.enable = true;
 

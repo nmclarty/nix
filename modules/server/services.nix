@@ -1,4 +1,6 @@
 {
+  # tailscale needs networkd for dns to work properly
+  networking.useNetworkd = true;
   systemd.services.tailscaled = {
     # since tailscale ssh is killed during switch
     # disable automatic restarts, and manage updates manually
