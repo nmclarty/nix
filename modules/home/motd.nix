@@ -6,7 +6,7 @@ let
     (builtins.readFile "${flake}/scripts/backup-status.py");
 in
 {
-  config = lib.mkIf osConfig.virtualisation.quadlet.enable {
+  config = lib.mkIf osConfig.virtualisation.quadlet.enable || false {
     home.packages = with pkgs; [
       rust-motd
       figlet
