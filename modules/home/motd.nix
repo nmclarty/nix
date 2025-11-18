@@ -4,9 +4,11 @@ let
     (builtins.readFile "${flake}/scripts/update-status.py");
   backup-status = pkgs.writers.writePython3 "backup-status" { }
     (builtins.readFile "${flake}/scripts/backup-status.py");
+  
+  isEnabled = osConfig.virtualisation.quadlet.enable or false;
 in
 {
-  config = lib.mkIf osConfig.virtualisation.quadlet.enable || false {
+  config = lib.mkIf isEnabled {
     home.packages = with pkgs; [
       rust-motd
       figlet
