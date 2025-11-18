@@ -97,7 +97,7 @@
         set -gx NH_FLAKE ~/projects/nix/
 
         # motd (remove empty lines)
-        if type -q rust-motd
+        if type -q rust-motd; and test "$TERM_PROGRAM" != "vscode"
           rust-motd | grep -v '^$'
         end
       '';
