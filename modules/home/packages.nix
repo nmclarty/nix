@@ -30,8 +30,9 @@
       # secrets
       sops
       pwgen
-      # prompt
+      # fish
       lolcat
+      xxd
       # development
       python3
       nodejs
