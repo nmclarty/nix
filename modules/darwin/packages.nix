@@ -4,5 +4,6 @@
     gdal
     kubectl
     kubelogin-oidc
+    colima
   ];
 }
