@@ -34,6 +34,7 @@
       lolcat
       xxd
       # development
+      docker-client
       python3
       nodejs
       go

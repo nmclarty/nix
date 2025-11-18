@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, ... }: {
   programs = {
     btop = {
       enable = true;
@@ -36,6 +36,9 @@
     difftastic = {
       enable = true;
       git.enable = true;
+    };
+    gh = {
+      enable = true;
     };
     ssh = {
       enable = true;
@@ -87,7 +90,8 @@
         # load homebrew env
         set brew /opt/homebrew/bin/brew
         if test -f $brew
-          eval ($brew shellenv)
+          # load homebrew environment variables, but override them to end of $PATH
+          eval ($brew shellenv | string replace -r '(fish_add_path)' '$1 --append')
         end
       '';
       loginShellInit = ''

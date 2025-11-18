@@ -12,9 +12,12 @@
       appdir = "/Applications/homebrew";
     };
     brews = [
+      # mas cli for searching for mac app store apps
       "mas"
+      # colima requires the docker cli, otherwise it won't start
+      # however, we're not going to use it (instead from home manager)
       "docker"
-      "docker-compose"
+      # install colima and automatically start/restart it
       { name = "colima"; restart_service = true; }
     ];
     masApps = {
