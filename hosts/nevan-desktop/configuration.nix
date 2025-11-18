@@ -1,7 +1,9 @@
-{ inputs, ... }: {
-  imports = [
+{ inputs, flake, ... }: {
+  imports = with flake.modules; [
+    # standalone
     inputs.nixos-wsl.nixosModules.default
   ];
+  # hardware
   wsl = {
     enable = true;
     defaultUser = "nmclarty";
