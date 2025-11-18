@@ -1,10 +1,5 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   programs = {
-    direnv = {
-      enable = true;
-      silent = true;
-      nix-direnv.enable = true;
-    };
     btop = {
       enable = true;
       settings = {
@@ -78,6 +73,7 @@
     };
     fish = {
       enable = true;
+      package = pkgs.fish.overrideAttrs { doCheck = false; };
       interactiveShellInit = ''
         # set up ssh auth socket
         set op_sock ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock

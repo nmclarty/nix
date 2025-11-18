@@ -4,7 +4,9 @@
     global.autoUpdate = false;
     onActivation = {
       cleanup = "zap";
+      autoUpdate = true;
       upgrade = true;
+      extraFlags = [ "--quiet" ];
     };
     caskArgs = {
       appdir = "/Applications/homebrew";

@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   # version
   system.stateVersion = 6;
   # nix settings
@@ -16,5 +16,8 @@
   users.users.nmclarty.home = "/Users/nmclarty";
   system.primaryUser = "nmclarty";
   # fish
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    package = pkgs.fish.overrideAttrs { doCheck = false; };
+  };
 }

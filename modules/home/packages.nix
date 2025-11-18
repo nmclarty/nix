@@ -1,8 +1,13 @@
 { pkgs, ... }: {
   home = {
     packages = with pkgs; [
-      # general
+      # shell
       eza
+      fd
+      zoxide
+      bat
+      ripgrep
+      tldr
       # utilities
       gdu
       micro
@@ -10,7 +15,6 @@
       doggo
       moreutils
       yq-go
-      difftastic
       zstd
       lazygit
       goaccess
