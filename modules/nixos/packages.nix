@@ -4,6 +4,7 @@
 
   # programs
   programs = {
+    # fish is mainly configured in home manager
     fish.enable = true;
     # to fix vscode remote development
     nix-ld.enable = true;
@@ -11,39 +12,8 @@
     command-not-found.enable = false;
   };
 
-  # services
-  systemd.services.tailscaled = {
-    # since tailscale ssh is killed during switch
-    # disable automatic restarts, and manage updates manually
-    restartIfChanged = false;
-    serviceConfig.LogLevelMax = "notice";
-  };
-  services = {
-    # clean up lingering apps on ssh session loss
-    logind.settings.Login.KillUserProcesses = true;
-    # remote access
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-      useRoutingFeatures = "server";
-    };
-    sanoid = {
-      enable = true;
-      templates.default = {
-        hourly = 24;
-        daily = 7;
-        monthly = 0;
-        yearly = 0;
-        autosnap = true;
-        autoprune = true;
-      };
-      datasets.zroot = {
-        useTemplate = [ "default" ];
-        recursive = true;
-        processChildrenOnly = true;
-      };
-    };
-  };
+  # disable generating man cache (because fish causes it to hang)
+  documentation.man.generateCaches = false;
 
   # security
   security = {

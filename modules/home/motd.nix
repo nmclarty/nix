@@ -6,7 +6,7 @@ let
     (builtins.readFile "${flake}/scripts/backup-status.py");
 
   # if we're managing containers declaratively using quadlet
-  isEnabled = osConfig.virtualisation.quadlet.enable or false;
+  isEnabled = (osConfig.virtualisation.quadlet.enable or false) == true;
   # create a list of services without dashes in their names
   # (indicating that they are main containers, not dependencies)
   # and turn that list into rust-motd container entries

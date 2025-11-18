@@ -1,5 +1,7 @@
 { inputs, flake, ... }: {
   imports = with flake.modules; [
+    # profiles
+    nixos.default
     # standalone
     inputs.nixos-wsl.nixosModules.default
   ];

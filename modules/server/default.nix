@@ -1,9 +1,10 @@
 {
   imports = [
     ./backup.nix
-    ./packages.nix
+    ./services.nix
     ./podman.nix
     ./ups.nix
     ./comin.nix
+    ./system.nix
   ];
 }

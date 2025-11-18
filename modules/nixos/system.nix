@@ -1,31 +1,28 @@
-{ pkgs, config, inputs, ... }: {
+{ config, ... }: {
   # version
   system.stateVersion = "25.05";
-
-  # enable nonfree firmware
-  hardware.enableRedistributableFirmware = true;
-
-  # use systemd boot
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    systemd-boot = {
-      configurationLimit = 5;
-      enable = true;
-    };
-  };
-
-  # tailscale needs networkd for dns to work properly
-  networking.useNetworkd = true;
 
   # locale
   time.timeZone = "America/Vancouver";
   i18n.defaultLocale = "en_CA.UTF-8";
   services.xserver.xkb.layout = "us";
 
-  # swap
+  # enable nonfree firmware
+  hardware.enableRedistributableFirmware = true;
+
+  # use networkd for a more modern networking stack
+  networking.useNetworkd = true;
+
+  # use zram for memory compression
   zramSwap.enable = true;
 
   # nix settings
+  sops.templates."nix/access-token" = {
+    owner = "nmclarty";
+    content = ''
+      access-tokens = github.com=${config.sops.placeholder."github/token"}
+    '';
+  };
   nix = {
     optimise.automatic = true;
     gc = {
@@ -38,51 +35,7 @@
       warn-dirty = false;
     };
     extraOptions = ''
-      !include ${config.sops.templates."git/token".path}
+      !include ${config.sops.templates."nix/access-token".path}
     '';
-  };
-
-  # disable generating man cache (because fish causes it to hang)
-  documentation.man.generateCaches = false;
-
-  # sysctls
-  boot.kernel.sysctl = {
-    "net.ipv4.tcp_congestion_control" = "bbr";
-    "vm.overcommit_memory" = 1; # allow overcommit for redis
-  };
-
-  # pam
-  security.pam = {
-    sshAgentAuth = {
-      enable = true;
-      authorizedKeysFiles = [ config.sops.secrets."nmclarty/ssh/remote".path ];
-    };
-    services.sudo.sshAgentAuth = true;
-  };
-
-  # users
-  sops.secrets = {
-    "nmclarty/hashedPassword" = {
-      sopsFile = "${inputs.nix-private}/secrets.yaml";
-      neededForUsers = true;
-    };
-    "root/hashedPassword" = {
-      sopsFile = "${inputs.nix-private}/secrets.yaml";
-      neededForUsers = true;
-    };
-  };
-  users = {
-    mutableUsers = false;
-    users.root = {
-      shell = pkgs.fish;
-      hashedPasswordFile = config.sops.secrets."root/hashedPassword".path;
-    };
-    users.nmclarty = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" "systemd-journal" "podman" ];
-      shell = pkgs.fish;
-      uid = 1000;
-      hashedPasswordFile = config.sops.secrets."nmclarty/hashedPassword".path;
-    };
   };
 }
