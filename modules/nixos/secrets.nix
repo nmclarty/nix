@@ -16,16 +16,6 @@
         sopsFile = "${inputs.nix-private}/secrets.yaml";
         mode = "0444"; # world-readable because it's a public key
       };
-      "nmclarty/ssh/public" = {
-        sopsFile = "${inputs.nix-private}/secrets.yaml";
-        path = "/home/nmclarty/.ssh/id_ed25519.pub";
-        mode = "0444"; # world-readable because it's a public key
-      };
-      "nmclarty/ssh/private" = {
-        sopsFile = "${inputs.nix-private}/secrets.yaml";
-        path = "/home/nmclarty/.ssh/id_ed25519";
-        owner = "nmclarty";
-      };
     };
     templates = {
       "git/allowed_signers" = {
