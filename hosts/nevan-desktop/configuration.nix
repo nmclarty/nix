@@ -5,9 +5,6 @@
     # standalone
     inputs.nixos-wsl.nixosModules.default
   ];
-  
-  # workaround to fix slow startup
-  services.chrony.servers = [];
 
   # hardware
   networking = {
@@ -19,7 +16,10 @@
     enable = true;
     defaultUser = "nmclarty";
     wslConf = {
-      interop.enabled = false;
+      interop = {
+        enabled = false;
+        appendWindowsPath = false;
+      };
     };
   };
   system.stateVersion = "25.05";
