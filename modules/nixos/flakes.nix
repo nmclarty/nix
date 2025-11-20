@@ -1,5 +1,5 @@
 { inputs, ... }: {
   imports = with inputs; [
-    nix-index-database.darwinModules.nix-index
+    nix-index-database.nixosModules.nix-index
   ];
 }
