@@ -33,9 +33,11 @@
       # fish
       lolcat
       xxd
-      # development
+      # dev tools
       gh
       docker-client
+      shellcheck
+      # dev languages
       python3
       nodejs
       go

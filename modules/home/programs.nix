@@ -75,30 +75,39 @@
       enable = true;
       interactiveShellInit = ''
         # set up ssh auth socket
-        set op_sock ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+        set op_sock "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
         if test -S $op_sock
-          # if 1password agent socket exists, use it
-          set -gx SSH_AUTH_SOCK $op_sock
+            # if 1password agent socket exists, use it
+            set -gx SSH_AUTH_SOCK $op_sock
         else if test -L "$SSH_AUTH_SOCK"
-          # if we're running remotely via ssh, resolve the symlink
-          set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
+            # if we're running remotely via ssh, resolve the symlink
+            set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
         end
 
         # load homebrew env
         set brew /opt/homebrew/bin/brew
         if test -f $brew
-          # load homebrew environment variables, but override them to end of $PATH
-          eval ($brew shellenv | string replace -r '(fish_add_path)' '$1 --append')
+            # load homebrew environment variables, but override them to end of $PATH
+            eval ($brew shellenv | string replace -r '(fish_add_path)' '$1 --append')
         end
+
       '';
       loginShellInit = ''
         # env vars
         set -gx EDITOR micro
         set -gx NH_FLAKE ~/projects/nix/
 
-        # motd (remove empty lines)
-        if type -q rust-motd; and test "$TERM_PROGRAM" != "vscode"
-          rust-motd | grep -v '^$'
+        # motd
+        if test "$TERM_PROGRAM" != vscode
+            # show hostname if we're connecting remotely
+            if test -n "$SSH_CONNECTION"
+                hostname | figlet | lolcat -f
+            end
+
+            # display rust-motd, removing blank lines
+            if type -q rust-motd
+                rust-motd | grep -v '^$'
+            end
         end
       '';
       shellAbbrs = {

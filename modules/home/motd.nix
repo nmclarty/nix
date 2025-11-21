@@ -1,9 +1,10 @@
 { pkgs, flake, lib, osConfig, config, ... }:
+# optional/extra feature configurations
 let
-  update-status = pkgs.writers.writePython3 "update-status" { }
-    (builtins.readFile "${flake}/scripts/update-status.py");
-  backup-status = pkgs.writers.writePython3 "backup-status" { }
-    (builtins.readFile "${flake}/scripts/backup-status.py");
+  cgStats =
+    if pkgs.stdenv.isLinux then ''
+      cg-stats state-file="${config.xdg.stateHome}/rust-motd/cg_stats.toml" threshold=0.01
+    '' else "";
 
   # if we're managing containers declaratively using quadlet
   isEnabled = (osConfig.virtualisation.quadlet.enable or false) == true;
@@ -13,7 +14,7 @@ let
   containers =
     if isEnabled then
       lib.concatStringsSep "\n    "
-        (map (s: "container display-name=\"${s}\" docker-name=\"/${s}\"")
+        (map (s: ''container display-name="${s}" docker-name="${s}"'')
           (lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames osConfig.virtualisation.quadlet.containers))
         ) else "";
   podman =
@@ -23,6 +24,11 @@ let
       }
     ''
     else "";
+
+  update-status = pkgs.writers.writePython3 "update-status" { }
+    (builtins.readFile "${flake}/scripts/motd/update-status.py");
+  backup-status = pkgs.writers.writePython3 "backup-status" { }
+    (builtins.readFile "${flake}/scripts/motd/backup-status.py");
 in
 {
   home.packages = with pkgs; [
@@ -40,10 +46,9 @@ in
           progress-empty-character "-"
         }
         components {
-          command "hostname | figlet | lolcat -f"
           uptime prefix="Uptime:"
           load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
-          cg-stats state-file="${config.xdg.stateHome}/rust-motd/cg_stats.toml" threshold=0.01
+          ${cgStats}
           ${podman}
           command color="light-white" "${update-status} ${flake} nixpkgs"
           command color="light-white" "${backup-status} local remote"
