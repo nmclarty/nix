@@ -18,6 +18,11 @@
         proc_per_core = true;
       };
     };
+    direnv = {
+      enable = true;
+      silent = true;
+      nix-direnv.enable = true;
+    };
     git = {
       enable = true;
       settings = {
