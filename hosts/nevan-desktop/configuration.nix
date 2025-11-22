@@ -17,7 +17,7 @@
     defaultUser = "nmclarty";
     wslConf = {
       interop = {
-        enabled = false;
+        enabled = true;
         appendWindowsPath = false;
       };
     };
