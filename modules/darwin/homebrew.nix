@@ -23,6 +23,7 @@
     masApps = {
       Xcode = 497799835;
       Infuse = 1136220934;
+      Tailscale = 1475387142;
       "Wifi Explorer" = 494803304;
       "Windows App" = 1295203466;
       "Microsoft Word" = 462054704;
@@ -31,7 +32,6 @@
       # utilities
       "1password"
       "seafile-client"
-      "tailscale-app"
       "scroll-reverser"
       # tools
       "stats"
