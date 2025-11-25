@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{
   # version
   system.stateVersion = 6;
   # nix settings
