@@ -1,4 +1,4 @@
-{ inputs, flake, pkgs, ... }: {
+{ inputs, flake, pkgs, lib, ... }: {
   imports = with flake.modules; [
     # profiles
     nixos.default
@@ -7,6 +7,12 @@
     disko.sbc
     inputs.disko.nixosModules.disko
   ];
+
+  # the backup service requires ZFS, so disable it
+  systemd = {
+    services.backup.enable = lib.mkForce false;
+    timers.backup.enable = lib.mkForce false;
+  };
 
   # hardware
   networking = {
