@@ -6,7 +6,7 @@ let
       cg-stats state-file="${config.xdg.stateHome}/rust-motd/cg_stats.toml" threshold=0.01
     '' else "";
 
-  conNames = builtins.attrNames osConfig.virtualisation.quadlet.containers or [ ];
+  conNames = builtins.attrNames (osConfig.virtualisation.quadlet.containers or {} );
   # create a list of services without dashes in their names
   # (indicating that they are main containers, not dependencies)
   # and turn that list into rust-motd container entries
@@ -29,7 +29,7 @@ in
     py_motd.homeModules.py_motd
   ];
   programs.py_motd = {
-    enable = true;
+    enable = true && pkgs.stdenv.isLinux;
     settings = {
       update.inputs = [ "nixpkgs" "nix-darwin" "nixos-wsl" "nix-private" ];
       backup.profiles = [ "local" "remote" ];

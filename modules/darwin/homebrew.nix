@@ -36,6 +36,7 @@
       # tools
       "stats"
       "balenaetcher"
+      "raspberry-pi-imager"
       # development
       "visual-studio-code"
       "wireshark-app"
