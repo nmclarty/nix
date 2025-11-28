@@ -10,8 +10,11 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    # personal
     nix-private.url = "github:nmclarty/nix-private";
     nix-private.inputs.nixpkgs.follows = "nixpkgs";
+    py_motd.url = "github:nmclarty/py_motd";
+    py_motd.inputs.nixpkgs.follows = "nixpkgs";
     # extras
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";

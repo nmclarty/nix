@@ -76,6 +76,8 @@
         # combine both and set the config option
         generatedBlocks // manualBlocks;
     };
+    # disable generating man cache (it's slow)
+    man.generateCaches = false;
     fish = {
       enable = true;
       interactiveShellInit = ''
@@ -112,6 +114,11 @@
             # display rust-motd, removing blank lines
             if type -q rust-motd
                 rust-motd | grep -v '^$'
+            end
+
+            # display py_motd
+            if type -q py_motd
+                py_motd
             end
         end
       '';

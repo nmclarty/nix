@@ -1,4 +1,4 @@
-{ pkgs, flake, lib, osConfig, config, ... }:
+{ pkgs, flake, lib, osConfig, config, inputs, ... }:
 # optional/extra feature configurations
 let
   cgStats =
@@ -24,13 +24,18 @@ let
       }
     ''
     else "";
-
-  update-status = pkgs.writers.writePython3 "update-status" { }
-    (builtins.readFile "${flake}/scripts/motd/update-status.py");
-  backup-status = pkgs.writers.writePython3 "backup-status" { }
-    (builtins.readFile "${flake}/scripts/motd/backup-status.py");
 in
 {
+  imports = with inputs; [
+    py_motd.homeModules.py_motd
+  ];
+  programs.py_motd = {
+    enable = true;
+    settings = {
+      update.inputs = [ "nixpkgs" "nix-darwin" "nixos-wsl" "nix-private" ];
+      backup.profiles = [ "local" "remote" ];
+    };
+  };
   home.packages = with pkgs; [
     rust-motd
     figlet
@@ -50,8 +55,6 @@ in
           load-avg format="Load (1, 5, 15 min.): {one:.02}, {five:.02}, {fifteen:.02}"
           ${cgStats}
           ${podman}
-          command color="light-white" "${update-status} ${flake} nixpkgs"
-          command color="light-white" "${backup-status} local remote"
         }
       '';
   };
