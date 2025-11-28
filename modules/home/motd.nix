@@ -1,4 +1,4 @@
-{ pkgs, flake, lib, osConfig, config, inputs, ... }:
+{ pkgs, lib, osConfig, config, inputs, ... }:
 # optional/extra feature configurations
 let
   cgStats =
@@ -6,16 +6,15 @@ let
       cg-stats state-file="${config.xdg.stateHome}/rust-motd/cg_stats.toml" threshold=0.01
     '' else "";
 
-  # if we're managing containers declaratively using quadlet
-  isEnabled = (osConfig.virtualisation.quadlet.enable or false) == true;
+  conNames = builtins.attrNames osConfig.virtualisation.quadlet.containers or [ ];
   # create a list of services without dashes in their names
   # (indicating that they are main containers, not dependencies)
   # and turn that list into rust-motd container entries
   containers =
-    if isEnabled then
+    if conNames != [ ] then
       lib.concatStringsSep "\n    "
-        (map (s: ''container display-name="${s}" docker-name="${s}"'')
-          (lib.filter (s: ! lib.strings.hasInfix "-" s) (builtins.attrNames osConfig.virtualisation.quadlet.containers))
+        (map (s: ''container display-name="${s}" docker-name="/${s}"'')
+          (lib.filter (s: ! lib.strings.hasInfix "-" s) conNames)
         ) else "";
   podman =
     if containers != "" then ''

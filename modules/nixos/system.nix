@@ -1,9 +1,9 @@
-{ config, flake, ... }: 
+{ config, flake, ... }:
 let
   # short git rev for the version label (i.e. "6669da0" or "6669da0-dirty")
   shortRev = flake.shortRev or flake.dirtyShortRev or "unknown";
   # nixos date from the version suffix (i.e. "20251122")
-  nixDate = builtins.substring 1 8 (config.system.nixos.versionSuffix);
+  nixDate = builtins.substring 1 8 config.system.nixos.versionSuffix;
 in
 {
   system = {
