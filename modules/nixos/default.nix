@@ -2,7 +2,7 @@
   imports = [
     # shared modules
     ../shared/default.nix
-    # nixos specific modules
+    # nixos modules
     ./packages.nix
     ./system.nix
     ./secrets.nix

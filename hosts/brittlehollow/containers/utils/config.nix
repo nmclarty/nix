@@ -39,16 +39,6 @@
                 respondingTimeouts:
                   readTimeout: "0s"
 
-            tailscale:
-              address: :8443
-              http:
-                tls:
-                  certResolver: cloudflare
-                  domains:
-                    - main: "ts.${config.private.domain}"
-                      sans:
-                        - "*.ts.${config.private.domain}"
-
           providers:
             file:
               filename: /etc/traefik/dynamic.yaml

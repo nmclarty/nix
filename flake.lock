@@ -24,10 +24,32 @@
     "blueprint_2": {
       "inputs": {
         "nixpkgs": [
-          "py_motd",
+          "nix-private",
           "nixpkgs"
         ],
         "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1763308703,
+        "narHash": "sha256-O9Y+Wer8wOh+N+4kcCK5p/VLrXyX+ktk0/s3HdZvJzk=",
+        "owner": "numtide",
+        "repo": "blueprint",
+        "rev": "5a9bba070f801d63e2af3c9ef00b86b212429f4f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "blueprint",
+        "type": "github"
+      }
+    },
+    "blueprint_3": {
+      "inputs": {
+        "nixpkgs": [
+          "py_motd",
+          "nixpkgs"
+        ],
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1763308703,
@@ -242,16 +264,17 @@
     },
     "nix-private": {
       "inputs": {
+        "blueprint": "blueprint_2",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1763805607,
-        "narHash": "sha256-7wKuuxG827KwDl7fKA8hzqx2/basIcS5pl8IGI+b9Jg=",
+        "lastModified": 1764452155,
+        "narHash": "sha256-tnt1m4fMBGlrqQNqK/V36GSqQhEGkAkcFcx1cVDIsyE=",
         "owner": "nmclarty",
         "repo": "nix-private",
-        "rev": "07f55f4e9b8ffc552ce88449c16a1360d4cf85b1",
+        "rev": "3610fb71378fa3f8fa66c8ee5fc1c73bb424e972",
         "type": "github"
       },
       "original": {
@@ -283,11 +306,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1764338033,
-        "narHash": "sha256-1LNGcU+aTbATD3BPCf7U1KsP1CjCH+ZWqM6JH0sZ6Q0=",
+        "lastModified": 1764406085,
+        "narHash": "sha256-CYbMp8hwuOf4umokSNp+t1s4Hjd4vxXq4S5CD+xvgNs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ba9b83e5fb4b552a423d24dabe5ccb47a9c89901",
+        "rev": "9561691c9f450fad7c3526916e1c4f44be0d1192",
         "type": "github"
       },
       "original": {
@@ -325,7 +348,7 @@
     },
     "py_motd": {
       "inputs": {
-        "blueprint": "blueprint_2",
+        "blueprint": "blueprint_3",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -454,6 +477,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

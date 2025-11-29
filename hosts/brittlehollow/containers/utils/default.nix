@@ -24,15 +24,12 @@
           publishPorts = [
             "80:80" # main http
             "443:443" # main https
-            "8443:8443" # tailscale https
           ];
           networks = [ "socket-proxy" "exposed:ip=10.90.0.2" ];
           labels = {
             "traefik.enable" = "true";
             "traefik.http.routers.traefik.service" = "api@internal";
             "traefik.http.routers.traefik.middlewares" = "tinyauth";
-            "traefik.http.routers.traefik.entrypoints" = "tailscale";
-            "traefik.http.routers.traefik.rule" = "Host(`traefik.ts.${config.private.domain}`)";
           };
           healthCmd = "traefik healthcheck";
           healthStartupCmd = "sleep 10";
