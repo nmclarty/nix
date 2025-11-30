@@ -1,9 +1,5 @@
-{ config, inputs, ... }: {
+{ config, ... }: {
   imports = [ ./support.nix ./config.nix ]; # redis, postgres, and config
-  users = import "${inputs.self}/lib/createUser.nix" {
-    name = "immich";
-    id = 2004;
-  }; # immich user
   virtualisation.quadlet = {
     containers = {
       immich = {

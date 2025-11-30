@@ -1,7 +1,10 @@
-{lib, ...}: {
+{flake, ...}:
+with flake.lib;
+{
   imports = [
     ./garage
   ];
-  users =
-    (lib.conUser { name = "garage"; id = 2006; });
+  users = containerUsers [
+    { name = "garage"; id = 2000; }
+  ];
 }

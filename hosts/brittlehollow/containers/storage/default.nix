@@ -1,6 +1,5 @@
-{ inputs, config, ... }: {
+{ config, ... }: {
   imports = [ ./config.nix ./support.nix ];
-  users = import "${inputs.self}/lib/createUser.nix" { name = "storage"; id = 2003; };
   virtualisation.quadlet = {
     containers = {
       seafile = {
