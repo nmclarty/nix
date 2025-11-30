@@ -9,7 +9,7 @@
   ];
 
   # hardware
-  hardware = {
+  networking = {
     hostName = "ashtwin";
     hostId = "43c12ddf";
   };
