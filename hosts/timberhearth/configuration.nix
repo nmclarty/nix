@@ -7,6 +7,7 @@
     disko.single
     inputs.disko.nixosModules.disko
   ];
+
   # hardware
   networking = {
     hostName = "timberhearth";

@@ -1,9 +1,5 @@
-{ config, inputs, ... }: {
+{ config, ... }: {
   imports = [ ./support.nix ./bluemap.nix ];
-  users = import "${inputs.self}/lib/createUser.nix" {
-    name = "minecraft";
-    id = 2005;
-  };
   sops.templates."minecraft/velocity/velocity.toml" = {
     restartUnits = [ "velocity.service" ];
     owner = "minecraft";

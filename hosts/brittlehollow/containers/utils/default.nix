@@ -1,9 +1,5 @@
-{ config, inputs, ... }: {
+{ config, ... }: {
   imports = [ ./config.nix ]; # traefik config
-  users = import "${inputs.self}/lib/createUser.nix" {
-    name = "utils";
-    id = 2002;
-  };
   virtualisation.quadlet = {
     containers = {
       traefik = {
