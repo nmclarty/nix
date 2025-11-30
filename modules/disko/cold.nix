@@ -1,0 +1,49 @@
+{
+  disko.devices = {
+    disk = {
+      one = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions.zfs = {
+            size = "100%";
+            content = {
+              type = "zfs";
+              pool = "cold";
+            };
+          };
+        };
+      };
+
+      two = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions.zfs = {
+            size = "100%";
+            content = {
+              type = "zfs";
+              pool = "cold";
+            };
+          };
+        };
+      };
+    };
+
+    cold = {
+      type = "zpool";
+      mode = "mirror";
+      options.ashift = "12";
+      rootFsOptions = {
+        compression = "lz4";
+        xattr = "sa";
+        # encryption
+        encryption = "aes-256-gcm";
+        keyformat = "passphrase";
+        keylocation = "file:///run/secrets/zfs/cold";
+      };
+    };
+  };
+}
