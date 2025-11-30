@@ -4,7 +4,7 @@
     containers = {
       garage = {
         containerConfig = {
-          image = "docker.io/library/garage:v2.1.0";
+          image = "docker.io/dxflrs/garage:v2.1.0";
           autoUpdate = "registry";
           user = "2000:2000";
           environments = {
