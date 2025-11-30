@@ -1,4 +1,4 @@
-{ flake, inputs, ... }: {
+{ flake, inputs, config, ... }: {
   imports = with flake.modules; [
     # profiles
     nixos.default
@@ -19,4 +19,7 @@
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
     kernelModules = [ "kvm-intel" ];
   };
+
+  # extra zpool
+  sops.secrets."zfs/cold".sopsFile = "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";
 }
