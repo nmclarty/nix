@@ -18,11 +18,13 @@
         proc_per_core = true;
       };
     };
+
     direnv = {
       enable = true;
       silent = true;
       nix-direnv.enable = true;
     };
+
     git = {
       enable = true;
       settings = {
@@ -38,10 +40,12 @@
         signByDefault = true;
       };
     };
+
     difftastic = {
       enable = true;
       git.enable = true;
     };
+
     ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -75,8 +79,14 @@
         # combine both and set the config option
         generatedBlocks // manualBlocks;
     };
+
     # disable generating man cache (it's slow)
     man.generateCaches = false;
+
+    tmux = {
+      enable = true;
+    };
+    
     fish = {
       enable = true;
       interactiveShellInit = ''
