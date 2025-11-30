@@ -12,9 +12,9 @@
   networking = {
     hostName = "timberhearth";
     hostId = "41bc3559";
-    cpu.intel.updateMicrocode = true;
   };
   nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = true;
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];

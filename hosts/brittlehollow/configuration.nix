@@ -16,9 +16,9 @@
   networking = {
     hostName = "brittlehollow";
     hostId = "012580f6";
-    cpu.intel.updateMicrocode = true;
   };
   nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = true;
   boot = {
     initrd.availableKernelModules = [ "vmd" "xhci_pci" "ahci" "nvme" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
