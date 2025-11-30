@@ -8,6 +8,7 @@
           autoUpdate = "registry";
           user = "2000:2000";
           hostname = config.networking.hostName;
+          networks = [ "host" ];
           environments = {
             GARAGE_RPC_SECRET_FILE = "/run/secrets/garage_rpc";
           };
