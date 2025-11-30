@@ -1,4 +1,4 @@
-{flake, ...}:
+{ flake, ... }:
 with flake.lib;
 {
   imports = [

@@ -1,6 +1,6 @@
 { flake, ... }:
 let
-  conUser = {name, id}: {
+  conUser = { name, id }: {
     name = name;
     value = {
       isSystemUser = true;
@@ -9,7 +9,7 @@ let
       uid = id;
     };
   };
-  conGroup = {name, id}: {
+  conGroup = { name, id }: {
     name = name;
     value = {
       gid = id;

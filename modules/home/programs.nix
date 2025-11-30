@@ -86,7 +86,7 @@
     tmux = {
       enable = true;
     };
-    
+
     fish = {
       enable = true;
       interactiveShellInit = ''
