@@ -18,7 +18,7 @@
 
       two = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/sdb";
         content = {
           type = "gpt";
           partitions.zfs = {
