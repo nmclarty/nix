@@ -25,4 +25,8 @@
 
   # extra zpool
   sops.secrets."zfs/cold".sopsFile = "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";
+  services.sanoid.datasets.cold = {
+    useTemplate = [ "default" ];
+    recursive = true;
+  };
 }
