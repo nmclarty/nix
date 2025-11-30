@@ -5,6 +5,7 @@
     server.default
     # standalone
     disko.mirror
+    disko.cold
     inputs.disko.nixosModules.disko
   ];
 
