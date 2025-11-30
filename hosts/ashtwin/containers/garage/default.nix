@@ -12,7 +12,7 @@
           };
           secrets = ["garage_rpc,uid=2000,gid=2000,mode=0400"];
           volumes = [
-            "${config.sops.templates."garage/garage.toml".path}:/etc/garage/toml:ro"
+            "${config.sops.templates."garage/garage.toml".path}:/etc/garage.toml:ro"
             "/srv/garage/meta:/var/lib/garage/meta"
             "/cold/garage/data:/var/lib/garage/data"
           ];
