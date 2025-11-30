@@ -3,5 +3,5 @@
     ./garage
   ];
   users =
-    (lib.createUser { name = "garage"; id = 2006; });
+    (lib.conUser { name = "garage"; id = 2006; });
 }
