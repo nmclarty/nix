@@ -111,7 +111,7 @@
       loginShellInit = ''
         # env vars
         set -gx EDITOR micro
-        set -gx NH_FLAKE ~/projects/nix/
+        set -gx NIXOS_CONFIG ~/projects/nix/
 
         # motd
         if test "$TERM_PROGRAM" != vscode

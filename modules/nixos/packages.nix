@@ -17,21 +17,18 @@
     command-not-found.enable = false;
   };
 
+  # nixos-cli settings
   environment.systemPackages = with pkgs; [
     nvd
     nix-output-monitor
   ];
-
-  # services
-  services = {
-    nixos-cli = {
-      enable = true;
-      config = {
-         use_nvd = true;
-         apply = {
-          use_git_commit_msg = true;
-          use_nom = true;
-         };
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      use_nvd = true;
+      apply = {
+        use_git_commit_msg = true;
+        use_nom = true;
       };
     };
   };
