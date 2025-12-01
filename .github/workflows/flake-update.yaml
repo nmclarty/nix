@@ -1,4 +1,4 @@
-name: "Flake.lock: update inputs"
+name: "Flake.lock: Update"
 
 on:
   workflow_dispatch:

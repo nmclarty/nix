@@ -1,0 +1,22 @@
+name: "Flake.lock: Check"
+
+on:
+  push:
+    branches: [ "main", "testing" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  flake-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Install nix
+      uses: cachix/install-nix-action@v31
+
+    - name: Check flake.lock
+      run: |
+        set -euo pipefail
+        nix flake check --no-build --all-systems
