@@ -16,8 +16,7 @@ jobs:
     - name: Install nix
       uses: cachix/install-nix-action@v31
       with:
-        extra_nix_config: |
-          --access-tokens github.com=${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
+        github_access_token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
 
     - name: Check flake.lock
       run: |
