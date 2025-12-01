@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
+  # import flake modules
+  imports = with inputs; [
+    nixos-cli.nixosModules.nixos-cli
+  ];
+
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -10,6 +15,13 @@
     nix-ld.enable = true;
     # command-not-found doesn't work with flakes
     command-not-found.enable = false;
+  };
+
+  # services
+  services = {
+    nixos-cli = {
+      enable = true;
+    };
   };
 
   # disable generating man cache (because fish causes it to hang)

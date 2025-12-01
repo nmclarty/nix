@@ -16,6 +16,10 @@
     py_motd.url = "github:nmclarty/py_motd";
     py_motd.inputs.nixpkgs.follows = "nixpkgs";
     # extras
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-cli.url = "github:nix-community/nixos-cli";
+    nixos-cli.inputs.nixpkgs.follows = "nixpkgs";
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
@@ -30,7 +34,6 @@
   };
   # Load the blueprint
   outputs = inputs:
-    inputs.blueprint {
-      inherit inputs;
-    };
+    inputs.blueprint { inherit inputs; } //
+    import ./deploy.nix { inherit inputs; };
 }
