@@ -11,7 +11,7 @@
   # the backup service requires ZFS, so disable it
   systemd = {
     services.backup.enable = lib.mkForce false;
-    timers.backup.enable = lib.mkForce false;
+    timers.backup.enable = lib.mkForce falsa;
   };
 
   # hardware
