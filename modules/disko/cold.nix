@@ -37,7 +37,6 @@
         type = "zpool";
         mode = "mirror";
         options.ashift = "12";
-        mountpoint = "/cold";
         rootFsOptions = {
           compression = "lz4";
           xattr = "sa";
