@@ -34,6 +34,6 @@
   };
   # Load the blueprint
   outputs = inputs:
-    inputs.blueprint { inherit inputs; } //
-    import ./deploy.nix { inherit inputs; };
+    inputs.blueprint { inherit inputs; };
+    #import ./deploy.nix { inherit inputs; };
 }
