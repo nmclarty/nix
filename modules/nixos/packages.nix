@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }: {
   # import flake modules
   imports = with inputs; [
-    nixos-cli.nixosModules.nixos-cla
+    nixos-cli.nixosModules.nixos-cli
   ];
 
   # allow unfree packages
