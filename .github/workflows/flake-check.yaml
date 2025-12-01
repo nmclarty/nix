@@ -21,4 +21,4 @@ jobs:
     - name: Check flake.lock
       run: |
         set -euo pipefail
-        nix flake check --no-build --all-systems
+        nix flake check --no-build --all-systems --quiet
