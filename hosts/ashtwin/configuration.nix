@@ -1,4 +1,4 @@
-{ flake, inputs, config, ... }: {
+{ flake, inputs, config, pkgs, ... }: {
   imports = with flake.modules; [
     # profiles
     nixos.default
@@ -20,7 +20,7 @@
   hardware.cpu.intel.updateMicrocode = true;
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "i2c-dev" ];
   };
 
   # extra zpool
@@ -28,5 +28,22 @@
   services.sanoid.datasets.cold = {
     useTemplate = [ "default" ];
     recursive = true;
+  };
+
+  # lights
+  environment.systemPackages = with pkgs; [ i2c-tools ugreen-leds-cli ];
+  systemd.services.ugreen-leds = {
+    enable = true;
+    wantedBy = [ "default.target" ];
+    description = "Control system leds on startup";
+    path = with pkgs; [
+      ugreen-leds-cli
+      i2c-tools
+    ];
+    script = ''
+      set -euo pipefail
+      ugreen_leds_cli all -off
+      echo "Turned off all system leds"
+    '';
   };
 }
