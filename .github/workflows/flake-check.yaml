@@ -19,7 +19,7 @@ jobs:
     - name: Run statix (and show fixes if possible)
       shell: nix shell nixpkgs#statix nixpkgs#delta --command bash -euo pipefail {0}
       run: |
-        statix fix -d | grep -v '^$' | delta --paging never cat >> $GITHUB_STEP_SUMMARY
+        statix fix -d | grep -v '^$' | delta --paging never
         statix check .
 
     - name: Run deadnix
