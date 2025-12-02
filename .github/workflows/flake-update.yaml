@@ -31,7 +31,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v21
         with:
           determinate: false
-          github-token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN}}
+          github-token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
 
       - name: Use nix cache
         uses: DeterminateSystems/magic-nix-cache-action@v13
