@@ -18,6 +18,8 @@ jobs:
 
     - name: Use nix cache
       uses: DeterminateSystems/magic-nix-cache-action@v13
+      with:
+        use-flakehub: false
 
     - name: Run statix (and show fixes if possible)
       shell: nix shell nixpkgs#statix nixpkgs#delta --command bash -e {0}
