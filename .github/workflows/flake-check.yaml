@@ -17,10 +17,8 @@ jobs:
       uses: cachix/install-nix-action@v31
 
     - name: Run statix (and show fixes if possible)
-      run: |
-        #! /usr/bin/env nix
-        #! nix shell nixpkgs#statix nixpkgs#delta --command /usr/bin/env bash
-        
+      shell: nix shell nixpkgs#statix nixpkgs#delta
+      run: | 
         statix fix -d | grep -v '^$' | delta --pager cat
         statix check .
 
