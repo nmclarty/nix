@@ -1,7 +1,7 @@
 { flake, ... }:
 let
   conUser = { name, id }: {
-    inherit name;
+    name = name;
     value = {
       isSystemUser = true;
       description = "${name} container user";
