@@ -30,7 +30,5 @@
   };
   # Load the blueprint
   outputs = inputs:
-    inputs.blueprint {
-      inherit inputs;
-    };
+    inputs.blueprint { inherit inputs; };
 }
