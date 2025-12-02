@@ -21,7 +21,7 @@ jobs:
       run: |
         echo "Available fixes (if any):"
         statix fix -d | grep -v '^$' | delta --pager cat
-        echo
+        echo ""
         statix check .
 
     - name: Run deadnix
