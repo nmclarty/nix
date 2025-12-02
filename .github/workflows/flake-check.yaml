@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  flake-check:
+  flake-lint:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
