@@ -15,10 +15,10 @@ jobs:
     
     - name: Install nix
       uses: cachix/install-nix-action@v31
-      with:
-        github_access_token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
 
-    - name: Check flake.lock
-      run: |
-        set -euo pipefail
-        nix flake check --no-build --all-systems --quiet --offline
+    - name: Run statix
+      run: nix run nixpkgs#statix -- check .
+
+    - name: Run deadnix
+      run: nix run nixpkgs#deadnix -- --fail .
+
