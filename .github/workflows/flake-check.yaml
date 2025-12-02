@@ -17,7 +17,7 @@ jobs:
       uses: cachix/install-nix-action@v31
 
     - name: Run statix (and show fixes if possible)
-      shell: nix shell nixpkgs#statix nixpkgs#delta --command bash '{0}'
+      shell: nix shell nixpkgs#statix nixpkgs#delta --command bash {0}
       run: |
         set -euo pipefail
         statix fix -d | grep -v '^$' | delta --pager cat
