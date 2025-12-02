@@ -16,8 +16,6 @@
     py_motd.url = "github:nmclarty/py_motd";
     py_motd.inputs.nixpkgs.follows = "nixpkgs";
     # extras
-    nixos-cli.url = "github:nix-community/nixos-cli";
-    nixos-cli.inputs.nixpkgs.follows = "nixpkgs";
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
