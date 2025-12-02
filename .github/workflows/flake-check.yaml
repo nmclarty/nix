@@ -34,5 +34,5 @@ jobs:
       run: nix run nixpkgs#deadnix -- --fail .
 
     - name: Check flake
-      run: nix flake check --no-build --all-systems
+      run: nix flake check --no-build --all-systems > /dev/null 2>&1
 
