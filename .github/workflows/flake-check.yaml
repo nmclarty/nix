@@ -8,6 +8,7 @@ on:
 
 jobs:
   flake-check:
+    name: Validate system configurations
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -29,6 +30,7 @@ jobs:
 
 
   flake-lint:
+    name: Lint with statix and deadnix
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
