@@ -10,29 +10,31 @@ jobs:
   flake-lint:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    
-    - name: Install nix
-      uses: DeterminateSystems/nix-installer-action@v21
-      with:
-        determinate: false
-        github-token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@v21
+        with:
+          determinate: false
+          github-token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
 
-    - name: Use nix cache
-      uses: DeterminateSystems/magic-nix-cache-action@v13
-      with:
-        use-flakehub: false
+      - name: Use nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
+        with:
+          use-flakehub: false
 
-    - name: Run statix (and show fixes if possible)
-      shell: nix shell nixpkgs#statix nixpkgs#delta --command bash -e {0}
-      run: |
-        statix fix -d | grep -v '^$' | delta --paging never
-        statix check .
+      - name: Run statix (show fixes)
+        shell: nix shell nixpkgs#statix nixpkgs#delta --command bash -e {0}
+        run: |
+          statix fix -d | grep -v '^$' | delta --paging never
+      
+      - name: Run statix (show issues)
+        run: nix run nixpkgs#statix -- check .
 
-    - name: Run deadnix
-      run: nix run nixpkgs#deadnix -- --fail .
+      - name: Run deadnix
+        run: nix run nixpkgs#deadnix -- --fail .
 
-    - name: Check flake
-      run: nix flake check --no-build --all-systems > /dev/null 2>&1
+      - name: Check flake
+        run: nix flake check --no-build --all-systems > /dev/null 2>&1
 
