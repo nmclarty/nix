@@ -2,11 +2,32 @@ name: "Flake: Check"
 
 on:
   push:
-    branches: [ "main", "testing" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
+  flake-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@v21
+        with:
+          determinate: false
+          github-token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}
+
+      - name: Use nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
+        with:
+          use-flakehub: false
+
+      - name: Check flake
+        run: nix flake check --no-build --all-systems > /dev/null 2>&1
+
+
   flake-lint:
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +55,3 @@ jobs:
 
       - name: Run deadnix
         run: nix run nixpkgs#deadnix -- --fail .
-
-      - name: Check flake
-        run: nix flake check --no-build --all-systems > /dev/null 2>&1
-
