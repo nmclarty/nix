@@ -16,8 +16,13 @@ jobs:
     - name: Install nix
       uses: cachix/install-nix-action@v31
 
-    - name: Run statix
-      run: nix run nixpkgs#statix -- check .
+    - name: Run statix (and show fixes if possible)
+      run: |
+        #! /usr/bin/env nix
+        #! nix shell nixpkgs#statix nixpkgs#delta --command /usr/bin/env bash
+        
+        statix fix -d | grep -v '^$' | delta --pager cat
+        statix check .
 
     - name: Run deadnix
       run: nix run nixpkgs#deadnix -- --fail .
