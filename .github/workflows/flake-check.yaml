@@ -32,3 +32,8 @@ jobs:
     - name: Run deadnix
       run: nix run nixpkgs#deadnix -- --fail .
 
+    - name: Check flake
+      run: >
+        nix flake check --no-build --all-systems &>/dev/null && echo "Flake check passed!" >> $GITHUB_STEP_SUMMARY
+        || echo "Flake check failed, run `nix flake check` locally to see details." >> $GITHUB_STEP_SUMMARY
+
