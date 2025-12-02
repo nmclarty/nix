@@ -1,4 +1,4 @@
-name: "Flake.lock: Check"
+name: "Flake: Check"
 
 on:
   push:

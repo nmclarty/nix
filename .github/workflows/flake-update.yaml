@@ -1,4 +1,4 @@
-name: "Flake.lock: Update"
+name: "Flake: Update"
 
 on:
   workflow_dispatch:
@@ -7,23 +7,30 @@ on:
 
 jobs:
   flake-update:
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
       issues: write
       pull-requests: write
-    runs-on: ubuntu-latest
     steps:
-      - name: Checout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install nix
-        uses: DeterminateSystems/determinate-nix-action@v3
+        uses: DeterminateSystems/nix-installer-action@v21
+        with:
+          determinate: false
+          github-token: ${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN}}
+
+      - name: Use nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
+        with:
+          use-flakehub: false
 
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@main
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
-          nix-options: "--access-tokens github.com=${{ secrets.PRIVATE_FLAKE_INPUTS_TOKEN }}"
-          pr-title: "Flake.lock: update inputs"
-          pr-labels: |
-            automated
+          pr-title: "Flake: Update"
+          pr-labels: automated
+          pr-reviewers: nmclarty
