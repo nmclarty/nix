@@ -34,10 +34,5 @@ jobs:
       run: nix run nixpkgs#deadnix -- --fail .
 
     - name: Check flake
-      run: |
-        if $(nix flake check --no-build --all-systems &>/dev/null); then
-          echo "Flake check passed!" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "Flake check failed, run `nix flake check` locally to see details." >> $GITHUB_STEP_SUMMARY
-        fi
+      run: nix flake check --no-build --all-systems
 
