@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ ... }:
 let
   conUser = { name, id }: {
     inherit name;

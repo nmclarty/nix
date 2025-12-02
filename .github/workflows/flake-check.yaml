@@ -14,7 +14,10 @@ jobs:
       uses: actions/checkout@v4
     
     - name: Install nix
-      uses: cachix/install-nix-action@v31
+      uses: DeterminateSystems/nix-installer-action@v21
+
+    - name: Use nix cache
+      uses: DeterminateSystems/magic-nix-cache-action@v31
 
     - name: Run statix (and show fixes if possible)
       shell: nix shell nixpkgs#statix nixpkgs#delta --command bash -e {0}
