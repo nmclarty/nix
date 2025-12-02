@@ -2,6 +2,16 @@ name: "Flake: Update"
 
 on:
   workflow_dispatch:
+    inputs:
+      inputsToUpdate:
+        description: Which flake inputs to update (space-separated)
+        required: true
+        default: ""
+        type: choice
+        options:
+          - ""
+          - "nixpkgs"
+
   schedule:
     - cron: "0 0 * * 0"
 
@@ -31,6 +41,7 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v28
         with:
+          inputs: ${{ inputs.inputsToUpdate }}
           pr-title: "Flake: Update"
           pr-labels: automated
           pr-reviewers: nmclarty
