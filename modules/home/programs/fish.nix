@@ -1,0 +1,77 @@
+{
+  programs = {
+    # disable generating man cache (fish enables it, but it's pretty slow)
+    man.generateCaches = false;
+
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        # set up ssh auth socket
+        set op_sock "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+        if test -S $op_sock
+            # if 1password agent socket exists, use it
+            set -gx SSH_AUTH_SOCK $op_sock
+        else if test -L "$SSH_AUTH_SOCK"
+            # if we're running remotely via ssh, resolve the symlink
+            set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
+        end
+
+        # load homebrew env
+        set brew /opt/homebrew/bin/brew
+        if test -f $brew
+            # load homebrew environment variables
+            eval ($brew shellenv)
+        end
+
+      '';
+      loginShellInit = ''
+        # env vars
+        set -gx EDITOR micro
+        set -gx NH_FLAKE ~/projects/nix/
+
+        # motd
+        if test "$TERM_PROGRAM" != vscode
+            # show hostname if we're connecting remotely
+            if test -n "$SSH_CONNECTION"
+                hostname | figlet | lolcat -f
+            end
+
+            # display rust-motd, removing blank lines
+            if type -q rust-motd
+                rust-motd | grep -v '^$'
+            end
+
+            # display py_motd
+            if type -q py_motd
+                py_motd
+            end
+        end
+      '';
+      shellAbbrs = {
+        # general
+        ll = "eza -lh --git";
+        la = "eza -lh --git --all";
+        lt = "eza -lh --git --tree --git-ignore --total-size";
+        # docker
+        dc = "docker compose";
+        de = "docker exec -it";
+      };
+      functions = {
+        fish_greeting = "";
+        fish_prompt = ''
+          echo -n "$(hostname | lolcat -f)"
+          set_color brgreen; echo -n " [$(basename $PWD)]";
+          set_color bryellow; echo -n " > ";
+        '';
+        helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
+        helper-ps = "sudo podman ps --format='table {{.Names}}\t{{.Status}}\t{{.Image}}'";
+        helper-hostid = "head -c4 /dev/urandom | xxd -p";
+        helper-logs = ''
+          cat /srv/utils/traefik/logs/access.log \
+          | grep "$argv[1]@docker" (if test (count $argv) -eq 0; echo "-v"; end) \
+          | goaccess --log-format TRAEFIKCLF
+        '';
+      };
+    };
+  };
+}

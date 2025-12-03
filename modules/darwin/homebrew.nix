@@ -14,11 +14,6 @@
     brews = [
       # mas cli for searching for mac app store apps
       "mas"
-      # colima requires the docker cli, otherwise it won't start
-      # however, we're not going to use it (instead from home manager)
-      "docker"
-      # install colima and automatically start/restart it
-      { name = "colima"; restart_service = true; }
     ];
     masApps = {
       Xcode = 497799835;
