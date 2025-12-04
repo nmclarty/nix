@@ -41,6 +41,7 @@
         rootFsOptions = {
           compression = "lz4";
           xattr = "sa";
+          canmount = "noauto";
           # encryption
           encryption = "aes-256-gcm";
           keyformat = "passphrase";
