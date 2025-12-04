@@ -59,9 +59,9 @@
         containerConfig = {
           image = "lscr.io/linuxserver/ddclient:latest";
           autoUpdate = "registry";
-          user = "2002:2002";
-          readOnly = true;
-          tmpfses = [ "/tmp" ];
+          # user = "2002:2002";
+          # readOnly = true;
+          # tmpfses = [ "/tmp" ];
           # volumes = [ ]
         };
       };
