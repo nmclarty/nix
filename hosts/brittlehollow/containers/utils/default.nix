@@ -60,8 +60,6 @@
           image = "lscr.io/linuxserver/ddclient:latest";
           autoUpdate = "registry";
           user = "2002:2002";
-          readOnly = true;
-          tmpfses = [ "/tmp" ];
           volumes = [ "${config.sops.templates."utils/ddclient/ddclient.conf".path}:/config/ddclient.conf" ];
         };
       };
