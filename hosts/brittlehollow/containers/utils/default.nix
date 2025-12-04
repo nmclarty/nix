@@ -55,6 +55,17 @@
         };
       };
 
+      ddclient = {
+        containerConfig = {
+          image = "lscr.io/linuxserver/ddclient:latest";
+          autoUpdate = "registry";
+          user = "2002:2002";
+          readOnly = true;
+          tmpfses = [ "/tmp" ];
+          # volumes = [ ]
+        };
+      };
+
       pocket = {
         containerConfig = {
           image = "ghcr.io/pocket-id/pocket-id:v1";
