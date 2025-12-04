@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       inputsToUpdate:
-        description: Which flake inputs to update (space-separated)
-        required: true
-        default: ""
+        description: Which flake inputs to update (blank for all)
         type: choice
+        required: true
+        default: "nixpkgs"
         options:
           - ""
           - "nixpkgs"
