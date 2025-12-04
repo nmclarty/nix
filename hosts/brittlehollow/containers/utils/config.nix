@@ -1,5 +1,11 @@
-{ config, ... }: {
+{ inputs, config, ... }: {
   sops = {
+    secrets = {
+      "utils/traefik/token" = {
+        sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
+        key = "utils/traefik/token";
+      };
+    };
     templates = {
       "utils/traefik/traefik.yaml" = {
         restartUnits = [ "traefik.service" ];
@@ -77,6 +83,28 @@
                   customResponseHeaders:
                     server: ""
                     x-powered-by: ""
+        '';
+      };
+
+      "utils/ddclient/ddclient.conf" = {
+        restartUnits = [ "ddclient.service" ];
+        owner = "utils";
+        content = ''
+          # general
+          daemon=300
+          # syslog=yes
+          # ssl=yes
+
+          # router
+          usev4=webv4
+          usev6=webv6
+
+          # protocol
+          protocol=cloudflare, \
+          zone=${config.private.domain}, \
+          login=token, \
+          password=${config.sops.placeholder."utils/traefik/token"} \
+          *.${config.private.domain}
         '';
       };
     };
