@@ -37,6 +37,7 @@
       "wireshark-app"
       "jetbrains-toolbox"
       "claude-code"
+      "zed"
       # media
       "google-chrome"
       "spotify"
