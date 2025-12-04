@@ -2,12 +2,12 @@ name: "Flake: Check"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
-  flake-check:
+  check:
     name: Validate system configurations
     runs-on: ubuntu-latest
     steps:
@@ -28,14 +28,13 @@ jobs:
       - name: Check flake
         run: nix flake check --no-build --all-systems > /dev/null 2>&1
 
-
-  flake-lint:
+  lint:
     name: Lint with statix and deadnix
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Install nix
         uses: DeterminateSystems/nix-installer-action@v21
         with:
@@ -51,7 +50,7 @@ jobs:
         shell: nix shell nixpkgs#statix nixpkgs#delta --command bash -e {0}
         run: |
           statix fix -d | grep -v '^$' | delta --paging never
-      
+
       - name: Run statix (show issues)
         run: nix run nixpkgs#statix -- check .
 
