@@ -13,7 +13,10 @@
   # pam
   security.pam.services.sudo_local.touchIdAuth = true;
   # users
-  users.users.nmclarty.home = "/Users/nmclarty";
+  users.users.nmclarty = {
+    home = "/Users/nmclarty";
+    uid = 501;
+  };
   system.primaryUser = "nmclarty";
   # fish
   programs.fish.enable = true;
