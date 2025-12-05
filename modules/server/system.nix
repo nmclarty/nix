@@ -23,11 +23,15 @@
   };
   # pam
   security.pam = {
-    sshAgentAuth = {
+    rssh = {
       enable = true;
-      authorizedKeysFiles = [ config.sops.secrets."nmclarty/ssh/remote".path ];
+      settings = {
+        cue = true;
+        cue_prompt = "Authenticating with ssh-agent...";
+        auth_key_file = config.sops.secrets."nmclarty/ssh/remote".path;
+      };
     };
-    services.sudo.sshAgentAuth = true;
+    services.sudo.rssh = true;
   };
   # use systemd boot
   boot.loader = {
