@@ -5,29 +5,24 @@
 
     fish = {
       enable = true;
-      interactiveShellInit = ''
-        # set up ssh auth socket
+      loginShellInit = ''
+        # env vars
+        set -gx EDITOR micro
+        set -gx NH_FLAKE ~/projects/nix/
+
+        # ssh agent
         set op_sock "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
         if test -S $op_sock
             # if 1password agent socket exists, use it
             set -gx SSH_AUTH_SOCK $op_sock
-        else if test -L "$SSH_AUTH_SOCK"
-            # if we're running remotely via ssh, resolve the symlink
-            set -gx SSH_AUTH_SOCK (readlink -f $SSH_AUTH_SOCK)
         end
 
-        # load homebrew env
+        # homebrew
         set brew /opt/homebrew/bin/brew
         if test -f $brew
             # load homebrew environment variables
             eval ($brew shellenv)
         end
-
-      '';
-      loginShellInit = ''
-        # env vars
-        set -gx EDITOR micro
-        set -gx NH_FLAKE ~/projects/nix/
 
         # motd
         if test "$TERM_PROGRAM" != vscode
