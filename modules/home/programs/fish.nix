@@ -58,8 +58,8 @@
           set_color brgreen; echo -n " [$(basename $PWD)]";
           set_color bryellow; echo -n " > ";
         '';
-        helper-health = "sudo podman inspect $argv[1] | yq -oj '.[0].State.Health'";
-        helper-ps = "sudo podman ps --format='table {{.Names}}\t{{.Status}}\t{{.Image}}'";
+        helper-health = "docker inspect $argv[1] | yq -oj '.[0].State.Health'";
+        helper-ps = "docker ps --format='table {{.Names}}\t{{.Status}}\t{{.Image}}'";
         helper-hostid = "head -c4 /dev/urandom | xxd -p";
         helper-logs = ''
           cat /srv/utils/traefik/logs/access.log \
