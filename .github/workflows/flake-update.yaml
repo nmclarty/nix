@@ -7,11 +7,10 @@ on:
         description: Which flake inputs to update (blank for all)
         type: choice
         required: true
-        default: "nixpkgs"
         options:
           - nixpkgs
           - nix-private
-          - all
+          - ""
 
   schedule:
     - cron: "0 0 * * 0"
@@ -38,11 +37,11 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
-
+  
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v28
         with:
-          inputs: ${{ inputs.toUpdate == 'all' && '' || inputs.toUpdate }}
+          inputs: ${{ env.TO_UPDATE }}
           pr-title: "Flake: Update"
           pr-labels: automated
           pr-reviewers: nmclarty
