@@ -5,12 +5,9 @@ on:
     inputs:
       inputsToUpdate:
         description: Which flake inputs to update (blank for all)
-        type: choice
+        type: string
         required: true
         default: "nixpkgs"
-        options:
-          - ""
-          - "nixpkgs"
 
   schedule:
     - cron: "0 0 * * 0"
