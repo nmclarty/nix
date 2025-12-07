@@ -6,7 +6,6 @@ on:
       inputsToUpdate:
         description: Which flake inputs to update (blank for all)
         type: string
-        required: true
         default: "nixpkgs"
 
   schedule:
