@@ -6,7 +6,6 @@ on:
      toUpdate:
         description: Which flake inputs to update (blank for all)
         type: choice
-        required: true
         options:
           - nixpkgs
           - nix-private
