@@ -18,6 +18,7 @@
         end
 
         # homebrew
+        set -gx HOMEBREW_NO_ENV_HINTS 1
         set brew /opt/homebrew/bin/brew
         if test -f $brew
             # load homebrew environment variables
