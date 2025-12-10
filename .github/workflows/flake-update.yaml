@@ -3,7 +3,7 @@ name: "Flake: Update"
 on:
   workflow_dispatch:
     inputs:
-     toUpdate:
+      toUpdate:
         description: Which flake inputs to update (blank for all)
         type: choice
         options:
@@ -36,11 +36,11 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
-  
+
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v28
         with:
-          inputs: ${{ env.TO_UPDATE }}
+          inputs: ${{ inputs.toUpdate }}
           pr-title: "Flake: Update"
           pr-labels: automated
           pr-reviewers: nmclarty
