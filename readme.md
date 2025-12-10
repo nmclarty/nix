@@ -1,13 +1,9 @@
 # *nix*
 ### welcome to my system configuration repo!
 
----
-
 Hi!, I'm new to NixOS (and its associated tools) so you probably shouldn't use this as anything like a template to be followed.
 
 However, feel free to take inspiration or give suggestions on how I could make something better!
-
----
 
 ### Structure
 This flake uses the (opinionated) library [Blueprint](https://github.com/numtide/blueprint) for organizing everything since I wanted to avoid boilerplate. It mostly follows the structure as specified in their docs, save for some extra module types.
