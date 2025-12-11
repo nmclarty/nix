@@ -31,7 +31,7 @@ in
   programs.py_motd = {
     enable = true && pkgs.stdenv.isLinux;
     settings = {
-      update.inputs = [ "nixpkgs" "nix-darwin" "nixos-wsl" "nix-private" ];
+      update.inputs = [ "nixpkgs" "nix-private" "py_motd" ];
       backup.profiles = [ "local" "remote" ];
     };
   };
