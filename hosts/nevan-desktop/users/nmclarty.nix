@@ -1,24 +1,20 @@
-{ flake, lib, config, ... }:
-let
-  sshPath = "/mnt/c/Windows/System32/OpenSSH";
-  signPath = "/mnt/c/Users/${config.home.username}/AppData/Local/Microsoft/WindowsApps";
-in
+{ flake, pkgs, ... }:
 {
   imports = with flake.modules; [
     home.default
     extra.devel
   ];
 
-  # configure fish and git to use the windows ssh and signing programs
-  programs.fish.shellAliases = {
-    ssh = "${sshPath}/ssh.exe";
-    ssh-add = "${sshPath}/ssh-add.exe";
-  };
-  programs.git.settings = {
-    core.sshCommand = "${sshPath}/ssh.exe";
-    gpg.ssh = {
-      defaultKeyCommand = lib.mkForce "${sshPath}/ssh-add.exe -L";
-      program = "${signPath}/op-ssh-sign-wsl.exe";
+  systemd.user.services.wsl2-ssh-agent = {
+    Unit = {
+      Description = "WSL2 SSH Agent Bridge";
+      After = [ "network.target" ];
+      ConditionUser = "!root";
     };
+    Service = {
+      ExecStart = "${pkgs.wsl2-ssh-agent}/bin/wsl2-ssh-agent --verbose --foreground --socket=%t/wsl2-ssh-agent.sock";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = [ "default.target" ];
   };
 }
