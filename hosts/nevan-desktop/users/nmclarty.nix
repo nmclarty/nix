@@ -4,7 +4,10 @@ let
   signPath = "/mnt/c/Users/${config.home.username}/AppData/Local/Microsoft/WindowsApps";
 in
 {
-  imports = [ flake.modules.home.default ];
+  imports = with flake.modules; [
+    home.default
+    extra.devel
+  ];
 
   # configure fish and git to use the windows ssh and signing programs
   programs.fish.shellAliases = {

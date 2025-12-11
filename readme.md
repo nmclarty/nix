@@ -7,7 +7,6 @@ However, feel free to take inspiration or give suggestions on how I could make s
 
 ### Structure
 This flake uses the (opinionated) library [Blueprint](https://github.com/numtide/blueprint) for organizing everything since I wanted to avoid boilerplate. It mostly follows the structure as specified in their docs, save for some extra module types.
-
 ```
 .
 ├── hosts # per host configurations
@@ -16,16 +15,15 @@ This flake uses the (opinionated) library [Blueprint](https://github.com/numtide
 │       └── users # per system user config (imports main home manager module)
 ├── lib # helper functions
 └── modules 
-    ├── darwin # macos system config
+    ├── darwin # MacOS system
     ├── disko # disk layouts
-    ├── home # home manager config
-    │   └── programs # per program config (e.g. when more than a few lines)
-    ├── nixos # nixos system config
-    ├── server # server specific config
+    ├── devel # extra modules (to be imported on their own)
+    ├── home # home manager
+    │   └── programs # per program (e.g. when more than a few lines)
+    ├── nixos # NixOS system
+    ├── server # server specific
     └── shared # shared config between darwin and nixos
 ```
-
----
  
 ### Dependencies
 Key flakes:

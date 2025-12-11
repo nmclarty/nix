@@ -1,4 +1,14 @@
-{
+{ pkgs, ... }: {
+  # dependencies
+  home.packages = with pkgs; [
+    # abbrs
+    eza
+    # functions
+    lolcat
+    xxd
+    # both
+    docker-client
+  ];
   programs = {
     # disable generating man cache (fish enables it, but it's pretty slow)
     man.generateCaches = false;
@@ -8,7 +18,6 @@
       loginShellInit = ''
         # env vars
         set -gx EDITOR micro
-        set -gx NH_FLAKE ~/projects/nix/
 
         # ssh agent
         set op_sock "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"

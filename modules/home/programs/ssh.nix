@@ -19,10 +19,6 @@
         );
         # add manual config for hosts that aren't managed by nix
         manualBlocks = {
-          ics226 = {
-            user = "student";
-            forwardAgent = true;
-          };
           "github.com" = {
             hostname = "ssh.github.com";
             port = 443;

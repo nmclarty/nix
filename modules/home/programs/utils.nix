@@ -10,5 +10,19 @@
       enable = true;
       git.enable = true;
     };
+
+    nh = {
+      enable = true;
+      flake = "~/projects/nix";
+    };
+
+    micro = {
+      enable = true;
+      settings = {
+        clipboard = "terminal";
+        mkparents = true;
+        scrollbar = true;
+      };
+    };
   };
 }
