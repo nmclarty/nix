@@ -13,7 +13,7 @@
 
     nh = {
       enable = true;
-      flake = "~/projects/nix";
+      flake = "$HOME/projects/nix";
     };
 
     micro = {

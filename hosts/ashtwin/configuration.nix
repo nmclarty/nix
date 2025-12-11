@@ -9,6 +9,7 @@
     inputs.disko.nixosModules.disko
     # host
     ./containers
+    ./samba.nix
   ];
 
   # hardware
