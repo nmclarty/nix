@@ -13,7 +13,7 @@
 
     nh = {
       enable = true;
-      flake = "$HOME/projects/nix";
+      flake = "github:nmclarty/nix";
     };
 
     micro = {
