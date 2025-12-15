@@ -3,13 +3,14 @@
     # profiles
     nixos.default
     server.default
-    # standalone
+    # disko
     disko.mirror
     inputs.disko.nixosModules.disko
+    # extras
+    extra.lanzaboote
     # host
     ./containers
     ./ups.nix
-    ./lanzaboote.nix
   ];
 
   # hardware
