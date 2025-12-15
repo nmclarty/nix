@@ -1,7 +1,0 @@
-{ inputs, ... }: {
-  imports = with inputs; [
-    nix-private.darwinModules.private
-    nix-index-database.darwinModules.nix-index
-  ];
-  private.enable = true;
-}

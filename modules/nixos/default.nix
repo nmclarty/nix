@@ -1,8 +1,5 @@
 {
   imports = [
-    # shared modules
-    ../shared/default.nix
-    # nixos modules
     ./packages.nix
     ./system.nix
     ./secrets.nix

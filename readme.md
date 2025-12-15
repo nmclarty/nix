@@ -1,7 +1,7 @@
 # *nix*
 ### welcome to my system configuration repo!
 
-Hi!, I'm new to NixOS (and its associated tools) so you probably shouldn't use this as anything like a template to be followed.
+Hi!, I'm new to NixOS (and its associated tools) so you probably shouldn't use this as anything like a template.
 
 However, feel free to take inspiration or give suggestions on how I could make something better!
 
@@ -9,20 +9,20 @@ However, feel free to take inspiration or give suggestions on how I could make s
 This flake uses the (opinionated) library [Blueprint](https://github.com/numtide/blueprint) for organizing everything since I wanted to avoid boilerplate. It mostly follows the structure as specified in their docs, save for some extra module types.
 ```
 .
-├── hosts # per host configurations
+├── hosts # individual systems
 │   └── brittlehollow
-│       ├── containers # quadlet containers for services
-│       └── users # per system user config (imports main home manager module)
+│       ├── *.nix # per-system config (such as ups settings)
+│       ├── users # per-system users (also imports modules/home)
+│       └── containers # per-system containers
 ├── lib # helper functions
-└── modules 
+└── modules
     ├── darwin # MacOS system
     ├── disko # disk layouts
-    ├── devel # extra modules (to be imported on their own)
+    ├── extra # extra modules (to be imported as-needed)
     ├── home # home manager
     │   └── programs # per program (e.g. when more than a few lines)
     ├── nixos # NixOS system
-    ├── server # server specific
-    └── shared # shared config between darwin and nixos
+    └── server # NixOS server
 ```
  
 ### Dependencies
