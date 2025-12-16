@@ -37,11 +37,12 @@
             # load homebrew environment variables
             eval ($brew shellenv)
         end
-
+      '';
+      interactiveShellInit = ''
         # motd
-        if test "$TERM_PROGRAM" != vscode
+        if test $SHLVL -eq 1
             # show hostname if we're connecting remotely
-            if test -n "$SSH_CONNECTION"
+            if test -n $SSH_CONNECTION
                 hostname | figlet | lolcat -f
             end
 
