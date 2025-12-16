@@ -20,8 +20,8 @@
         set -gx EDITOR micro
 
         # ssh agent
-        set op_sock "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-        set win_sock "$XDG_RUNTIME_DIR/wsl2-ssh-agent.sock"
+        set op_sock $(path normalize "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock")
+        set win_sock $(path normalize "$XDG_RUNTIME_DIR/wsl2-ssh-agent.sock")
         if test -S $op_sock
             # if 1password agent socket exists, use it
             set -gx SSH_AUTH_SOCK $op_sock
