@@ -22,10 +22,10 @@
         # ssh agent
         set op_sock $(path normalize "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock")
         set win_sock $(path normalize "$XDG_RUNTIME_DIR/wsl2-ssh-agent.sock")
-        if test -S $op_sock
+        if test -S "$op_sock"
             # if 1password agent socket exists, use it
             set -gx SSH_AUTH_SOCK $op_sock
-        else if test -S $win_sock
+        else if test -S "$win_sock"
             # if wsl2-ssh-agent socket exists, use it
             set -gx SSH_AUTH_SOCK $win_sock
         end
@@ -33,16 +33,16 @@
         # homebrew
         set -gx HOMEBREW_NO_ENV_HINTS 1
         set brew /opt/homebrew/bin/brew
-        if test -f $brew
+        if test -f "$brew"
             # load homebrew environment variables
             eval ($brew shellenv)
         end
       '';
       interactiveShellInit = ''
         # motd
-        if test $SHLVL -eq 1
+        if test "$SHLVL" -eq 1
             # show hostname if we're connecting remotely
-            if test -n $SSH_CONNECTION
+            if test -n "$SSH_CONNECTION"
                 hostname | figlet | lolcat -f
             end
 
@@ -78,7 +78,7 @@
         helper-hostid = "head -c4 /dev/urandom | xxd -p";
         helper-logs = ''
           cat /srv/utils/traefik/logs/access.log \
-          | grep "$argv[1]@docker" (if test (count $argv) -eq 0; echo "-v"; end) \
+          | grep "$argv[1]@docker" (if test "(count $argv)" -eq 0; echo "-v"; end) \
           | goaccess --log-format TRAEFIKCLF
         '';
       };
