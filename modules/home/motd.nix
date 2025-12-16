@@ -29,9 +29,9 @@ in
     py_motd.homeModules.py_motd
   ];
   programs.py_motd = {
-    enable = true && pkgs.stdenv.isLinux;
+    enable = pkgs.stdenv.isLinux;
     settings = {
-      update.inputs = [ "nixpkgs" "nix-private" "py_motd" ];
+      update.inputs = [ "nixpkgs" "py_motd" "nix-private" ];
       backup.profiles = [ "local" "remote" ];
     };
   };
