@@ -1,7 +1,4 @@
 { pkgs, ... }: {
-  # allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # programs
   programs = {
     # fish is mainly configured in home manager
