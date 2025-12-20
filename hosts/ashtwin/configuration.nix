@@ -23,6 +23,10 @@
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
     kernelModules = [ "kvm-intel" "i2c-dev" ];
   };
+  disko.devices.disk = {
+    primary.device = "/dev/nvme0n1";
+    secondary.device = "/dev/nvme1n1";
+  };
 
   # extra zpool
   sops.secrets."zfs/cold".sopsFile = "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";

@@ -6,18 +6,16 @@
     # standalone
     disko.single
     inputs.disko.nixosModules.disko
+    # hardware
+    "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
   ];
 
   # hardware
   networking = {
-    hostName = "timberhearth";
-    hostId = "41bc3559";
+    hostName = "darkbramble";
+    hostId = "4895e382";
   };
-  nixpkgs.hostPlatform = "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = true;
-  boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "sd_mod" ];
-    kernelModules = [ "kvm-intel" ];
-  };
+  nixpkgs.hostPlatform = "aarch64-linux";
+  boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" ];
   disko.devices.disk.primary.device = "/dev/sda";
 }

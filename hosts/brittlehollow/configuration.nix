@@ -24,6 +24,10 @@
     initrd.availableKernelModules = [ "vmd" "xhci_pci" "ahci" "nvme" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
   };
+  disko.devices.disk = {
+    primary.device = "/dev/nvme0n1";
+    secondary.device = "/dev/nvme1n1";
+  };
 
   # extra zpool
   sops.secrets."zfs/tank".sopsFile = "${inputs.nix-private}/${config.networking.hostName}/secrets.yaml";

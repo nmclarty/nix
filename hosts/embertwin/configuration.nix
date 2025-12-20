@@ -25,4 +25,5 @@
     kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [ "nvme" "usbhid" "usb_storage" "sr_mod" ];
   };
+  disko.devices.disk.primary.device = "/dev/nvme0n1";
 }
