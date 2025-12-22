@@ -13,7 +13,9 @@ in
 
     # dirs
     systemd.tmpfiles.rules = [
-
+      "d /srv/immich/library - ${id} ${id}"
+      "d /srv/immich/redis - ${id} ${id}"
+      "d /srv/immich/postgres - ${id} ${id}"
     ];
 
     # containers

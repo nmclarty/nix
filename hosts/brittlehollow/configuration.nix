@@ -40,5 +40,8 @@
   private.containers.enable = true;
 
   # apps
-  apps.immich.enable = true;
+  apps = {
+    immich.enable = true;
+    seafile.enable = true;
+  };
 }

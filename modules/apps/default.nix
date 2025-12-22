@@ -3,5 +3,6 @@
     ./forgejo
     ./garage
     ./immich
+    ./seafile
   ];
 }
