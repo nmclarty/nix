@@ -3,11 +3,14 @@
     # profiles
     nixos.default
     server.default
-    # standalone
+    # disko
     disko.single
     inputs.disko.nixosModules.disko
     # hardware
     "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
+    # apps
+    apps.default
+    ./apps.nix
   ];
 
   # hardware

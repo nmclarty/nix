@@ -1,27 +1,21 @@
 _:
-let
-  conUser = { name, id }: {
-    inherit name;
-    value = {
+{
+  # Creates a system user and group, commonly used for container users
+  # - name (The name of the user)
+  # - id (The uid/gid of the user)
+  mkContainerUser = name: id: {
+    users.${name} = {
       isSystemUser = true;
       description = "${name} container user";
       group = name;
       uid = id;
     };
+    groups.${name}.gid = id;
   };
-  conGroup = { name, id }: {
-    inherit name;
-    value = {
-      gid = id;
-    };
-  };
-in
-with builtins;
-{
-  # Creates a set of system users and groups, commonly used for container users
-  # - users: a list of attribute sets with `name` and `id` keys
-  containerUsers = users: {
-    users = listToAttrs (map conUser users);
-    groups = listToAttrs (map conGroup users);
+
+  mkContainer = config: config // {
+    autoUpdate = "registry";
+    healthStartupCmd = "sleep 10";
+    healthOnFailure = "kill";
   };
 }
