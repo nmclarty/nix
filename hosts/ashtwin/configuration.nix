@@ -3,12 +3,13 @@
     # profiles
     nixos.default
     server.default
-    # standalone
+    # disko
     disko.mirror
     disko.cold
     inputs.disko.nixosModules.disko
+    # apps
+    apps.default
     # host
-    ./containers
     ./samba.nix
   ];
 
@@ -51,4 +52,7 @@
       echo "Turned off all system leds"
     '';
   };
+
+  # apps
+  apps.garage.enable = true;
 }

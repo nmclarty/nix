@@ -7,10 +7,10 @@ with flake.lib;
     ./minecraft
     ./storage
   ];
-  users = containerUsers [
-    { name = "utils"; id = 2002; }
-    { name = "storage"; id = 2003; }
-    { name = "immich"; id = 2004; }
-    { name = "minecraft"; id = 2005; }
-  ];
+  # users = mkContainerUsers [
+  #   { name = "utils"; id = 2002; }
+  #   { name = "storage"; id = 2003; }
+  #   { name = "immich"; id = 2004; }
+  #   { name = "minecraft"; id = 2005; }
+  # ];
 }

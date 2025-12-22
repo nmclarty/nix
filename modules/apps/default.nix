@@ -1,5 +1,6 @@
 {
   imports = [
-    ./forgejo
+    ./forgejo.nix
+    ./garage.nix
   ];
 }
