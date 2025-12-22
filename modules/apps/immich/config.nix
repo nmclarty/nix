@@ -6,16 +6,11 @@ in
 {
   config = mkIf cfg.enable {
     sops = {
-      secrets = {
-        "immich/pocket/client" = {
-          sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
-          key = "immich/pocket/client";
-        };
-        "immich/pocket/secret" = {
-          sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
-          key = "immich/pocket/secret";
-        };
-      };
+      secrets = flake.lib.mkSecrets [
+        "immich/pocket/client"
+        "immich/pocket/secret"
+      ] "${config.networking.hostName}/podman.yaml";
+
       templates."immich/config.json" = {
         restartUnits = [ "immich.service" "immich-microservices.service" ];
         owner = "immich";

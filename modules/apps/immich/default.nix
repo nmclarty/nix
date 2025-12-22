@@ -1,12 +1,13 @@
 { flake, lib, config, ... }:
 with lib;
+with flake.lib;
 let
   cfg = config.apps.immich;
   id = toString cfg.user.id;
 in
 {
   imports = [ ./support.nix ./config.nix ];
-  options.apps.immich = mkContainerOptions { name = "immich"; id = "2002"; };
+  options.apps.immich = mkContainerOptions { name = "immich"; id = 2002; };
   config = mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };

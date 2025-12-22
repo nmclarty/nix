@@ -1,30 +1,20 @@
-{ flake, lib, config, ... }:
-with lib;
+{ config, lib, flake, ... }:
 let
   cfg = config.apps.immich;
 in
 {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     sops = {
-      secrets = {
-        "storage/seafile/secret" = {
-          sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
-          key = "storage/seafile/secret";
-        };
-        "storage/seafile/oauth/client" = {
-          sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
-          key = "storage/seafile/oauth/client";
-        };
-        "storage/seafile/oauth/secret" = {
-          sopsFile = "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
-          key = "storage/seafile/oauth/secret";
-        };
-      };
+      secrets = flake.lib.mkSecrets [
+        "storage/seafile/secret"
+        "storage/seafile/oauth/client"
+        "storage/seafile/oauth/secret"
+      ] "${config.networking.hostName}/podman.yaml";
 
       templates = {
         "seafile/seafile.conf" = {
           restartUnits = [ "seafile.service" ];
-          owner = "storage";
+          owner = cfg.user.name;
           content = ''
             [quota]
             default = 250
@@ -40,7 +30,7 @@ in
 
         "seafile/seahub_settings.py" = {
           restartUnits = [ "seafile.service" ];
-          owner = "storage";
+          owner = cfg.user.name;
           content = ''
             # initial
             SECRET_KEY = "${config.sops.placeholder."storage/seafile/secret"}"
@@ -85,7 +75,7 @@ in
 
         "seafile/seafevents.conf" = {
           restartUnits = [ "seafile.service" ];
-          owner = "storage";
+          owner = cfg.user.name;
           content = ''
             [STATISTICS]
             enabled=true
@@ -102,7 +92,7 @@ in
 
         "seafile/seafdav.conf" = {
           restartUnits = [ "seafile.service" ];
-          owner = "storage";
+          owner = cfg.user.name;
           content = ''
             [WEBDAV]
             enabled = false
@@ -113,7 +103,7 @@ in
 
         "seafile/gunicorn.conf.py" = {
           restartUnits = [ "seafile.service" ];
-          owner = "storage";
+          owner = cfg.user.name;
           content = ''
             import os
 

@@ -8,6 +8,8 @@
     inputs.disko.nixosModules.disko
     # extras
     extra.lanzaboote
+    # apps
+    apps.default
     # host
     ./ups.nix
   ];

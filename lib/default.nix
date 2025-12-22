@@ -1,7 +1,7 @@
 { inputs, ... }:
 with inputs.nixpkgs.lib;
 {
-  # Creates a system user and group, commonly used for container users
+  # Creates a system user and group, commonly used for container users.
   # - name (The name of the user)
   # - id (The uid/gid of the user)
   mkContainerUser = { name, id }: {
@@ -29,4 +29,19 @@ with inputs.nixpkgs.lib;
       };
     };
   };
+  # Creates multiple sops-nix secrets based on the keys and then input file.
+  # - keys (a list of the keys to create secrets for)
+  # - file (a string containing the path to the secret file)
+  mkSecrets = keys: file:
+    builtins.listToAttrs (
+      map
+        (key: {
+          name = key;
+          value = {
+            sopsFile = "${inputs.nix-private}/${file}";
+            inherit key;
+          };
+        })
+        keys
+    );
 }
