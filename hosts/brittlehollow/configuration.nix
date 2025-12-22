@@ -9,7 +9,6 @@
     # extras
     extra.lanzaboote
     # host
-    ./containers
     ./ups.nix
   ];
 
@@ -39,4 +38,7 @@
 
   # enable containers from private repo
   private.containers.enable = true;
+
+  # apps
+  apps.immich.enable = true;
 }

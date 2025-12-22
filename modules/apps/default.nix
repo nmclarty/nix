@@ -1,6 +1,7 @@
 {
   imports = [
-    ./forgejo.nix
-    ./garage.nix
+    ./forgejo
+    ./garage
+    ./immich
   ];
 }

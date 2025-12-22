@@ -6,8 +6,7 @@ let
   id = toString cfg.user.id;
 in
 {
-  options.apps.forgejo = mkContainerOptions { name = "Forgejo"; id = 2000; };
-
+  options.apps.forgejo = mkContainerOptions { name = "forgejo"; id = 2000; };
   config = mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };

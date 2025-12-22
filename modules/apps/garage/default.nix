@@ -6,8 +6,8 @@ let
   id = toString cfg.user.id;
 in
 {
+  imports = [ ./config.nix ];
   options.apps.garage = mkContainerOptions { name = "garage"; id = 2001; };
-
   config = mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };
@@ -33,27 +33,6 @@ in
         "/srv/garage/meta:/var/lib/garage/meta"
         "/cold/garage/data:/var/lib/garage/data"
       ];
-    };
-
-    # config
-    sops.templates."garage/garage.toml" = {
-      restartUnits = [ "garage.container" ];
-      owner = cfg.user.name;
-      content = ''
-        metadata_dir = "/var/lib/garage/meta"
-        data_dir = "/var/lib/garage/data"
-        db_engine = "sqlite"
-
-        replication_factor = 1
-        compression_level = "none"
-        block_size = "128MiB"
-
-        rpc_bind_addr = "[::]:3901"
-
-        [s3_api]
-        s3_region = "wilds"
-        api_bind_addr = "[::]:3900"
-      '';
     };
   };
 }
