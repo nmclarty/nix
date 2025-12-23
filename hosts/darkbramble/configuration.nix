@@ -3,11 +3,13 @@
     # profiles
     nixos.default
     server.default
-    # standalone
+    # disko
     disko.single
     inputs.disko.nixosModules.disko
     # hardware
     "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
+    # apps
+    apps.default
   ];
 
   # hardware
@@ -18,4 +20,7 @@
   nixpkgs.hostPlatform = "aarch64-linux";
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" ];
   disko.devices.disk.primary.device = "/dev/sda";
+
+  # apps
+  apps.forgejo.enable = true;
 }

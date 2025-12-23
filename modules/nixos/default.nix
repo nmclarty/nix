@@ -4,5 +4,6 @@
     ./system.nix
     ./secrets.nix
     ./users.nix
+    ./motd.nix
   ];
 }

@@ -1,8 +1,13 @@
+{ lib, config, ... }:
+let
+  cfg = config.apps.garage;
+in
 {
-  sops.templates = {
-    "garage/garage.toml" = {
-      restartUnits = [ "garage.container" ];
-      owner = "garage";
+  config = lib.mkIf cfg.enable {
+    # config
+    sops.templates."garage/garage.toml" = {
+      restartUnits = [ "garage.service" ];
+      owner = cfg.user.name;
       content = ''
         metadata_dir = "/var/lib/garage/meta"
         data_dir = "/var/lib/garage/data"

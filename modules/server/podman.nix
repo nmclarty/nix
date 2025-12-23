@@ -45,7 +45,6 @@
     podman = {
       enable = true;
       autoPrune.enable = true;
-      dockerSocket.enable = true;
       extraPackages = with pkgs; [
         yq-go
         coreutils
@@ -65,4 +64,3 @@
   };
   users.groups.containers = { };
 }
-

@@ -1,0 +1,132 @@
+{ config, lib, flake, ... }:
+let
+  cfg = config.apps.seafile;
+in
+{
+  config = lib.mkIf cfg.enable {
+    sops = {
+      secrets = flake.lib.mkSecrets [
+        "seafile/secret"
+        "seafile/oauth/client"
+        "seafile/oauth/secret"
+      ] "${config.networking.hostName}/podman.yaml";
+
+      templates = {
+        "seafile/seafile.conf" = {
+          restartUnits = [ "seafile.service" ];
+          owner = cfg.user.name;
+          content = ''
+            [quota]
+            default = 250
+
+            [history]
+            keep_days = 30
+
+            [fileserver]
+            port = 8082
+            use_go_fileserver = true
+          '';
+        };
+
+        "seafile/seahub_settings.py" = {
+          restartUnits = [ "seafile.service" ];
+          owner = cfg.user.name;
+          content = ''
+            # initial
+            SECRET_KEY = "${config.sops.placeholder."seafile/secret"}"
+            TIME_ZONE = "Etc/UTC"
+
+            # security
+            ALLOWED_HOSTS = [ "seafile.${config.apps.domain}", "127.0.0.1" ]
+            CSRF_COOKIE_SECURE = True
+            SESSION_COOKIE_SECURE = True
+
+            # general
+            ENABLE_TWO_FACTOR_AUTH = True
+            ENABLE_WIKI = False
+            SITE_TITLE = "Seafile"
+            LOGOUT_REDIRECT_URL = "https://seafile.${config.apps.domain}/accounts/login/"
+
+            # library
+            ENCRYPTED_LIBRARY_VERSION = 4
+            ENCRYPTED_LIBRARY_PWD_HASH_ALGO = "argon2id"
+            ENCRYPTED_LIBRARY_PWD_HASH_PARAMS = "2,102400,8"
+            ENABLE_REPO_SNAPSHOT_LABEL = True
+            ENABLE_REPO_HISTORY_SETTING = False
+
+            # oidc for pocket id integration
+            ENABLE_OAUTH = True
+            CLIENT_SSO_VIA_LOCAL_BROWSER = True
+            OAUTH_CLIENT_ID = "${config.sops.placeholder."seafile/oauth/client"}"
+            OAUTH_CLIENT_SECRET = "${config.sops.placeholder."seafile/oauth/secret"}"
+            OAUTH_REDIRECT_URL = "https://seafile.${config.apps.domain}/oauth/callback/"
+            OAUTH_PROVIDER = "pocket-id"
+            OAUTH_AUTHORIZATION_URL = "https://pocket.${config.apps.domain}/authorize"
+            OAUTH_TOKEN_URL = "https://pocket.${config.apps.domain}/api/oidc/token"
+            OAUTH_USER_INFO_URL = "https://pocket.${config.apps.domain}/api/oidc/userinfo"
+            OAUTH_SCOPE = [ "openid", "email", "profile" ]
+            OAUTH_ATTRIBUTE_MAP = {
+                "sub": (True, "uid"),
+                "name": (False, "name"),
+                "email": (False, "contact_email")
+            }
+          '';
+        };
+
+        "seafile/seafevents.conf" = {
+          restartUnits = [ "seafile.service" ];
+          owner = cfg.user.name;
+          content = ''
+            [STATISTICS]
+            enabled=true
+
+            [SEAHUB EMAIL]
+            enabled = true
+            interval = 30m
+
+            [FILE HISTORY]
+            enabled = true
+            suffix = md,txt,doc,docx,xls,xlsx,ppt,pptx,sdoc
+          '';
+        };
+
+        "seafile/seafdav.conf" = {
+          restartUnits = [ "seafile.service" ];
+          owner = cfg.user.name;
+          content = ''
+            [WEBDAV]
+            enabled = false
+            port = 8080
+            share_name = /seafdav
+          '';
+        };
+
+        "seafile/gunicorn.conf.py" = {
+          restartUnits = [ "seafile.service" ];
+          owner = cfg.user.name;
+          content = ''
+            import os
+
+            daemon = True
+            workers = 5
+
+            # default localhost:8000
+            bind = "127.0.0.1:8000"
+
+            # Pid
+            pids_dir = '/opt/seafile/pids'
+            pidfile = os.path.join(pids_dir, 'seahub.pid')
+
+            # for file upload, we need a longer timeout value (default is only 30s, too short)
+            timeout = 1200
+
+            limit_request_line = 8190
+
+            # for forwarder headers
+            forwarder_headers = 'SCRIPT_NAME,PATH_INFO,REMOTE_USER'
+          '';
+        };
+      };
+    };
+  };
+}

@@ -17,7 +17,7 @@
     };
     users.nmclarty = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "systemd-journal" "podman" ];
+      extraGroups = [ "wheel" "systemd-journal" ];
       shell = pkgs.fish;
       uid = 1000;
       hashedPasswordFile = config.sops.secrets."nmclarty/hashedPassword".path;

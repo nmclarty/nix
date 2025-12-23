@@ -1,9 +1,8 @@
 {
   home.stateVersion = "25.05";
   imports = [
-    ./programs
+    ./cli
     ./packages.nix
     ./files.nix
-    ./motd.nix
   ];
 }
