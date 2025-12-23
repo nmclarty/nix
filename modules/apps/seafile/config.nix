@@ -6,9 +6,9 @@ in
   config = lib.mkIf cfg.enable {
     sops = {
       secrets = flake.lib.mkSecrets [
-        "storage/seafile/secret"
-        "storage/seafile/oauth/client"
-        "storage/seafile/oauth/secret"
+        "seafile/secret"
+        "seafile/oauth/client"
+        "seafile/oauth/secret"
       ] "${config.networking.hostName}/podman.yaml";
 
       templates = {
@@ -33,7 +33,7 @@ in
           owner = cfg.user.name;
           content = ''
             # initial
-            SECRET_KEY = "${config.sops.placeholder."storage/seafile/secret"}"
+            SECRET_KEY = "${config.sops.placeholder."seafile/secret"}"
             TIME_ZONE = "Etc/UTC"
 
             # security
@@ -57,8 +57,8 @@ in
             # oidc for pocket id integration
             ENABLE_OAUTH = True
             CLIENT_SSO_VIA_LOCAL_BROWSER = True
-            OAUTH_CLIENT_ID = "${config.sops.placeholder."storage/seafile/oauth/client"}"
-            OAUTH_CLIENT_SECRET = "${config.sops.placeholder."storage/seafile/oauth/secret"}"
+            OAUTH_CLIENT_ID = "${config.sops.placeholder."seafile/oauth/client"}"
+            OAUTH_CLIENT_SECRET = "${config.sops.placeholder."seafile/oauth/secret"}"
             OAUTH_REDIRECT_URL = "https://seafile.${config.private.domain}/oauth/callback/"
             OAUTH_PROVIDER = "pocket-id"
             OAUTH_AUTHORIZATION_URL = "https://pocket.${config.private.domain}/authorize"
