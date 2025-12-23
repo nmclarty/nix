@@ -26,34 +26,21 @@
   };
   systemd.services.podman.environment.LOGGING = "--log-level=warn"; # reduce log spam
   virtualisation = {
-    containers = {
-      enable = true;
-      containersConf.settings = {
-        # containers.log_driver = "k8s-file";
-        engine.events_logger = "file";
-        secrets = {
-          driver = "shell";
-          opts = {
-            list = "true";
-            lookup = ''printf $(yq .$(yq -r ".idToName.$SECRET_ID" /var/lib/containers/storage/secrets/secrets.json | tr '_' '.') ${config.sops.secrets."podman.yaml".path})'';
-            store = "true";
-            delete = "true";
-          };
-        };
-      };
-    };
+    containers.enable = true;
     podman = {
       enable = true;
-      autoPrune.enable = true;
-      extraPackages = with pkgs; [
-        yq-go
-        coreutils
-        iptables
-      ]; # yq and tr (coreutils) for parsing secrets, iptables for creating pods (doesn't work without it?)
+      dockerCompat = true;
+      autoPrune = {
+        enable = true;
+        flags = [ "--all" ];
+      };
     };
     quadlet = {
-      autoEscape = true;
-      autoUpdate.enable = true;
+      enable = true;
+      autoUpdate = {
+        enable = true;
+        calendar = "weekly";
+      };
     };
   };
   # for rootful userns
