@@ -6,7 +6,7 @@ with flake.lib;
     ./forgejo
     ./garage
     ./immich
-    # # ./minecraft
+    ./minecraft
     ./pocket
     ./seafile
     ./tinyauth

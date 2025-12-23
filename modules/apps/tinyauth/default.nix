@@ -1,7 +1,7 @@
 { flake, lib, config, ... }:
 with flake.lib;
 let
-  cfg = config.apps.immich;
+  cfg = config.apps.tinyauth;
   id = toString cfg.user.id;
 in
 {

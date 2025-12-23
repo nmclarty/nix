@@ -14,7 +14,7 @@ with inputs.nixpkgs.lib;
     groups.${name}.gid = id;
   };
 
-  # Creates mutltiple option sets, for each container passed.
+  # Creates multiple option sets, for each container passed.
   # - apps (a list of containers)
   mkContainerOptions = apps: builtins.listToAttrs (
     map
