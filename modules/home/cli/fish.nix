@@ -60,7 +60,7 @@
 
             # display rust-motd, removing blank lines
             set motd "/run/rust-motd/motd"
-            if type -f "$motd"
+            if test -f "$motd"
                 cat "$motd" | grep -v '^$'
             end
 
