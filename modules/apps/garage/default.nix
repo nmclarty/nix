@@ -1,5 +1,4 @@
 { flake, lib, config, ... }:
-with lib;
 with flake.lib;
 let
   cfg = config.apps.garage;
@@ -7,8 +6,8 @@ let
 in
 {
   imports = [ ./config.nix ];
-  options.apps.garage = mkContainerOptions { name = "garage"; id = 2001; };
-  config = mkIf cfg.enable {
+  options.apps.garage = mkContainerOptions { tag = "v2.1.0"; name = "garage"; id = 2001; };
+  config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };
 
@@ -20,7 +19,7 @@ in
 
     # containers
     virtualisation.quadlet.containers.garage.containerConfig = {
-      image = "docker.io/dxflrs/garage:v2.1.0";
+      image = "docker.io/dxflrs/garage:${cfg.tag}";
       autoUpdate = "registry";
       user = "${id}:${id}";
       networks = [ "host" ];

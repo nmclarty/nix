@@ -1,10 +1,9 @@
 { lib, config, ... }:
-with lib;
 let
   cfg = config.apps.garage;
 in
 {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # config
     sops.templates."garage/garage.toml" = {
       restartUnits = [ "garage.container" ];

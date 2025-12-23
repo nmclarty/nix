@@ -1,5 +1,4 @@
 { flake, lib, config, ... }:
-with lib;
 with flake.lib;
 let
   cfg = config.apps.immich;
@@ -7,8 +6,8 @@ let
 in
 {
   imports = [ ./support.nix ./config.nix ];
-  options.apps.immich = mkContainerOptions { name = "immich"; id = 2002; };
-  config = mkIf cfg.enable {
+  options.apps.immich = mkContainerOptions { tag = "release"; name = "immich"; id = 2002; };
+  config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };
 
@@ -24,7 +23,7 @@ in
       containers = {
         immich = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-server:release";
+            image = "ghcr.io/immich-app/immich-server:${cfg.tag}";
             autoUpdate = "registry";
             user = "${id}:${id}";
             environments = {
@@ -46,15 +45,12 @@ in
             healthStartupCmd = "sleep 10";
             healthOnFailure = "kill";
           };
-          unitConfig = {
-            Requires = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" "immich-microservices.service" ];
-            After = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" "immich-microservices.service" ];
-          };
+          unitConfig = mkContainerDeps [ "immich-redis" "immich-postgres" "immich-learning" "immich-microservices" ];
         };
 
         immich-microservices = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-server:release";
+            image = "ghcr.io/immich-app/immich-server:${cfg.tag}";
             autoUpdate = "registry";
             user = "${id}:${id}";
             environments = {
@@ -75,16 +71,13 @@ in
             healthStartupCmd = "sleep 10";
             healthOnFailure = "kill";
           };
-          unitConfig = {
-            Requires = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" ];
-            After = [ "immich-redis.service" "immich-postgres.service" "immich-learning.service" ];
-          };
+          unitConfig = mkContainerDeps [ "immich-redis" "immich-postgres" "immich-learning" ];
           serviceConfig.AllowedCPUs = "12-19";
         };
 
         immich-learning = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-machine-learning:release-openvino";
+            image = "ghcr.io/immich-app/immich-machine-learning:${cfg.tag}-openvino";
             autoUpdate = "registry";
             userns = "auto:uidmapping=0:${id}:1,gidmapping=0:${id}:1";
             environments = { MACHINE_LEARNING_MODEL_INTRA_OP_THREADS = "2"; };

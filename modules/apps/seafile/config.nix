@@ -1,6 +1,6 @@
 { config, lib, flake, ... }:
 let
-  cfg = config.apps.immich;
+  cfg = config.apps.seafile;
 in
 {
   config = lib.mkIf cfg.enable {

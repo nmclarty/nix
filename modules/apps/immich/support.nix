@@ -1,11 +1,10 @@
 { lib, config, ... }:
-with lib;
 let
   cfg = config.apps.immich;
   id = toString cfg.user.id;
 in
 {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     virtualisation.quadlet.containers = {
       immich-redis.containerConfig = {
         image = "docker.io/valkey/valkey:8-bookworm";

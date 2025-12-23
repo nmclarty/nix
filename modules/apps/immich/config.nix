@@ -1,19 +1,19 @@
 { flake, lib, config, ... }:
-with lib;
+with flake.lib;
 let
   cfg = config.apps.immich;
 in
 {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     sops = {
-      secrets = flake.lib.mkSecrets [
+      secrets = mkSecrets [
         "immich/pocket/client"
         "immich/pocket/secret"
       ] "${config.networking.hostName}/podman.yaml";
 
       templates."immich/config.json" = {
         restartUnits = [ "immich.service" "immich-microservices.service" ];
-        owner = "immich";
+        owner = cfg.user.name;
         content = ''
           {
             "backup": {

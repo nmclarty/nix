@@ -1,5 +1,4 @@
 { flake, lib, config, ... }:
-with lib;
 with flake.lib;
 let
   cfg = config.apps.seafile;
@@ -7,8 +6,8 @@ let
 in
 {
   imports = [ ./support.nix ./config.nix ];
-  options.apps.seafile = mkContainerOptions { name = "seafile"; id = 2003; };
-  config = mkIf cfg.enable {
+  options.apps.seafile = mkContainerOptions { tag = "13.0-latest"; name = "seafile"; id = 2003; };
+  config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };
 
@@ -25,7 +24,7 @@ in
       containers = {
         seafile = {
           containerConfig = {
-            image = "docker.io/seafileltd/seafile-mc:13.0-latest";
+            image = "docker.io/seafileltd/seafile-mc:${cfg.tag}";
             autoUpdate = "registry";
             userns = "auto:uidmapping=0:${id}:1,gidmapping=0:${id}:1";
             environments = rec {
@@ -76,15 +75,12 @@ in
             healthStartupCmd = "sleep 10";
             healthOnFailure = "kill";
           };
-          unitConfig = {
-            Requires = [ "storage-mariadb.service" "storage-redis.service" ];
-            After = [ "storage-mariadb.service" "storage-redis.service" ];
-          };
+          unitConfig = mkContainerDeps [ "storage-mariadb" "storage-redis" ];
         };
 
         storage-notification = {
           containerConfig = {
-            image = "docker.io/seafileltd/notification-server:13.0-latest";
+            image = "docker.io/seafileltd/notification-server:${cfg.tag}";
             autoUpdate = "registry";
             environments = {
               SEAFILE_MYSQL_DB_HOST = "storage-mariadb";
@@ -111,10 +107,7 @@ in
             healthStartupCmd = "sleep 10";
             healthOnFailure = "kill";
           };
-          unitConfig = {
-            Requires = [ "storage-mariadb.service" ];
-            After = [ "storage-mariadb.service" ];
-          };
+          unitConfig = mkContainerDeps [ "storage-mariadb" ];
         };
       };
 

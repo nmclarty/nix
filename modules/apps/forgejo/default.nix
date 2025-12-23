@@ -1,13 +1,12 @@
 { flake, lib, config, ... }:
-with lib;
 with flake.lib;
 let
   cfg = config.apps.forgejo;
   id = toString cfg.user.id;
 in
 {
-  options.apps.forgejo = mkContainerOptions { name = "forgejo"; id = 2000; };
-  config = mkIf cfg.enable {
+  options.apps.forgejo = mkContainerOptions { tag = "13-rootless"; name = "forgejo"; id = 2000; };
+  config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };
 
@@ -18,7 +17,7 @@ in
 
     # containers
     virtualisation.quadlet.containers.forgejo.containerConfig = {
-      image = "codeberg.org/forgejo/forgejo:13-rootless";
+      image = "codeberg.org/forgejo/forgejo:${cfg.tag}";
       autoUpdate = "registry";
       user = "${id}:${id}";
       volumes = [ "/srv/forgejo/data:/var/lib/gitea" ];

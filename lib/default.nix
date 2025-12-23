@@ -14,8 +14,13 @@ with inputs.nixpkgs.lib;
     groups.${name}.gid = id;
   };
 
-  mkContainerOptions = { name, id }: {
+  mkContainerOptions = { tag, name, id }: {
     enable = mkEnableOption "Enable ${name}";
+    tag = mkOption {
+      type = types.str;
+      default = tag;
+      description = "The image tag to use.";
+    };
     user = {
       name = mkOption {
         type = types.str;
@@ -29,6 +34,18 @@ with inputs.nixpkgs.lib;
       };
     };
   };
+
+  # Creates a list of systemd dependencies for a quadlet container.
+  # - deps (a list of service names to depend on)
+  mkContainerDeps = deps:
+    let
+      services = map (dep: "${dep}.service") deps;
+    in
+    {
+      Requires = services;
+      After = services;
+    };
+
   # Creates multiple sops-nix secrets based on the keys and then input file.
   # - keys (a list of the keys to create secrets for)
   # - file (a string containing the path to the secret file)
