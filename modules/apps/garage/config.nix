@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     # config
     sops.templates."garage/garage.toml" = {
-      restartUnits = [ "garage.container" ];
+      restartUnits = [ "garage.service" ];
       owner = cfg.user.name;
       content = ''
         metadata_dir = "/var/lib/garage/meta"

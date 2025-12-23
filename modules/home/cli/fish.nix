@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
+  imports = with inputs; [
+    py_motd.homeModules.py_motd
+  ];
   # dependencies
   home.packages = with pkgs; [
     # abbrs
@@ -12,6 +15,14 @@
   programs = {
     # disable generating man cache (fish enables it, but it's pretty slow)
     man.generateCaches = false;
+
+    py_motd = {
+      enable = pkgs.stdenv.isLinux;
+      settings = {
+        update.inputs = [ "nixpkgs" "py_motd" "nix-private" ];
+        backup.profiles = [ "local" "remote" ];
+      };
+    };
 
     fish = {
       enable = true;
@@ -47,8 +58,9 @@
             end
 
             # display rust-motd, removing blank lines
-            if type -q rust-motd
-                rust-motd | grep -v '^$'
+            set motd "/run/rust-motd/motd"
+            if type -f "$motd"
+                cat "$motd" | grep -v '^$'
             end
 
             # display py_motd
