@@ -8,7 +8,7 @@ in
   imports = [ ./config.nix ];
   config = lib.mkIf cfg.enable {
     # user
-    user = mkContainerUser { inherit (cfg.user) name id; };
+    users = mkContainerUser { inherit (cfg.user) name id; };
 
     # dirs
     systemd.tmpfiles.rules = [

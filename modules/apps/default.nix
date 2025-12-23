@@ -1,11 +1,12 @@
-{ lib, config, ... }:
+{ flake, lib, config, ... }:
 with lib;
+with flake.lib;
 {
   imports = [
     ./forgejo
     ./garage
     ./immich
-    ./minecraft
+    # # ./minecraft
     ./pocket
     ./seafile
     ./tinyauth

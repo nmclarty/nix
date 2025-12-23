@@ -15,7 +15,7 @@ in
     ];
 
     # containers
-    pocket = {
+    virtualisation.quadlet.containers.pocket = {
       containerConfig = {
         image = "ghcr.io/pocket-id/pocket-id:${cfg.tag}";
         autoUpdate = "registry";

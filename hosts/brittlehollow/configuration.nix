@@ -45,5 +45,9 @@
   apps = {
     immich.enable = true;
     seafile.enable = true;
+    traefik.enable = true;
+    pocket.enable = true;
+    tinyauth.enable = true;
+    minecraft.enable = true;
   };
 }
