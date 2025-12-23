@@ -7,6 +7,7 @@
     # abbrs
     eza
     # functions
+    figlet
     lolcat
     xxd
     # both
