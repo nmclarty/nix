@@ -39,7 +39,7 @@
   };
 
   # enable containers from private repo
-  private.containers.enable = true;
+  #private.containers.enable = true;
 
   # apps
   apps = {
