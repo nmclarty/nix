@@ -18,7 +18,7 @@ let
         ) else "";
   podman =
     if containers != "" then ''
-      docker title="Podman" {
+      docker title="Podman" socket="unix:///var/run/podman/podman.sock" {
         ${containers}
       }
     ''
