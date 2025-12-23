@@ -37,7 +37,7 @@ in
             TIME_ZONE = "Etc/UTC"
 
             # security
-            ALLOWED_HOSTS = [ "seafile.${config.private.domain}", "127.0.0.1" ]
+            ALLOWED_HOSTS = [ "seafile.${config.apps.domain}", "127.0.0.1" ]
             CSRF_COOKIE_SECURE = True
             SESSION_COOKIE_SECURE = True
 
@@ -45,7 +45,7 @@ in
             ENABLE_TWO_FACTOR_AUTH = True
             ENABLE_WIKI = False
             SITE_TITLE = "Seafile"
-            LOGOUT_REDIRECT_URL = "https://seafile.${config.private.domain}/accounts/login/"
+            LOGOUT_REDIRECT_URL = "https://seafile.${config.apps.domain}/accounts/login/"
 
             # library
             ENCRYPTED_LIBRARY_VERSION = 4
@@ -59,11 +59,11 @@ in
             CLIENT_SSO_VIA_LOCAL_BROWSER = True
             OAUTH_CLIENT_ID = "${config.sops.placeholder."seafile/oauth/client"}"
             OAUTH_CLIENT_SECRET = "${config.sops.placeholder."seafile/oauth/secret"}"
-            OAUTH_REDIRECT_URL = "https://seafile.${config.private.domain}/oauth/callback/"
+            OAUTH_REDIRECT_URL = "https://seafile.${config.apps.domain}/oauth/callback/"
             OAUTH_PROVIDER = "pocket-id"
-            OAUTH_AUTHORIZATION_URL = "https://pocket.${config.private.domain}/authorize"
-            OAUTH_TOKEN_URL = "https://pocket.${config.private.domain}/api/oidc/token"
-            OAUTH_USER_INFO_URL = "https://pocket.${config.private.domain}/api/oidc/userinfo"
+            OAUTH_AUTHORIZATION_URL = "https://pocket.${config.apps.domain}/authorize"
+            OAUTH_TOKEN_URL = "https://pocket.${config.apps.domain}/api/oidc/token"
+            OAUTH_USER_INFO_URL = "https://pocket.${config.apps.domain}/api/oidc/userinfo"
             OAUTH_SCOPE = [ "openid", "email", "profile" ]
             OAUTH_ATTRIBUTE_MAP = {
                 "sub": (True, "uid"),

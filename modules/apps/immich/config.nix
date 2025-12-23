@@ -204,7 +204,7 @@ in
               "clientSecret": "${config.sops.placeholder."immich/pocket/secret"}",
               "defaultStorageQuota": 250,
               "enabled": true,
-              "issuerUrl": "https://pocket.${config.private.domain}",
+              "issuerUrl": "https://pocket.${config.apps.domain}",
               "mobileOverrideEnabled": false,
               "mobileRedirectUri": "",
               "profileSigningAlgorithm": "none",
@@ -223,7 +223,7 @@ in
               "enabled": true
             },
             "server": {
-              "externalDomain": "https://immich.${config.private.domain}",
+              "externalDomain": "https://immich.${config.apps.domain}",
               "loginPageMessage": "",
               "publicUsers": true
             },
