@@ -6,7 +6,6 @@ let
 in
 {
   imports = [ ./support.nix ./config.nix ];
-  options.apps.seafile = mkContainerOptions { tag = "13.0-latest"; name = "seafile"; id = 2003; };
   config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };

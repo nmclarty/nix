@@ -5,7 +5,6 @@ let
   id = toString cfg.user.id;
 in
 {
-  options.apps.pocket = mkContainerOptions { tag = "v1"; name = "pocket"; id = 2005; };
   config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };

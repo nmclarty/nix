@@ -5,7 +5,6 @@ let
   id = toString cfg.user.id;
 in
 {
-  options.apps.tinyauth = mkContainerOptions { tag = "v4"; name = "tinyauth"; id = 2006; };
   config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };

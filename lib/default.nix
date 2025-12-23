@@ -14,26 +14,35 @@ with inputs.nixpkgs.lib;
     groups.${name}.gid = id;
   };
 
-  mkContainerOptions = { tag, name, id }: {
-    enable = mkEnableOption "Enable ${name}";
-    tag = mkOption {
-      type = types.str;
-      default = tag;
-      description = "The image tag to use.";
-    };
-    user = {
-      name = mkOption {
-        type = types.str;
-        default = name;
-        description = "The user to create and use for ${name}.";
-      };
-      id = mkOption {
-        type = types.int;
-        default = id;
-        description = "The uid/gid for the user.";
-      };
-    };
-  };
+  # Creates mutltiple option sets, for each container passed.
+  # - apps (a list of containers)
+  mkContainerOptions = apps: builtins.listToAttrs (
+    map
+      ({ id, name, tag }: {
+        inherit name;
+        value = {
+          enable = mkEnableOption "Enable ${name}";
+          tag = mkOption {
+            type = types.str;
+            default = tag;
+            description = "The image tag to use.";
+          };
+          user = {
+            name = mkOption {
+              type = types.str;
+              default = name;
+              description = "The user to create and use for ${name}.";
+            };
+            id = mkOption {
+              type = types.int;
+              default = id;
+              description = "The uid/gid for the user.";
+            };
+          };
+        };
+      })
+      apps
+  );
 
   # Creates a list of systemd dependencies for a quadlet container.
   # - deps (a list of service names to depend on)

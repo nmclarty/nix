@@ -6,7 +6,6 @@ let
 in
 {
   imports = [ ./config.nix ];
-  options.apps.garage = mkContainerOptions { tag = "v3"; name = "traefik"; id = 2004; };
   config = lib.mkIf cfg.enable {
     # user
     user = mkContainerUser { inherit (cfg.user) name id; };

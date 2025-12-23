@@ -6,7 +6,6 @@ let
 in
 {
   imports = [ ./support.nix ./config.nix ];
-  options.apps.immich = mkContainerOptions { tag = "release"; name = "immich"; id = 2002; };
   config = lib.mkIf cfg.enable {
     # user
     users = mkContainerUser { inherit (cfg.user) name id; };
