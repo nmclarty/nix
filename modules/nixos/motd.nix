@@ -22,8 +22,8 @@ in
 {
   systemd.services.rust-motd = {
     description = "Update the motd using rust-motd";
-    after = [ "podman.socket" ];
-    requires = [ "podman.socket" ];
+    after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     path = with pkgs; [ rust-motd ];
     script = ''
