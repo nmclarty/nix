@@ -16,6 +16,10 @@
   systemd.services.podman.environment.LOGGING = "--log-level=warn"; # reduce log spam
   virtualisation = {
     containers.enable = true;
+    containersConf.settings = {
+      containers.tz = "local";
+      engine.events_logger = "file";
+    };
     podman = {
       enable = true;
       dockerCompat = true;
