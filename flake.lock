@@ -24,7 +24,7 @@
     "blueprint_2": {
       "inputs": {
         "nixpkgs": [
-          "nix-private",
+          "nix-helpers",
           "nixpkgs"
         ],
         "systems": "systems_2"
@@ -46,7 +46,7 @@
     "blueprint_3": {
       "inputs": {
         "nixpkgs": [
-          "py_motd",
+          "nix-private",
           "nixpkgs"
         ],
         "systems": "systems_3"
@@ -161,11 +161,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766387499,
-        "narHash": "sha256-AjK3/UKDzeXFeYNLVBaJ3+HLE9he1g5UrlNd4/BM3eA=",
+        "lastModified": 1766553851,
+        "narHash": "sha256-hHKQhHkXxuPJwLkI8wdu826GLV5AcuW9/HVdc9eBnTU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "527ad07e6625302b648ed3b28c34b62a79bd103e",
+        "rev": "7eca7f7081036a7b740090994c9ec543927f89a7",
         "type": "github"
       },
       "original": {
@@ -205,11 +205,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766038392,
-        "narHash": "sha256-ht/GuKaw5NT3M12xM+mkUtkSBVtzjJ8IHIy6R/ncv9g=",
+        "lastModified": 1766524813,
+        "narHash": "sha256-N/sxS27+t9nGvGWqwwAceSMW/Y5ddcypS/aiTnZ7ScA=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "5fb45ece6129bd7ad8f7310df0ae9c00bae7c562",
+        "rev": "c2b36207f2c396c79dbed9d40536db221bd4e363",
         "type": "github"
       },
       "original": {
@@ -218,19 +218,41 @@
         "type": "github"
       }
     },
-    "nix-private": {
+    "nix-helpers": {
       "inputs": {
         "blueprint": "blueprint_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pyproject-nix": "pyproject-nix"
+      },
+      "locked": {
+        "lastModified": 1766567930,
+        "narHash": "sha256-jkHfs72L51jhsexluer7FmbvFSSb0tozJuhIt/3kksc=",
+        "owner": "nmclarty",
+        "repo": "nix-helpers",
+        "rev": "a04d21caa8d89fcf5397b8f5a98c50ff87d08461",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nmclarty",
+        "repo": "nix-helpers",
+        "type": "github"
+      }
+    },
+    "nix-private": {
+      "inputs": {
+        "blueprint": "blueprint_3",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1766475242,
-        "narHash": "sha256-DedzzpO4gtGvO/+DvSbH0u1dBGPZnFuJUA+f7dqs44M=",
+        "lastModified": 1766569522,
+        "narHash": "sha256-GfY51AJgFhPlDEMSm/HAKZ1F8bHoFszhQiBdKBgyC5s=",
         "owner": "nmclarty",
         "repo": "nix-private",
-        "rev": "2c17bac508dbce22f26875a287cf131902185a7a",
+        "rev": "25a6efff586af32adbc513232c210104680715e2",
         "type": "github"
       },
       "original": {
@@ -299,32 +321,10 @@
         "type": "github"
       }
     },
-    "py_motd": {
-      "inputs": {
-        "blueprint": "blueprint_3",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "pyproject-nix": "pyproject-nix"
-      },
-      "locked": {
-        "lastModified": 1765866943,
-        "narHash": "sha256-Z77sYC46tp9Qyir7WkHh9Oiaix9ivduojgUzWA+NC10=",
-        "owner": "nmclarty",
-        "repo": "py_motd",
-        "rev": "c388ed635f81c12a0af7694d352a07febce47647",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nmclarty",
-        "repo": "py_motd",
-        "type": "github"
-      }
-    },
     "pyproject-nix": {
       "inputs": {
         "nixpkgs": [
-          "py_motd",
+          "nix-helpers",
           "nixpkgs"
         ]
       },
@@ -364,10 +364,10 @@
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nix-darwin": "nix-darwin",
+        "nix-helpers": "nix-helpers",
         "nix-private": "nix-private",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "py_motd": "py_motd",
         "quadlet-nix": "quadlet-nix",
         "sops-nix": "sops-nix"
       }

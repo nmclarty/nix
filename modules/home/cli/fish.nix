@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }: {
   imports = with inputs; [
-    py_motd.homeModules.py_motd
+    nix-helpers.homeModules.py-motd
   ];
   # dependencies
   home.packages = with pkgs; [
@@ -17,10 +17,10 @@
     # disable generating man cache (fish enables it, but it's pretty slow)
     man.generateCaches = false;
 
-    py_motd = {
+    py-motd = {
       enable = pkgs.stdenv.isLinux;
       settings = {
-        update.inputs = [ "nixpkgs" "py_motd" "nix-private" ];
+        update.inputs = [ "nixpkgs" "nix-helpers" "nix-private" ];
         backup.profiles = [ "local" "remote" ];
       };
     };

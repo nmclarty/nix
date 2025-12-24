@@ -7,8 +7,8 @@ in
   config = lib.mkIf cfg.enable {
     sops = {
       secrets = mkSecrets [
-        "immich/pocket/client"
-        "immich/pocket/secret"
+        "immich/pocket/client_id"
+        "immich/pocket/client_secret"
       ] "${config.networking.hostName}/podman.yaml";
 
       templates."immich/config.json" = {
@@ -200,8 +200,8 @@ in
               "autoLaunch": true,
               "autoRegister": true,
               "buttonText": "Login with Pocket ID",
-              "clientId": "${config.sops.placeholder."immich/pocket/client"}",
-              "clientSecret": "${config.sops.placeholder."immich/pocket/secret"}",
+              "clientId": "${config.sops.placeholder."immich/pocket/client_id"}",
+              "clientSecret": "${config.sops.placeholder."immich/pocket/client_secret"}",
               "defaultStorageQuota": 250,
               "enabled": true,
               "issuerUrl": "https://pocket.${config.apps.domain}",

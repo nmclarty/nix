@@ -24,9 +24,9 @@ in
             autoUpdate = "registry";
             user = "${id}:${id}";
             environments = {
-              CF_DNS_API_TOKEN_FILE = "/run/secrets/traefik_token";
+              CF_DNS_API_TOKEN_FILE = "/run/secrets/traefik__dns_token";
             };
-            secrets = [ "traefik_token,uid=${id},gid=${id},mode=0400" ];
+            secrets = [ "traefik__dns_token,uid=${id},gid=${id},mode=0400" ];
             volumes = [
               "${config.sops.templates."traefik/traefik.yaml".path}:/etc/traefik/traefik.yaml:ro"
               "${config.sops.templates."traefik/dynamic.yaml".path}:/etc/traefik/dynamic.yaml:ro"

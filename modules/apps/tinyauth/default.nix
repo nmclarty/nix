@@ -28,7 +28,7 @@ in
           SECURE_COOKIE = "true";
           TRUSTED_PROXIES = "10.90.0.2";
           # pocket-id oauth
-          PROVIDERS_POCKETID_CLIENT_SECRET_FILE = "/run/secrets/tinyauth_secret";
+          PROVIDERS_POCKETID_CLIENT_SECRET_FILE = "/run/secrets/tinyauth__client_secret";
           PROVIDERS_POCKETID_AUTH_URL = "https://pocket.${config.apps.domain}/authorize";
           PROVIDERS_POCKETID_TOKEN_URL = "https://pocket.${config.apps.domain}/api/oidc/token";
           PROVIDERS_POCKETID_USER_INFO_URL = "https://pocket.${config.apps.domain}/api/oidc/userinfo";
@@ -37,8 +37,8 @@ in
           PROVIDERS_POCKETID_NAME = "Pocket ID";
         };
         secrets = [
-          "tinyauth_client,type=env,target=PROVIDERS_POCKETID_CLIENT_ID"
-          "tinyauth_secret,uid=${id},gid=${id},mode=0400"
+          "tinyauth__client_id,type=env,target=PROVIDERS_POCKETID_CLIENT_ID"
+          "tinyauth__client_secret,uid=${id},gid=${id},mode=0400"
         ];
         volumes = [ "/srv/tinyauth:/data" ];
         networks = [ "exposed.network" ];

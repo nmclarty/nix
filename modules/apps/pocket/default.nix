@@ -23,12 +23,12 @@ in
         environments = {
           APP_URL = "https://pocket.${config.apps.domain}";
           TRUST_PROXY = "true";
-          MAXMIND_LICENSE_KEY_FILE = "/run/secrets/pocket_maxmind";
-          ENCRYPTION_KEY_FILE = "/run/secrets/pocket_encryption";
+          MAXMIND_LICENSE_KEY_FILE = "/run/secrets/pocket__maxmind_licence_key";
+          ENCRYPTION_KEY_FILE = "/run/secrets/pocket__encryption_key";
         };
         secrets = [
-          "pocket_maxmind,uid=${id},gid=${id},mode=0400"
-          "pocket_encryption,uid=${id},gid=${id},mode=0400"
+          "pocket__maxmind_licence_key,uid=${id},gid=${id},mode=0400"
+          "pocket__encryption_key,uid=${id},gid=${id},mode=0400"
         ];
         volumes = [ "/srv/pocket:/app/data" ];
         networks = [ "exposed.network" ];

@@ -51,12 +51,12 @@ in
               MD_FILE_COUNT_LIMIT = "100000";
             };
             secrets = [
-              "seafile_mariadb_root,type=env,target=INIT_SEAFILE_MYSQL_ROOT_PASSWORD"
-              "seafile_mariadb_password,type=env,target=SEAFILE_MYSQL_DB_PASSWORD"
-              "seafile_email,type=env,target=INIT_SEAFILE_ADMIN_EMAIL"
-              "seafile_password,type=env,target=INIT_SEAFILE_ADMIN_PASSWORD"
-              "seafile_jwt,type=env,target=JWT_PRIVATE_KEY"
-              "seafile_redis_password,type=env,target=REDIS_PASSWORD"
+              "seafile__mariadb__root_password,type=env,target=INIT_SEAFILE_MYSQL_ROOT_PASSWORD"
+              "seafile__mariadb__password,type=env,target=SEAFILE_MYSQL_DB_PASSWORD"
+              "seafile__admin_email,type=env,target=INIT_SEAFILE_ADMIN_EMAIL"
+              "seafile__admin_password,type=env,target=INIT_SEAFILE_ADMIN_PASSWORD"
+              "seafile__jwt_private_key,type=env,target=JWT_PRIVATE_KEY"
+              "seafile__redis__password,type=env,target=REDIS_PASSWORD"
             ];
             volumes = [
               "/srv/seafile/logs:/shared/logs"
@@ -91,8 +91,8 @@ in
               NOTIFICATION_SERVER_LOG_LEVEL = "info";
             };
             secrets = [
-              "seafile_mariadb_password,type=env,target=SEAFILE_MYSQL_DB_PASSWORD"
-              "seafile_jwt,type=env,target=JWT_PRIVATE_KEY"
+              "seafile__mariadb__password,type=env,target=SEAFILE_MYSQL_DB_PASSWORD"
+              "seafile__jwt_private_key,type=env,target=JWT_PRIVATE_KEY"
             ];
             volumes = [ "/srv/seafile/data/logs:/shared/seafile/logs" ];
             networks = [ "seafile.network" "exposed.network" ];

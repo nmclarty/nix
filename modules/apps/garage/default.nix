@@ -23,9 +23,9 @@ in
       user = "${id}:${id}";
       networks = [ "host" ];
       environments = {
-        GARAGE_RPC_SECRET_FILE = "/run/secrets/garage_rpc";
+        GARAGE_RPC_SECRET_FILE = "/run/secrets/garage__rpc_secret";
       };
-      secrets = [ "garage_rpc,uid=${id},gid=${id},mode=0400" ];
+      secrets = [ "garage__rpc_secret,uid=${id},gid=${id},mode=0400" ];
       volumes = [
         "${config.sops.templates."garage/garage.toml".path}:/etc/garage.toml:ro"
         "/srv/garage/meta:/var/lib/garage/meta"

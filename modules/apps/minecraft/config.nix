@@ -16,7 +16,7 @@ in
         force-key-authentication = true
         prevent-client-proxy-connections = false
         player-info-forwarding-mode = "modern"
-        forwarding-secret-file = "/run/secrets/minecraft_velocity_secret"
+        forwarding-secret-file = "/run/secrets/minecraft__velocity__forwarding_secret"
         announce-forge = false
         kick-existing-players = false
         ping-passthrough = "disabled"

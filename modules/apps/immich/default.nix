@@ -26,13 +26,13 @@ in
             autoUpdate = "registry";
             user = "${id}:${id}";
             environments = {
-              DB_PASSWORD_FILE = "/run/secrets/immich_postgres_password";
+              DB_PASSWORD_FILE = "/run/secrets/immich__postgres__password";
               REDIS_HOSTNAME = "immich-redis";
               DB_HOSTNAME = "immich-postgres";
               IMMICH_CONFIG_FILE = "/etc/immich/immich.json";
               IMMICH_WORKERS_INCLUDE = "api";
             };
-            secrets = [ "immich_postgres_password,uid=${id},gid=${id},mode=0400" ];
+            secrets = [ "immich__postgres__password,uid=${id},gid=${id},mode=0400" ];
             devices = [ "/dev/dri:/dev/dri" ];
             volumes = [
               "/srv/immich/library:/data"
@@ -53,13 +53,13 @@ in
             autoUpdate = "registry";
             user = "${id}:${id}";
             environments = {
-              DB_PASSWORD_FILE = "/run/secrets/immich_postgres_password";
+              DB_PASSWORD_FILE = "/run/secrets/immich__postgres__password";
               REDIS_HOSTNAME = "immich-redis";
               DB_HOSTNAME = "immich-postgres";
               IMMICH_CONFIG_FILE = "/etc/immich/immich.json";
               IMMICH_WORKERS_EXCLUDE = "api";
             };
-            secrets = [ "immich_postgres_password,uid=${id},gid=${id},mode=0400" ];
+            secrets = [ "immich__postgres__password,uid=${id},gid=${id},mode=0400" ];
             devices = [ "/dev/dri:/dev/dri" ];
             volumes = [
               "/srv/immich/library:/data"

@@ -31,7 +31,7 @@ in
             environments = {
               TYPE = "VELOCITY";
             };
-            secrets = [ "minecraft_velocity_secret,uid=${id},gid=${id},mode=0400" ];
+            secrets = [ "minecraft__velocity__forwarding_secret,uid=${id},gid=${id},mode=0400" ];
             volumes = [
               "/srv/minecraft/velocity:/server"
               "${config.sops.templates."minecraft/velocity/velocity.toml".path}:/server/velocity.toml:ro"

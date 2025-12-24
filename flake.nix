@@ -13,8 +13,8 @@
     # personal
     nix-private.url = "github:nmclarty/nix-private";
     nix-private.inputs.nixpkgs.follows = "nixpkgs";
-    py_motd.url = "github:nmclarty/py_motd";
-    py_motd.inputs.nixpkgs.follows = "nixpkgs";
+    nix-helpers.url = "github:nmclarty/nix-helpers";
+    nix-helpers.inputs.nixpkgs.follows = "nixpkgs";
     # extras
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";

@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     sops = {
       secrets = flake.lib.mkSecrets [
-        "traefik/token"
+        "traefik/dns_token"
       ] "${config.networking.hostName}/podman.yaml";
 
       templates = {
@@ -106,7 +106,7 @@ in
             protocol=cloudflare, \
             zone=${config.apps.domain}, \
             login=token, \
-            password=${config.sops.placeholder."traefik/token"} \
+            password=${config.sops.placeholder."traefik/dns_token"} \
             *.${config.apps.domain}
           '';
         };

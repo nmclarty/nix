@@ -16,12 +16,12 @@ in
               MARIADB_AUTO_UPGRADE = "true";
               MARIADB_DATABASE = "minecraft";
               MARIADB_USER = "minecraft";
-              MARIADB_ROOT_PASSWORD_FILE = "/run/secrets/minecraft_mariadb_root";
-              MARIADB_PASSWORD_FILE = "/run/secrets/minecraft_mariadb_password";
+              MARIADB_ROOT_PASSWORD_FILE = "/run/secrets/minecraft__mariadb__root_password";
+              MARIADB_PASSWORD_FILE = "/run/secrets/minecraft__mariadb__password";
             };
             secrets = [
-              "minecraft_mariadb_root,uid=${id},gid=${id},mode=0400"
-              "minecraft_mariadb_password,uid=${id},gid=${id},mode=0400"
+              "minecraft__mariadb__root_password,uid=${id},gid=${id},mode=0400"
+              "minecraft__mariadb__password,uid=${id},gid=${id},mode=0400"
             ];
             volumes = [ "/srv/minecraft/mariadb:/var/lib/mysql" ];
             networks = [ "minecraft.network" ];
