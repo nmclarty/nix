@@ -10,6 +10,7 @@
     extra.lanzaboote
     # apps
     apps.default
+    inputs.nix-private.modules.apps.default
     # host
     ./ups.nix
   ];
@@ -38,9 +39,6 @@
     recursive = true;
   };
 
-  # enable containers from private repo
-  #private.containers.enable = true;
-
   # apps
   apps = {
     immich.enable = true;
@@ -49,5 +47,6 @@
     pocket.enable = true;
     tinyauth.enable = true;
     # minecraft.enable = true;
+    media.enable = true;
   };
 }

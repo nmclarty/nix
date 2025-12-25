@@ -1,15 +1,16 @@
-{ config, lib, flake, ... }:
+{ inputs, config, lib, ... }:
+with inputs.nix-helpers.lib;
 let
   cfg = config.apps.seafile;
 in
 {
   config = lib.mkIf cfg.enable {
     sops = {
-      secrets = flake.lib.mkSecrets [
+      secrets = mkSecrets [
         "seafile/secret_key"
         "seafile/oauth/client_id"
         "seafile/oauth/client_secret"
-      ] "${config.networking.hostName}/podman.yaml";
+      ] "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
 
       templates = {
         "seafile/seafile.conf" = {

@@ -1,13 +1,14 @@
-{ flake, lib, config, ... }:
+{ inputs, lib, config, ... }:
+with inputs.nix-helpers.lib;
 let
   cfg = config.apps.traefik;
 in
 {
   config = lib.mkIf cfg.enable {
     sops = {
-      secrets = flake.lib.mkSecrets [
+      secrets = mkSecrets [
         "traefik/dns_token"
-      ] "${config.networking.hostName}/podman.yaml";
+      ] "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
 
       templates = {
         "traefik/traefik.yaml" = {

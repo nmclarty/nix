@@ -1,6 +1,6 @@
-{ flake, lib, config, ... }:
+{ inputs, lib, config, ... }:
 with lib;
-with flake.lib;
+with inputs.nix-helpers.lib;
 {
   imports = [
     ./forgejo
@@ -29,5 +29,6 @@ with flake.lib;
     { id = 2005; name = "pocket"; tag = "v1"; }
     { id = 2006; name = "tinyauth"; tag = "v4"; }
     { id = 2007; name = "minecraft"; tag = "stable"; }
+    { id = 2008; name = "media"; tag = "latest"; }
   ];
 }

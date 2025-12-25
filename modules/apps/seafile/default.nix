@@ -1,5 +1,5 @@
-{ flake, lib, config, ... }:
-with flake.lib;
+{ inputs, lib, config, ... }:
+with inputs.nix-helpers.lib;
 let
   cfg = config.apps.seafile;
   id = toString cfg.user.id;

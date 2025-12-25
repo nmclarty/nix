@@ -1,5 +1,5 @@
-{ flake, lib, config, ... }:
-with flake.lib;
+{ inputs, lib, config, ... }:
+with inputs.nix-helpers.lib;
 let
   cfg = config.apps.immich;
 in
@@ -9,7 +9,7 @@ in
       secrets = mkSecrets [
         "immich/pocket/client_id"
         "immich/pocket/client_secret"
-      ] "${config.networking.hostName}/podman.yaml";
+      ] "${inputs.nix-private}/${config.networking.hostName}/podman.yaml";
 
       templates."immich/config.json" = {
         restartUnits = [ "immich.service" "immich-microservices.service" ];
