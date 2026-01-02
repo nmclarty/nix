@@ -93,7 +93,7 @@
 
       # make sure directories exist
       createDirs
-      
+
       # get the list of running quadlet containers
       containers=$(getRunningContainers)
 

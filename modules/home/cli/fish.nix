@@ -1,4 +1,6 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, lib, osConfig, ... }:
+with lib;
+{
   imports = with inputs; [
     nix-helpers.homeModules.py-motd
   ];
@@ -20,6 +22,8 @@
     py-motd = {
       enable = pkgs.stdenv.isLinux;
       settings = {
+        modules = [ "update" ]
+          ++ lists.optional (hasAttr "backup" osConfig.systemd.services) "backup";
         update.inputs = [ "nixpkgs" "nix-helpers" "nix-private" ];
         backup.profiles = [ "local" "remote" ];
       };
