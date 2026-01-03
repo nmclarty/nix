@@ -98,6 +98,7 @@ with lib;
           | grep "$argv[1]@docker" (if test "(count $argv)" -eq 0; echo "-v"; end) \
           | goaccess --log-format TRAEFIKCLF
         '';
+        rrun = "rustc $argv[1].rs && ./$argv[1]";
       };
     };
   };

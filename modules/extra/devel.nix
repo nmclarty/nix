@@ -5,6 +5,10 @@
     python3
     nodejs
     go
+    rustc
+    gcc
+    # managers
+    cargo
     # tools
     gh
     shellcheck
